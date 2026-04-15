@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kerala NRI Toolkit — Free Tools for Gulf Malayalis</title>
+<meta name="description" content="Free financial tools for Kerala NRIs — live exchange rates, property calculator, stamp duty, EMI, visa tracker and document checklist. Built for Gulf Malayalis."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+body{font-family:'Inter',sans-serif;}
+.stat-card{background:white;border-radius:20px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid #f1f5f9;transition:transform .2s;}
+.stat-card:hover{transform:translateY(-2px);}
+.tool-card{background:white;border-radius:24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border:1px solid #f1f5f9;padding:24px;display:flex;flex-direction:column;gap:10px;transition:all .2s;}
+.tool-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.1);}
+.chart-card{background:white;border-radius:24px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid #f1f5f9;}
+.hero-bg{background:linear-gradient(135deg,#1a3c2e 0%,#14532d 40%,#065f46 100%);}
+.badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;}
+.open-btn{display:inline-block;background:#1a3c2e;color:white;padding:9px 20px;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;transition:background .15s;}
+.open-btn:hover{background:#14532d;}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;border-radius:3px;background:#94a3b8;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#059669;cursor:pointer;}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:.4;}}
+.live-dot{display:inline-block;width:8px;height:8px;background:#10b981;border-radius:50%;animation:pulse-dot 1.4s infinite;margin-right:5px;}
+</style>
+</head>
+<body class="bg-[#f8fafc]">
+
+<!-- ═══════════════════════════════════════════════ NAVBAR ═══ -->
+<nav class="bg-[#1a3c2e] text-white px-4 py-3 sticky top-0 z-50 shadow-lg">
+  <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+    <a href="index.html" class="text-lg font-extrabold text-emerald-300">&#127796; Kerala NRI Toolkit</a>
+    <ul class="flex flex-wrap gap-4 text-sm">
+      <li><a href="index.html" class="text-emerald-300 font-bold border-b-2 border-emerald-300 pb-0.5">Home</a></li>
+      <li><a href="exchange-rates.html" class="text-slate-300 hover:text-white">Exchange Rates</a></li>
+      <li><a href="land-value.html" class="text-slate-300 hover:text-white">Land Value</a></li>
+      <li><a href="document-checklist.html" class="text-slate-300 hover:text-white">Documents</a></li>
+      <li><a href="visa-tracker.html" class="text-slate-300 hover:text-white">Visa Tracker</a></li>
+      <li><a href="stamp-duty.html" class="text-slate-300 hover:text-white">Stamp Duty</a></li>
+      <li><a href="emi-calculator.html" class="text-slate-300 hover:text-white">EMI Calculator</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ HERO ════ -->
+<section class="hero-bg text-white py-20 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="badge" style="background:rgba(16,185,129,.2);color:#6ee7b7;margin-bottom:16px;display:inline-block;">FREE NRI TOOLS &mdash; 2026</span>
+    <h1 class="text-5xl font-extrabold mb-3 leading-tight">Kerala is Calling.</h1>
+    <h2 class="text-4xl font-extrabold mb-6 text-emerald-300">We'll Handle the Numbers.</h2>
+    <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10">Live exchange rates, property calculators, visa tracking and 40-point document checklists — all free, all built for Gulf Malayalis.</p>
+    <div class="flex flex-wrap justify-center gap-6">
+      <div class="text-center"><div class="text-3xl font-extrabold text-emerald-300">6</div><div class="text-sm text-slate-400 mt-1">Free Tools</div></div>
+      <div class="w-px bg-white opacity-20 h-12 self-center"></div>
+      <div class="text-center"><div class="text-3xl font-extrabold text-emerald-300">40</div><div class="text-sm text-slate-400 mt-1">Documents Covered</div></div>
+      <div class="w-px bg-white opacity-20 h-12 self-center"></div>
+      <div class="text-center"><div class="text-3xl font-extrabold text-emerald-300">14</div><div class="text-sm text-slate-400 mt-1">Kerala Districts</div></div>
+      <div class="w-px bg-white opacity-20 h-12 self-center"></div>
+      <div class="text-center"><div class="text-3xl font-extrabold text-emerald-300">6</div><div class="text-sm text-slate-400 mt-1">Gulf Countries</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ LIVE STATS BAR ═══ -->
+<section class="py-8 px-4" style="background:linear-gradient(180deg,#065f46 0%,#f8fafc 60%);">
+  <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+
+    <!-- Stat 1: Live AED/INR -->
+    <div class="stat-card">
+      <div class="flex items-center justify-between mb-1">
+        <span style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">AED → INR</span>
+        <span id="rateStatus" style="font-size:.68rem;color:#94a3b8;"><span class="live-dot"></span>Live</span>
+      </div>
+      <div id="liveRate" class="text-3xl font-extrabold text-[#1a3c2e]">25.30</div>
+      <div id="rateChange" class="text-xs mt-1 text-slate-400">Loading...</div>
+      <a href="exchange-rates.html" class="text-xs text-emerald-700 font-semibold mt-2 block">All currencies &rarr;</a>
+    </div>
+
+    <!-- Stat 2: Days to tax year end -->
+    <div class="stat-card">
+      <div style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Tax Year Ends</div>
+      <div id="taxDays" class="text-3xl font-extrabold text-[#1a3c2e]">—</div>
+      <div class="text-xs text-slate-400 mt-1">Days to 31 March 2027</div>
+      <div class="text-xs text-amber-600 font-semibold mt-2">&#9888; File ITR before deadline</div>
+    </div>
+
+    <!-- Stat 3: Nearest visa expiry -->
+    <div class="stat-card" id="visaStat">
+      <div style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Nearest Visa Expiry</div>
+      <div id="visaDays" class="text-3xl font-extrabold text-[#1a3c2e]">—</div>
+      <div id="visaName" class="text-xs text-slate-400 mt-1">No visa tracked yet</div>
+      <a href="visa-tracker.html" id="visaLink" class="text-xs text-emerald-700 font-semibold mt-2 block">Add visa &rarr;</a>
+    </div>
+
+    <!-- Stat 4: Doc checklist progress -->
+    <div class="stat-card">
+      <div style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Documents Collected</div>
+      <div id="docCount" class="text-3xl font-extrabold text-[#1a3c2e]">0/40</div>
+      <div style="background:#e2e8f0;border-radius:999px;height:5px;margin-top:8px;overflow:hidden;">
+        <div id="docBar" style="background:#059669;height:5px;border-radius:999px;width:0%;transition:width .5s;"></div>
+      </div>
+      <a href="document-checklist.html" class="text-xs text-emerald-700 font-semibold mt-2 block">Open checklist &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ TOOLS GRID ═══ -->
+<section class="py-14 px-4 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-extrabold text-gray-900">6 Free Tools</h2>
+      <p class="text-gray-500 mt-2">Everything a Kerala NRI needs — property, money, documents, visa</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+
+      <div class="tool-card border-l-4 border-emerald-500">
+        <div style="font-size:1.8rem;">&#128178;</div>
+        <div><span class="badge" style="background:#dcfce7;color:#15803d;">LIVE RATES</span></div>
+        <h3 class="text-lg font-bold">Exchange Rates</h3>
+        <p class="text-sm text-gray-500">Live INR exchange rates for AED, USD, GBP, QAR, SAR, KWD with historical context</p>
+        <a href="exchange-rates.html" class="open-btn mt-auto">Open Tool &rarr;</a>
+      </div>
+
+      <div class="tool-card border-l-4 border-blue-400">
+        <div style="font-size:1.8rem;">&#127968;</div>
+        <div><span class="badge" style="background:#dbeafe;color:#1e40af;">14 DISTRICTS</span></div>
+        <h3 class="text-lg font-bold">Land Value Estimator</h3>
+        <p class="text-sm text-gray-500">Estimate Kerala property values across all 14 districts with SRO guideline rates</p>
+        <a href="land-value.html" class="open-btn mt-auto">Open Tool &rarr;</a>
+      </div>
+
+      <div class="tool-card border-l-4 border-purple-400">
+        <div style="font-size:1.8rem;">&#128196;</div>
+        <div><span class="badge" style="background:#f3e8ff;color:#7e22ce;">40 DOCUMENTS</span></div>
+        <h3 class="text-lg font-bold">Document Checklist</h3>
+        <p class="text-sm text-gray-500">Complete NRI document tracker — POA, property, bank, home loan and post-registration</p>
+        <a href="document-checklist.html" class="open-btn mt-auto">Open Tool &rarr;</a>
+      </div>
+
+      <div class="tool-card border-l-4 border-amber-400">
+        <div style="font-size:1.8rem;">&#9992;&#65039;</div>
+        <div><span class="badge" style="background:#fef9c3;color:#854d0e;">UAE &bull; SAUDI &bull; UK &bull; US</span></div>
+        <h3 class="text-lg font-bold">Visa Tracker</h3>
+        <p class="text-sm text-gray-500">Track Iqama, Emirates ID, BRP, Green Card expiry with colour-coded countdown alerts</p>
+        <a href="visa-tracker.html" class="open-btn mt-auto">Open Tool &rarr;</a>
+      </div>
+
+      <div class="tool-card border-l-4 border-red-400">
+        <div style="font-size:1.8rem;">&#128204;</div>
+        <div><span class="badge" style="background:#fee2e2;color:#991b1b;">2026 RATES</span></div>
+        <h3 class="text-lg font-bold">Stamp Duty Calculator</h3>
+        <p class="text-sm text-gray-500">Kerala stamp duty and registration charges — all 6 deed types, live currency conversion</p>
+        <a href="stamp-duty.html" class="open-btn mt-auto">Open Tool &rarr;</a>
+      </div>
+
+      <div class="tool-card border-l-4 border-teal-400">
+        <div style="font-size:1.8rem;">&#129518;</div>
+        <div><span class="badge" style="background:#ccfbf1;color:#115e59;">NRI HOME LOAN</span></div>
+        <h3 class="text-lg font-bold">EMI Calculator</h3>
+        <p class="text-sm text-gray-500">NRI home loan EMI with amortization table, bank rate comparison and Gulf currency view</p>
+        <a href="emi-calculator.html" class="open-btn mt-auto">Open Tool &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ CHARTS ════ -->
+<section class="py-14 px-4 bg-[#f8fafc]">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-extrabold text-gray-900">Live Market Snapshot</h2>
+      <p class="text-gray-500 mt-2">Data updated automatically — always current</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Chart 1: AED/INR Trend -->
+      <div class="chart-card">
+        <div class="flex items-center justify-between mb-1">
+          <h3 class="font-bold text-gray-800">AED → INR Trend</h3>
+          <span style="font-size:.7rem;color:#059669;font-weight:700;"><span class="live-dot"></span>Live endpoint</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-4">6-month movement — INR weakening vs AED</p>
+        <canvas id="trendChart" height="200"></canvas>
+      </div>
+
+      <!-- Chart 2: Stamp Duty State Comparison -->
+      <div class="chart-card">
+        <h3 class="font-bold text-gray-800 mb-1">Stamp Duty by State</h3>
+        <p class="text-xs text-gray-400 mb-4">Sale deed — combined stamp duty + registration fee (%)</p>
+        <canvas id="stampChart" height="200"></canvas>
+      </div>
+
+      <!-- Chart 3: EMI Preview with sliders -->
+      <div class="chart-card">
+        <h3 class="font-bold text-gray-800 mb-1">EMI Preview</h3>
+        <p class="text-xs text-gray-400 mb-3">Adjust loan amount &amp; rate — quick estimate</p>
+
+        <div class="mb-3">
+          <div class="flex justify-between text-xs font-semibold text-gray-600 mb-1">
+            <span>Loan Amount</span>
+            <span id="loanDisp" class="text-emerald-700">₹50 L</span>
+          </div>
+          <input type="range" id="loanSlider" min="500000" max="20000000" step="500000" value="5000000" oninput="updateEMI()"/>
+        </div>
+        <div class="mb-4">
+          <div class="flex justify-between text-xs font-semibold text-gray-600 mb-1">
+            <span>Interest Rate</span>
+            <span id="rateDisp" class="text-emerald-700">8.5%</span>
+          </div>
+          <input type="range" id="rateSlider" min="6" max="13" step="0.25" value="8.5" oninput="updateEMI()"/>
+        </div>
+
+        <div class="flex justify-between text-xs text-gray-500 mb-3">
+          <span>Tenure: <strong class="text-gray-700">20 years</strong></span>
+          <span id="emiResult" class="font-extrabold text-[#1a3c2e] text-sm">EMI: ₹43,391</span>
+        </div>
+
+        <canvas id="emiChart" height="160"></canvas>
+        <a href="emi-calculator.html" class="open-btn text-center block mt-4 text-sm">Full EMI Breakdown &rarr;</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ ADSENSE ════ -->
+<section class="py-10 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="border-2 border-dashed border-gray-300 p-8 rounded-xl">
+      <p class="text-gray-400 text-sm">Advertisement — Google AdSense</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ FOOTER ════ -->
+<footer class="bg-[#0f172a] text-white py-10 px-4">
+  <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4 text-sm">
+    <p class="text-slate-400">&copy; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community</p>
+    <ul class="flex flex-wrap gap-4 text-slate-400">
+      <li><a href="index.html" class="hover:text-emerald-300">Home</a></li>
+      <li><a href="exchange-rates.html" class="hover:text-emerald-300">Exchange Rates</a></li>
+      <li><a href="land-value.html" class="hover:text-emerald-300">Land Value</a></li>
+      <li><a href="document-checklist.html" class="hover:text-emerald-300">Documents</a></li>
+      <li><a href="visa-tracker.html" class="hover:text-emerald-300">Visa Tracker</a></li>
+      <li><a href="stamp-duty.html" class="hover:text-emerald-300">Stamp Duty</a></li>
+      <li><a href="emi-calculator.html" class="hover:text-emerald-300">EMI Calculator</a></li>
+    </ul>
+
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid #1e293b;">
+      <p style="font-size:.68rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">&#127968; Kerala Districts &mdash; Land Value Guide</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;"><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Thiruvananthapuram</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Kollam</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Pathanamthitta</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Alappuzha</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Kottayam</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Idukki</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Ernakulam</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Thrissur</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Palakkad</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Malappuram</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Kozhikode</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Wayanad</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Kannur</a><a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Kasaragod</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ══ STAT BAR: Tax Year countdown ══ */
+(function(){
+  var now = new Date();
+  var end = new Date("2027-03-31");
+  var days = Math.ceil((end - now) / 86400000);
+  document.getElementById("taxDays").textContent = days;
+})();
+
+/* ══ STAT BAR: Visa nearest expiry ══ */
+(function(){
+  try {
+    var visas = JSON.parse(localStorage.getItem("nriVisas") || "[]");
+    if (visas.length === 0) return;
+    visas.sort(function(a,b){ return new Date(a.expiry) - new Date(b.expiry); });
+    var nearest = visas[0];
+    var days = Math.ceil((new Date(nearest.expiry) - new Date()) / 86400000);
+    var el = document.getElementById("visaDays");
+    el.textContent = days < 0 ? "Expired" : days + "d";
+    el.style.color = days < 0 ? "#dc2626" : days <= 30 ? "#ea580c" : days <= 90 ? "#ca8a04" : "#1a3c2e";
+    document.getElementById("visaName").textContent = nearest.name + " — " + nearest.type;
+    document.getElementById("visaLink").textContent = "View tracker \u2192";
+    document.getElementById("visaLink").href = "visa-tracker.html";
+  } catch(e) {}
+})();
+
+/* ══ STAT BAR: Doc checklist progress ══ */
+(function(){
+  try {
+    var saved = JSON.parse(localStorage.getItem("nriDocs") || "{}");
+    var done = Object.values(saved).filter(Boolean).length;
+    document.getElementById("docCount").textContent = done + "/40";
+    document.getElementById("docBar").style.width = Math.round((done/40)*100) + "%";
+  } catch(e) {}
+})();
+
+/* ══ LIVE AED/INR RATE ══ */
+function loadRate() {
+  fetch("https://latest.currency-api.pages.dev/v1/currencies/aed.json")
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var rate = d.aed.inr;
+      if (!rate) throw 0;
+      document.getElementById("liveRate").textContent = rate.toFixed(2);
+      document.getElementById("rateChange").textContent = "1 AED = ₹" + rate.toFixed(4);
+    })
+    .catch(function(){
+      fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/aed.json")
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          var rate = d.aed.inr;
+          document.getElementById("liveRate").textContent = rate.toFixed(2);
+          document.getElementById("rateChange").textContent = "1 AED = ₹" + rate.toFixed(4);
+        })
+        .catch(function(){
+          document.getElementById("liveRate").textContent = "25.30";
+          document.getElementById("rateChange").textContent = "Backup rate — AED/INR";
+          document.getElementById("rateStatus").innerHTML = '<span style="color:#94a3b8;font-size:.68rem;">Backup</span>';
+        });
+    });
+}
+loadRate();
+
+/* ══ CHART 1: AED/INR Trend ══ */
+(function(){
+  var ctx = document.getElementById("trendChart").getContext("2d");
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ["Nov '25","Dec '25","Jan '26","Feb '26","Mar '26","Apr '26"],
+      datasets: [{
+        label: "AED → INR",
+        data: [23.1, 23.5, 23.9, 24.4, 24.9, 25.3],
+        borderColor: "#059669",
+        backgroundColor: "rgba(5,150,105,.08)",
+        borderWidth: 2.5,
+        pointRadius: [3,3,3,3,3,6],
+        pointBackgroundColor: ["#059669","#059669","#059669","#059669","#059669","#10b981"],
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {display: false},
+        tooltip: {callbacks:{label:function(c){return "1 AED = ₹"+c.parsed.y;}}}
+      },
+      scales: {
+        y: {
+          min: 22.5, max: 26,
+          ticks: {callback: function(v){ return "₹"+v; }, font:{size:10}},
+          grid: {color:"#f1f5f9"}
+        },
+        x: {ticks:{font:{size:10},maxRotation:45,minRotation:0}, grid:{display:false}}
+      }
+    }
+  });
+})();
+
+/* ══ CHART 2: Stamp Duty Comparison ══ */
+(function(){
+  var ctx = document.getElementById("stampChart").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Kerala","Tamil Nadu","Telangana","Goa","Karnataka","Maharashtra","Delhi"],
+      datasets: [{
+        label: "Total %",
+        data: [10, 8, 7.5, 6.5, 6, 6, 6],
+        backgroundColor: ["#dc2626","#f97316","#f59e0b","#84cc16","#10b981","#10b981","#10b981"],
+        borderRadius: 6,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {display: false},
+        tooltip: {callbacks:{label:function(c){return c.parsed.y + "% (SD + Reg)";}}}
+      },
+      scales: {
+        y: {
+          max: 12,
+          ticks: {callback:function(v){return v+"%";}, font:{size:10}},
+          grid: {color:"#f1f5f9"}
+        },
+        x: {ticks:{font:{size:9},maxRotation:45,minRotation:0}, grid:{display:false}}
+      }
+    }
+  });
+})();
+
+/* ══ CHART 3: EMI Donut ══ */
+var emiChart;
+function buildEMI(principal, interest) {
+  var ctx = document.getElementById("emiChart").getContext("2d");
+  if (emiChart) emiChart.destroy();
+  emiChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Principal","Total Interest"],
+      datasets: [{
+        data: [principal, interest],
+        backgroundColor: ["#059669","#fcd34d"],
+        borderWidth: 0,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: "70%",
+      plugins: {
+        legend: {position:"bottom", labels:{font:{size:10}, boxWidth:12}},
+        tooltip: {callbacks:{label:function(c){
+          var v = c.parsed;
+          return c.label + ": ₹" + Math.round(v).toLocaleString("en-IN");
+        }}}
+      }
+    }
+  });
+}
+
+function updateEMI() {
+  var P = parseFloat(document.getElementById("loanSlider").value);
+  var ann = parseFloat(document.getElementById("rateSlider").value);
+  var n = 240;
+  var r = ann / 12 / 100;
+  var emi = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n) - 1);
+  var total = emi * n;
+  var interest = total - P;
+
+  var lakh = function(v){ return v >= 10000000 ? (v/10000000).toFixed(1)+" Cr" : (v/100000).toFixed(0)+" L"; };
+  document.getElementById("loanDisp").textContent   = "₹" + lakh(P);
+  document.getElementById("rateDisp").textContent   = ann.toFixed(2) + "%";
+  document.getElementById("emiResult").textContent  = "EMI: ₹" + Math.round(emi).toLocaleString("en-IN");
+  buildEMI(P, interest);
+}
+updateEMI();
+</script>
+</body>
+</html>

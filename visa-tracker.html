@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gulf Visa &amp; Iqama Tracker | Kerala NRI Toolkit</title>
+<meta name="description" content="Track your Gulf visa, Iqama, Emirates ID and residence permit expiry dates. Get countdown alerts for UAE, Saudi, Qatar, Kuwait, Bahrain and Oman visas."/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+body{font-family:'Inter',sans-serif;}
+.visa-card{border-radius:16px;padding:18px;margin-bottom:12px;border:2px solid transparent;transition:all .2s;position:relative;}
+.visa-card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.1);}
+.status-safe    {background:#f0fdf4;border-color:#86efac;}
+.status-caution {background:#fefce8;border-color:#fde047;}
+.status-warning {background:#fff7ed;border-color:#fdba74;}
+.status-critical{background:#fef2f2;border-color:#fca5a5;}
+.status-expired {background:#f1f5f9;border-color:#cbd5e1;}
+.days-big{font-size:2.6rem;font-weight:800;line-height:1;}
+.days-safe    {color:#16a34a;}
+.days-caution {color:#ca8a04;}
+.days-warning {color:#ea580c;}
+.days-critical{color:#dc2626;}
+.days-expired {color:#94a3b8;}
+.pill{display:inline-block;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;}
+.pill-safe    {background:#dcfce7;color:#15803d;}
+.pill-caution {background:#fef9c3;color:#854d0e;}
+.pill-warning {background:#ffedd5;color:#9a3412;}
+.pill-critical{background:#fee2e2;color:#991b1b;}
+.pill-expired {background:#e2e8f0;color:#475569;}
+input,select{width:100%;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.9rem;font-weight:500;background:#f8fafc;outline:none;box-sizing:border-box;font-family:inherit;}
+input:focus,select:focus{border-color:#059669;background:white;}
+label{display:block;font-size:.73rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+.del-btn{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.07);border:none;border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.del-btn:hover{background:#fee2e2;color:#dc2626;}
+.fact-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9;font-size:.84rem;align-items:flex-start;}
+.fact-row:last-child{border:none;}
+</style>
+</head>
+<body style="background:#f8fafc;min-height:100vh;">
+
+<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
+    <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
+      <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
+      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">Exchange Rates</a>
+      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">Land Value</a>
+      <a href="document-checklist.html" style="color:#cbd5e1;text-decoration:none;">Documents</a>
+      <a href="visa-tracker.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">Visa Tracker</a>
+      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">Stamp Duty</a>
+      <a href="emi-calculator.html" style="color:#cbd5e1;text-decoration:none;">EMI Calculator</a>
+    </div>
+  </div>
+</nav>
+
+<div style="max-width:1200px;margin:0 auto;padding:36px 16px 20px;">
+  <span style="background:#d1fae5;color:#065f46;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;">UAE &bull; Saudi &bull; Qatar &bull; Kuwait &bull; Bahrain &bull; Oman</span>
+  <h1 style="font-size:2.2rem;font-weight:800;margin:12px 0 8px;">Gulf Visa &amp; Iqama Tracker</h1>
+  <p style="color:#64748b;max-width:600px;">Track expiry dates for your entire family's visas, Iqama, Emirates ID and residence permits. Get a clear countdown with colour-coded urgency alerts.</p>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 16px 48px;display:grid;grid-template-columns:380px 1fr;gap:24px;">
+
+<!-- LEFT: ADD FORM -->
+<div style="display:flex;flex-direction:column;gap:20px;">
+
+  <div style="background:white;border-radius:24px;padding:26px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
+    <h2 id="formTitle" style="font-size:1.1rem;font-weight:700;margin-bottom:18px;">&#43; Add Visa / Permit</h2>
+    <input type="hidden" id="editId" value=""/>
+
+    <div style="margin-bottom:14px;">
+      <label>Person / Member Name</label>
+      <input type="text" id="fName" placeholder="e.g. Ahmed / Spouse / Father" oninput="this.value=this.value.replace(/[0-9]/g,'')"/>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label>Country</label>
+      <select id="fCountry">
+        <option value="UAE">&#127462;&#127466; UAE (United Arab Emirates)</option>
+        <option value="Saudi Arabia">&#127462;&#127468; Saudi Arabia</option>
+        <option value="Qatar">&#127478;&#127462; Qatar</option>
+        <option value="Kuwait">&#127472;&#127484; Kuwait</option>
+        <option value="Bahrain">&#127463;&#127469; Bahrain</option>
+        <option value="Oman">&#127476;&#127474; Oman</option>
+        <option value="India">&#127470;&#127475; India (Visit Visa)</option>
+        <option value="UK">&#127468;&#127463; United Kingdom</option>
+        <option value="USA">&#127482;&#127480; United States (USA)</option>
+        <option value="Other">&#127758; Other</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label>Visa / Permit Type</label>
+      <select id="fType" onchange="updateTypeHint()">
+        <option value="Residence Visa / Emirates ID">Residence Visa / Emirates ID (UAE)</option>
+        <option value="Iqama">Iqama (Saudi Arabia)</option>
+        <option value="Residence Permit (RP)">Residence Permit / RP (Qatar)</option>
+        <option value="Civil ID / Iqama">Civil ID / Iqama (Kuwait)</option>
+        <option value="CPR Card">CPR Card (Bahrain)</option>
+        <option value="Residence Card (RC)">Residence Card / RC (Oman)</option>
+        <option value="Employment Visa">Employment Visa</option>
+        <option value="Visit Visa">Visit Visa</option>
+        <option value="OCI Card">OCI Card</option>
+        <option value="Passport">Passport</option>
+        <option value="BRP (Biometric Residence Permit)">BRP — Biometric Residence Permit (UK)</option>
+        <option value="Skilled Worker Visa (UK)">Skilled Worker Visa (UK)</option>
+        <option value="ILR / BRP (UK)">ILR — Indefinite Leave to Remain (UK)</option>
+        <option value="Student Visa BRP (UK)">Student Visa / BRP (UK)</option>
+        <option value="Family / Spouse Visa (UK)">Family / Spouse Visa (UK)</option>
+        <option value="H-1B Visa (USA)">H-1B Work Visa (USA)</option>
+        <option value="Green Card / I-551 (USA)">Green Card / I-551 (USA)</option>
+        <option value="EAD (USA)">EAD — Employment Authorization (USA)</option>
+        <option value="L-1 Visa (USA)">L-1 Intracompany Visa (USA)</option>
+        <option value="B-2 Visitor Visa (USA)">B-2 / B-1 Visitor Visa (USA)</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px;">
+      <label>Expiry Date</label>
+      <input type="date" id="fExpiry"/>
+    </div>
+    <div style="margin-bottom:18px;">
+      <label>Visa / ID Number <span style="color:#94a3b8;font-weight:400;text-transform:none;">(optional)</span></label>
+      <input type="text" id="fNumber" placeholder="e.g. 784-1991-1234567-1"/>
+    </div>
+
+    <div id="typeHint" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;font-size:.78rem;color:#166534;margin-bottom:14px;"></div>
+
+    <button onclick="saveVisa()" style="width:100%;background:#1a3c2e;color:white;font-weight:700;font-size:.92rem;padding:13px;border-radius:12px;border:none;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#14532d'" onmouseout="this.style.background='#1a3c2e'">
+      &#9989; Save Visa
+    </button>
+    <button onclick="cancelEdit()" id="cancelBtn" style="display:none;width:100%;background:#f1f5f9;color:#64748b;font-weight:600;font-size:.87rem;padding:10px;border-radius:12px;border:none;cursor:pointer;margin-top:8px;">
+      Cancel Edit
+    </button>
+    <button id="resetAllBtn" onclick="resetAllVisas()" style="width:100%;background:#f1f5f9;color:#94a3b8;font-weight:600;font-size:.78rem;padding:8px;border-radius:10px;border:none;cursor:pointer;margin-top:8px;">
+      &#8635; Reset All Visas
+    </button>
+  </div>
+
+  <!-- COLOUR GUIDE -->
+  <div style="background:white;border-radius:20px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
+    <h3 style="font-size:.87rem;font-weight:700;margin-bottom:12px;">&#127881; Urgency Guide</h3>
+    <div style="display:flex;flex-direction:column;gap:7px;font-size:.82rem;">
+      <div style="display:flex;align-items:center;gap:10px;"><span class="pill pill-safe">VALID</span><span style="color:#475569;">More than 90 days remaining</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="pill pill-caution">CAUTION</span><span style="color:#475569;">31 to 90 days remaining</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="pill pill-warning">RENEW SOON</span><span style="color:#475569;">8 to 30 days remaining</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="pill pill-critical">CRITICAL</span><span style="color:#475569;">0 to 7 days — renew immediately</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><span class="pill pill-expired">EXPIRED</span><span style="color:#475569;">Past expiry date</span></div>
+    </div>
+  </div>
+
+  <!-- NRI 182 DAY RULE -->
+  <div style="background:#fefce8;border:1px solid #fde047;border-radius:20px;padding:20px;">
+    <h3 style="font-size:.87rem;font-weight:700;color:#854d0e;margin-bottom:10px;">&#9888; The 182-Day Tax Rule</h3>
+    <p style="font-size:.81rem;color:#78350f;line-height:1.6;">If you stay in India for <strong>182 or more days</strong> in a financial year (April–March), you automatically become a <strong>Resident Indian for tax purposes</strong> — even if you hold a Gulf visa. This means your worldwide income becomes taxable in India.</p>
+    <p style="font-size:.81rem;color:#78350f;margin-top:8px;line-height:1.6;">Track your India visits carefully. Consult a CA if your annual India stay is approaching 150+ days.</p>
+  </div>
+
+</div>
+
+<!-- RIGHT: VISA CARDS -->
+<div>
+  <!-- SUMMARY BAR -->
+  <div id="summaryBar" style="display:none;background:white;border-radius:16px;padding:14px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+    <div style="display:flex;gap:16px;flex-wrap:wrap;" id="summaryPills"></div>
+    <button onclick="shareAll()" style="background:#25D366;color:white;font-weight:700;font-size:.78rem;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;flex-shrink:0;">&#128241; Share All</button>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div id="emptyState" style="background:white;border-radius:24px;padding:60px 20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);border:2px dashed #e2e8f0;">
+    <div style="font-size:3rem;margin-bottom:12px;">&#128196;</div>
+    <p style="font-weight:700;color:#1e293b;font-size:1rem;margin-bottom:6px;">No visas tracked yet</p>
+    <p style="color:#94a3b8;font-size:.85rem;">Add your first visa using the form on the left to start tracking expiry dates.</p>
+  </div>
+
+  <!-- CARDS CONTAINER -->
+  <div id="cardsContainer"></div>
+
+  <!-- GULF VISA FACTS -->
+  <div style="background:white;border-radius:20px;padding:22px;margin-top:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;">
+    <h3 style="font-size:.95rem;font-weight:700;margin-bottom:12px;">&#127758; Gulf Visa Renewal — Key Facts for Keralites</h3>
+    <div class="fact-row">
+      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+      <span><strong>UAE Residence Visa:</strong> Valid for 1, 2 or 3 years (or 5-10 years on unsponsored). Emirates ID must match visa validity. Renewal takes 1-2 weeks — start 30 days before expiry. <em>Source: u.ae official</em></span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+      <span><strong>UAE Grace Period:</strong> After residence visa cancellation or expiry, residents are granted a flexible grace period of up to 6 months (varies by resident category) before fines of AED 50/day kick in. Check with ICA or GDRFA for your specific category. <em>Source: u.ae official</em></span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
+      <span><strong>UAE 180-Day Outside Rule:</strong> If you stay outside the UAE for more than 180 consecutive days, your residence visa is automatically nullified — even if it hasn't reached its expiry date. Critical for NRIs visiting India for extended periods. <em>Source: u.ae official</em></span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+      <span><strong>Saudi Iqama:</strong> Must be renewed 3 days before expiry. Employer initiates renewal. Check via Absher.sa app. Fine for 1st violation = Iqama renewal fee; 2nd = double the fee; 3rd violation = deportation. No per-day accumulation — but employer also faces penalties for late renewal. <em>Source: moi.gov.sa official</em></span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+      <span><strong>Qatar RP:</strong> Tied to employment contract. Check via Metrash2 app. Exit permit abolished in 2020 — you can leave freely without employer NOC.</span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
+      <span><strong>Overstay Fines:</strong> UAE: AED 50/day (after grace period). Saudi: fine = Iqama renewal fee (not per-day — see Saudi fact above). Qatar Visit Visa: QAR 200/day. Qatar Residence Permit: QAR 10/day (max QAR 12,000). Overstay fines can block future visas and entry to all GCC countries. <em>Sources: u.ae, moi.gov.sa official</em></span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+      <span><strong>Passport Validity:</strong> Indian passport must have 6+ months validity for Gulf residence visa renewal. Renew passport before Iqama renewal if validity is low.</span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+      <span><strong>Family Visa (Dependent):</strong> Spouse and children's visas are tied to the sponsor's Iqama. If the sponsor's Iqama lapses, all dependent visas become invalid automatically.</span>
+    </div>
+    <div class="fact-row">
+      <span style="color:#dc2626;font-weight:700;flex-shrink:0;">&#10007;</span>
+      <span><strong>India Visit During Renewal:</strong> If you are in India when your Iqama expires, you may need an Emergency Return Certificate from the Indian Embassy to re-enter your Gulf country legally.</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer style="background:#0f172a;color:#64748b;padding:32px 16px;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;">
+    <p style="margin:0;">&#169; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community.</p>
+    <nav style="display:flex;flex-wrap:wrap;gap:16px;">
+      <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
+      <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
+      <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
+      <a href="document-checklist.html" style="color:#94a3b8;text-decoration:none;">Documents</a>
+      <a href="visa-tracker.html" style="color:#94a3b8;text-decoration:none;">Visa Tracker</a>
+      <a href="stamp-duty.html" style="color:#94a3b8;text-decoration:none;">Stamp Duty</a>
+      <a href="emi-calculator.html" style="color:#94a3b8;text-decoration:none;">EMI Calculator</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+var TYPE_HINTS = {
+  "Residence Visa / Emirates ID": "Renewal window: 30 days before expiry. Start medical & Emirates ID process early. Employer sponsors the renewal.",
+  "Iqama":                        "Check expiry on Absher.sa app. Fines start from Day 1 of overstay (SAR 100/day). Employer must initiate renewal.",
+  "Residence Permit (RP)":        "Check via Metrash2 app. Tied to your employment. Exit permit no longer required since 2020.",
+  "Civil ID / Iqama":             "Renew 30 days before expiry via MOI Kuwait. Ensure your employer has updated MOI records.",
+  "CPR Card":                     "Renew via NPRA Bahrain portal. CPR must be renewed before residence permit renewal.",
+  "Residence Card (RC)":          "Tied to employment contract. Check via ROP Oman portal. Renew 1 month before expiry.",
+  "Passport":                     "Indian passport: renew at least 1 year before expiry. Gulf residence renewals require 6+ months passport validity.",
+  "OCI Card":                     "OCI has lifetime validity but the booklet must be re-issued when you get a new passport (until age 50).",
+  "BRP (Biometric Residence Permit)": "Your BRP expiry date = your visa expiry. Always check your BRP — visa approval letter date and BRP date can differ. Renew via UK Visas & Immigration (UKVI) at gov.uk.",
+  "Skilled Worker Visa (UK)":     "Tied to your employer and job. If you change jobs, your visa may need to be re-sponsored. Renew via gov.uk at least 3 months before expiry.",
+  "ILR / BRP (UK)":               "ILR itself has no expiry — but the BRP card expires every 10 years and must be renewed for travel. Apply at gov.uk/renew-biometric-residence-permit.",
+  "Student Visa BRP (UK)":        "BRP is linked to course end date. If you extend your studies, you must extend your visa. Check status on gov.uk/view-prove-immigration-status.",
+  "Family / Spouse Visa (UK)":    "Usually valid for 2.5 years initially, then renewed for another 2.5 years before ILR eligibility after 5 years. Renew via UKVI.",
+  "H-1B Visa (USA)":              "H-1B stamp in passport expires, but your actual status (I-94) may say 'D/S'. You can remain in the US legally after stamp expiry — but you need a new stamp to re-enter after travel abroad.",
+  "Green Card / I-551 (USA)":     "Green Card (I-551) expires every 10 years and MUST be renewed. An expired Green Card is not valid for re-entry to the US. Apply via USCIS Form I-90.",
+  "EAD (USA)":                    "Employment Authorization Document expires every 1-2 years. File USCIS Form I-765 renewal at least 180 days before expiry to avoid a work authorisation gap.",
+  "L-1 Visa (USA)":               "L-1A (managers): up to 7 years total. L-1B (specialised knowledge): up to 5 years total. After max stay, you must leave the US for at least 1 year before reapplying.",
+  "B-2 Visitor Visa (USA)":       "Visa stamp validity does not equal your authorised stay. Your I-94 sets the actual departure date (usually 6 months). Overstay even 1 day and you can be barred from future US visas."
+};
+
+var visas = [];
+
+/* ---- LOAD FROM STORAGE ---- */
+try { visas = JSON.parse(localStorage.getItem("nriVisas") || "[]"); } catch(e) { visas = []; }
+
+/* ---- COMPUTE STATUS ---- */
+function getStatus(expiry) {
+  var now  = new Date(); now.setHours(0,0,0,0);
+  var exp  = new Date(expiry); exp.setHours(0,0,0,0);
+  var days = Math.round((exp - now) / 86400000);
+  var status, cls;
+  if      (days < 0)   { status = "EXPIRED";    cls = "expired";  }
+  else if (days <= 7)  { status = "CRITICAL",   cls = "critical"; }
+  else if (days <= 30) { status = "RENEW SOON"; cls = "warning";  }
+  else if (days <= 90) { status = "CAUTION";    cls = "caution";  }
+  else                 { status = "VALID";       cls = "safe";     }
+  return {days: days, status: status, cls: cls};
+}
+
+function fmtDate(d) {
+  var parts = d.split("-");
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return parseInt(parts[2]) + " " + months[parseInt(parts[1])-1] + " " + parts[0];
+}
+
+/* ---- RENDER ALL CARDS ---- */
+function render() {
+  var container = document.getElementById("cardsContainer");
+  var empty     = document.getElementById("emptyState");
+  var summary   = document.getElementById("summaryBar");
+
+  if (visas.length === 0) {
+    empty.style.display     = "block";
+    container.innerHTML     = "";
+    summary.style.display   = "none";
+    return;
+  }
+
+  empty.style.display   = "none";
+  summary.style.display = "flex";
+
+  // Sort by urgency (expired first, then fewest days)
+  var sorted = visas.slice().sort(function(a,b){
+    return getStatus(a.expiry).days - getStatus(b.expiry).days;
+  });
+
+  var html = "";
+  sorted.forEach(function(v) {
+    var s = getStatus(v.expiry);
+    var daysLabel = s.days < 0
+      ? Math.abs(s.days) + " days ago"
+      : s.days === 0 ? "Expires TODAY" : s.days + " days left";
+    html += '<div class="visa-card status-' + s.cls + '">'
+          + '<button class="del-btn" onclick="deleteVisa(\'' + v.id + '\')" title="Delete">&#10005;</button>'
+          + '<div style="display:flex;align-items:flex-start;gap:16px;">'
+          + '<div style="flex:1;">'
+          + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">'
+          + '<span style="font-size:1rem;font-weight:800;color:#1e293b;">' + v.name + '</span>'
+          + '<span class="pill pill-' + s.cls + '">' + s.status + '</span>'
+          + '</div>'
+          + '<div style="font-size:.82rem;font-weight:600;color:#475569;">' + v.type + ' &bull; ' + v.country + '</div>'
+          + (v.number ? '<div style="font-size:.76rem;color:#94a3b8;margin-top:2px;">ID: ' + v.number + '</div>' : '')
+          + '<div style="font-size:.78rem;color:#64748b;margin-top:6px;">Expiry: <strong>' + fmtDate(v.expiry) + '</strong></div>'
+          + '<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">'
+          + '<button onclick="editVisa(\'' + v.id + '\')" style="font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:8px;background:rgba(0,0,0,.06);border:none;cursor:pointer;">&#9998; Edit</button>'
+          + '<button onclick="shareVisa(\'' + v.id + '\')" style="font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:8px;background:#dcfce7;color:#15803d;border:none;cursor:pointer;">&#128241; Share</button>'
+          + '</div></div>'
+          + '<div style="text-align:right;flex-shrink:0;">'
+          + '<div class="days-big days-' + s.cls + '">' + Math.abs(s.days) + '</div>'
+          + '<div style="font-size:.72rem;font-weight:600;color:#64748b;margin-top:2px;">' + (s.days < 0 ? "days overdue" : s.days === 0 ? "today" : "days left") + '</div>'
+          + '</div></div></div>';
+  });
+  container.innerHTML = html;
+  updateSummary();
+}
+
+/* ---- SUMMARY PILLS ---- */
+function updateSummary() {
+  var counts = {safe:0, caution:0, warning:0, critical:0, expired:0};
+  visas.forEach(function(v){ counts[getStatus(v.expiry).cls]++; });
+  var html = "";
+  if (counts.expired  > 0) html += '<span class="pill pill-expired">'  + counts.expired  + ' expired</span>';
+  if (counts.critical > 0) html += '<span class="pill pill-critical">' + counts.critical + ' critical</span>';
+  if (counts.warning  > 0) html += '<span class="pill pill-warning">'  + counts.warning  + ' renew soon</span>';
+  if (counts.caution  > 0) html += '<span class="pill pill-caution">'  + counts.caution  + ' caution</span>';
+  if (counts.safe     > 0) html += '<span class="pill pill-safe">'     + counts.safe     + ' valid</span>';
+  document.getElementById("summaryPills").innerHTML = html;
+}
+
+/* ---- SAVE VISA ---- */
+function saveVisa() {
+  var name   = document.getElementById("fName").value.trim();
+  var country= document.getElementById("fCountry").value;
+  var type   = document.getElementById("fType").value;
+  var expiry = document.getElementById("fExpiry").value;
+  var number = document.getElementById("fNumber").value.trim();
+  var editId = document.getElementById("editId").value;
+
+  if (!name)   { alert("Please enter a name."); return; }
+  if (!expiry) { alert("Please select an expiry date."); return; }
+
+  if (editId) {
+    visas = visas.map(function(v){
+      return v.id === editId ? {id:editId, name:name, country:country, type:type, expiry:expiry, number:number} : v;
+    });
+  } else {
+    visas.push({id: "v" + Date.now(), name:name, country:country, type:type, expiry:expiry, number:number});
+  }
+  saveStorage();
+  render();
+  clearForm();
+}
+
+/* ---- EDIT ---- */
+function editVisa(id) {
+  var v = visas.find(function(x){ return x.id === id; });
+  if (!v) return;
+  document.getElementById("fName").value    = v.name;
+  document.getElementById("fCountry").value = v.country;
+  document.getElementById("fType").value    = v.type;
+  document.getElementById("fExpiry").value  = v.expiry;
+  document.getElementById("fNumber").value  = v.number || "";
+  document.getElementById("editId").value   = v.id;
+  document.getElementById("formTitle").textContent = "\u270E Edit Visa";
+  document.getElementById("cancelBtn").style.display = "block";
+  updateTypeHint();
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function cancelEdit() {
+  clearForm();
+}
+
+/* ---- DELETE ---- */
+function deleteVisa(id) {
+  var btn = document.querySelector('[onclick="deleteVisa(\'' + id + '\')"]');
+  if (btn && btn.getAttribute("data-confirm") !== "yes") {
+    btn.textContent = "\u2716 Confirm?";
+    btn.style.background = "#fee2e2";
+    btn.style.color = "#dc2626";
+    btn.setAttribute("data-confirm","yes");
+    setTimeout(function(){
+      if (btn) {
+        btn.textContent = "\u2716";
+        btn.style.background = "rgba(0,0,0,.07)";
+        btn.style.color = "";
+        btn.removeAttribute("data-confirm");
+      }
+    }, 3000);
+    return;
+  }
+  visas = visas.filter(function(v){ return v.id !== id; });
+  saveStorage();
+  render();
+}
+
+/* ---- CLEAR FORM ---- */
+function clearForm() {
+  document.getElementById("fName").value    = "";
+  document.getElementById("fCountry").value = "UAE";
+  document.getElementById("fType").value    = "Residence Visa / Emirates ID";
+  document.getElementById("fExpiry").value  = "";
+  document.getElementById("fNumber").value  = "";
+  document.getElementById("editId").value   = "";
+  document.getElementById("formTitle").textContent = "+ Add Visa / Permit";
+  document.getElementById("cancelBtn").style.display = "none";
+  document.getElementById("typeHint").style.display  = "none";
+}
+
+/* ---- TYPE HINT ---- */
+function updateTypeHint() {
+  var t    = document.getElementById("fType").value;
+  var hint = document.getElementById("typeHint");
+  if (TYPE_HINTS[t]) {
+    hint.textContent    = TYPE_HINTS[t];
+    hint.style.display  = "block";
+  } else {
+    hint.style.display  = "none";
+  }
+}
+
+/* ---- SHARE SINGLE ---- */
+function shareVisa(id) {
+  var v = visas.find(function(x){ return x.id === id; });
+  if (!v) return;
+  var s = getStatus(v.expiry);
+  var msg = "*Gulf Visa Expiry Alert*\n\n"
+          + "Name: " + v.name + "\n"
+          + "Type: " + v.type + "\n"
+          + "Country: " + v.country + "\n"
+          + "Expiry: " + fmtDate(v.expiry) + "\n"
+          + "Status: " + s.status + " (" + Math.abs(s.days) + (s.days < 0 ? " days overdue" : " days left") + ")\n\n"
+          + (s.days <= 30 && s.days >= 0 ? "ACTION NEEDED: Start renewal process immediately!\n\n" : "")
+          + "Tracked via Kerala NRI Toolkit\nhttps://kerala-nri-toolkit.vercel.app/visa-tracker.html";
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+}
+
+/* ---- SHARE ALL ---- */
+function shareAll() {
+  if (visas.length === 0) return;
+  var sorted = visas.slice().sort(function(a,b){ return getStatus(a.expiry).days - getStatus(b.expiry).days; });
+  var lines = ["*Gulf Visa Status — Kerala NRI Toolkit*", ""];
+  sorted.forEach(function(v) {
+    var s = getStatus(v.expiry);
+    var days = s.days < 0 ? Math.abs(s.days) + "d overdue" : s.days + " days left";
+    lines.push(v.name + " | " + v.type + " | " + s.status + " (" + days + ") | Expires: " + fmtDate(v.expiry));
+  });
+  lines.push("", "https://kerala-nri-toolkit.vercel.app/visa-tracker.html");
+  window.open("https://wa.me/?text=" + encodeURIComponent(lines.join("\n")), "_blank");
+}
+
+/* ---- RESET ALL ---- */
+function resetAllVisas() {
+  var btn = document.getElementById("resetAllBtn");
+  if (btn.getAttribute("data-confirm") !== "yes") {
+    btn.textContent = "Tap again to delete all visas";
+    btn.style.color = "#dc2626";
+    btn.style.background = "#fee2e2";
+    btn.setAttribute("data-confirm","yes");
+    setTimeout(function(){
+      btn.textContent = "\u8635 Reset All Visas";
+      btn.style.color = "#94a3b8";
+      btn.style.background = "#f1f5f9";
+      btn.removeAttribute("data-confirm");
+    }, 3000);
+    return;
+  }
+  visas = [];
+  saveStorage();
+  render();
+  clearForm();
+  btn.textContent = "\u8635 Reset All Visas";
+  btn.style.color = "#94a3b8";
+  btn.style.background = "#f1f5f9";
+  btn.removeAttribute("data-confirm");
+}
+
+/* ---- STORAGE ---- */
+function saveStorage() {
+  try { localStorage.setItem("nriVisas", JSON.stringify(visas)); } catch(e) {}
+}
+
+/* ---- INIT ---- */
+render();
+</script>
+</body>
+</html>
