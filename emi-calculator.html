@@ -5,249 +5,371 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Home Loan EMI Calculator 2025 | Kerala NRI Toolkit</title>
 <meta name="description" content="Free home loan EMI calculator for Kerala NRIs. Calculate monthly EMI, total interest, amortization schedule. Pre-filled from land value estimator."/>
-<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-body{font-family:'Inter',sans-serif;}
-.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.87rem;}
+*,*::before,*::after{box-sizing:border-box;}
+
+html,body{
+  overflow-x:hidden;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  touch-action:pan-y;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f8fafc;
+  min-height:100vh;
+  position:relative;
+  width:100%;
+}
+
+/* ── NAV ── */
+.nav-link-full{display:inline;}
+.nav-link-short{display:none;}
+
+/* ── RESULT ROWS ── */
+.rrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.87rem;flex-wrap:wrap;gap:4px;}
 .rrow:last-child{border:none;}
+.rrow span:last-child{font-weight:600;word-break:break-word;}
+
+/* ── RANGE SLIDERS ── */
 input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:#e2e8f0;outline:none;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#059669;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2);}
-.amort-row{display:grid;grid-template-columns:60px 1fr 1fr 1fr 1fr;font-size:.78rem;padding:7px 8px;border-bottom:1px solid #f1f5f9;}
+
+/* ── AMORTIZATION TABLE ── */
+.amort-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;border:1px solid #f1f5f9;}
+.amort-table{min-width:380px;width:100%;}
+.amort-row{display:grid;grid-template-columns:50px 1fr 1fr 1fr 1fr;font-size:.78rem;padding:7px 8px;border-bottom:1px solid #f1f5f9;word-break:break-word;}
 .amort-row:last-child{border:none;}
 .amort-head{background:#f8fafc;font-weight:700;color:#475569;}
+
+/* ── SPINNER ── */
 .spin{display:inline-block;width:12px;height:12px;border:2px solid #444;border-top-color:#10b981;border-radius:50%;animation:sp .7s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg);}}
-.fact-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:.87rem;color:#475569;align-items:flex-start;}
+
+/* ── FACT ITEMS ── */
+.fact-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:.87rem;color:#475569;align-items:flex-start;word-break:break-word;}
 .fact-item:last-child{border:none;}
-.fact-badge{display:inline-block;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle;}
+.fact-item span:last-child{word-break:break-word;min-width:0;flex:1;}
+.fact-badge{display:inline-block;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+
+/* ── MAIN GRID ── */
+.main-grid{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 16px 48px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  width:100%;
+}
+.main-grid > div{min-width:0;}
+
+/* ── TIPS LIST ── */
+.tips-list li span:last-child{word-break:break-word;min-width:0;flex:1;}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+
+  /* Nav */
+  .nav-link-full{display:none !important;}
+  .nav-link-short{display:inline !important;}
+  .nav-links{gap:8px !important;font-size:.78rem !important;}
+
+  /* Hero */
+  .hero-section{padding:20px 12px 16px !important;}
+  h1{font-size:1.4rem !important;}
+
+  /* Grid → single column */
+  .main-grid{
+    grid-template-columns:1fr !important;
+    padding:0 12px 32px !important;
+    gap:16px !important;
+  }
+
+  /* Input cards */
+  .input-card{padding:18px !important;}
+
+  /* Result card */
+  .result-card{padding:20px !important;}
+
+  /* EMI value font */
+  .emi-val{font-size:1.9rem !important;}
+
+  /* FX grid — auto-fit on mobile */
+  .fx-grid{grid-template-columns:repeat(auto-fit,minmax(80px,1fr)) !important;}
+
+  /* Amort + facts */
+  .amort-card{padding:16px !important;}
+  .facts-card{padding:16px !important;}
+  .tips-card{padding:16px !important;}
+
+  /* Footer */
+  .footer-nav{gap:8px !important;font-size:.74rem !important;}
+}
+
+@media(max-width:380px){
+  .emi-val{font-size:1.6rem !important;}
+  .amort-row{font-size:.7rem !important;padding:6px 6px !important;}
+  .fact-item{font-size:.8rem !important;}
+}
 </style>
 </head>
-<body style="background:#f8fafc;min-height:100vh;font-family:Inter,sans-serif;">
+<body>
 
-<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;">
+<!-- NAV -->
+<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
-    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
+    <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
       <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">Exchange Rates</a>
-      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">Land Value</a>
-      <a href="document-checklist.html" style="color:#cbd5e1;text-decoration:none;">Documents</a>
-      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">Visa Tracker</a>
-      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">Stamp Duty</a>
-      <a href="emi-calculator.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">EMI Calculator</a>
+      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Exchange Rates</span>
+        <span class="nav-link-short">Rates</span>
+      </a>
+      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Land Value</span>
+        <span class="nav-link-short">Land</span>
+      </a>
+      <a href="document-checklist.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Documents</span>
+        <span class="nav-link-short">Docs</span>
+      </a>
+      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Visa Tracker</span>
+        <span class="nav-link-short">Visa</span>
+      </a>
+      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Stamp Duty</span>
+        <span class="nav-link-short">Stamp</span>
+      </a>
+      <a href="emi-calculator.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">
+        <span class="nav-link-full">EMI Calculator</span>
+        <span class="nav-link-short">EMI</span>
+      </a>
     </div>
   </div>
 </nav>
 
-<div style="max-width:1200px;margin:0 auto;padding:40px 16px 24px;">
+<!-- HERO -->
+<div class="hero-section" style="max-width:1200px;margin:0 auto;padding:40px 16px 24px;width:100%;">
   <span style="background:#d1fae5;color:#065f46;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;">Home Loan Tool</span>
   <h1 style="font-size:2.2rem;font-weight:800;margin:12px 0 8px;">EMI Calculator</h1>
-  <p style="color:#64748b;max-width:600px;">Calculate your monthly home loan EMI, total interest payable and full amortization schedule. Pre-filled from the Land Value Estimator.</p>
+  <p style="color:#64748b;max-width:600px;margin:0;word-break:break-word;">Calculate your monthly home loan EMI, total interest payable and full amortization schedule. Pre-filled from the Land Value Estimator.</p>
   <div id="prefillBadge" style="display:none;margin-top:10px;background:#ecfdf5;border:1px solid #6ee7b7;border-radius:10px;padding:8px 14px;font-size:.82rem;color:#065f46;font-weight:600;">
     &#9989; Loan amount pre-filled from Land Value Estimator (80% LTV applied)
   </div>
 </div>
 
-<div style="max-width:1200px;margin:0 auto;padding:0 16px 48px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+<!-- MAIN GRID -->
+<div class="main-grid">
 
-<!-- LEFT: INPUTS + RESULT -->
-<div style="display:flex;flex-direction:column;gap:20px;">
+  <!-- LEFT: INPUTS + RESULT -->
+  <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
 
-  <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
-    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">&#129518; Loan Details</h2>
+    <!-- INPUT CARD -->
+    <div class="input-card" style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">&#129518; Loan Details</h2>
 
-    <div style="margin-bottom:22px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Loan Amount</label>
-        <span id="loanDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;">₹50,00,000</span>
+      <!-- Loan Amount -->
+      <div style="margin-bottom:22px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
+          <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Loan Amount</label>
+          <span id="loanDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;">₹50,00,000</span>
+        </div>
+        <input type="range" id="loanSlider" min="500000" max="30000000" step="100000" value="5000000" oninput="syncLoan('slider')"/>
+        <input type="number" id="loanInput" value="5000000" oninput="syncLoan('input')" placeholder="Enter amount"
+          style="width:100%;margin-top:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;"/>
+        <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>₹5L</span><span>₹3Cr</span></div>
       </div>
-      <input type="range" id="loanSlider" min="500000" max="30000000" step="100000" value="5000000" oninput="syncLoan('slider')"/>
-      <input type="number" id="loanInput" value="5000000" oninput="syncLoan('input')" placeholder="Enter amount"
-        style="width:100%;margin-top:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;box-sizing:border-box;"/>
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>₹5L</span><span>₹3Cr</span></div>
+
+      <!-- Interest Rate -->
+      <div style="margin-bottom:22px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
+          <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Interest Rate (per annum)</label>
+          <span id="rateDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;">8.5%</span>
+        </div>
+        <input type="range" id="rateSlider" min="6" max="18" step="0.1" value="8.5" oninput="syncRate('slider')"/>
+        <input type="number" id="rateInput" value="8.5" step="0.1" min="1" max="30" oninput="syncRate('input')" placeholder="e.g. 8.5"
+          style="width:100%;margin-top:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;"/>
+        <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>6%</span><span>18%</span></div>
+      </div>
+
+      <!-- Tenure -->
+      <div style="margin-bottom:8px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
+          <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Loan Tenure</label>
+          <span id="tenureDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;">20 years</span>
+        </div>
+        <input type="range" id="tenureSlider" min="1" max="30" step="1" value="20" oninput="syncTenure('slider')"/>
+        <input type="number" id="tenureInput" value="20" min="1" max="30" oninput="syncTenure('input')" placeholder="Years"
+          style="width:100%;margin-top:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;"/>
+        <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>1 yr</span><span>30 yrs</span></div>
+      </div>
     </div>
 
-    <div style="margin-bottom:22px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Interest Rate (per annum)</label>
-        <span id="rateDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;">8.5%</span>
-      </div>
-      <input type="range" id="rateSlider" min="6" max="18" step="0.1" value="8.5" oninput="syncRate('slider')"/>
-      <input type="number" id="rateInput" value="8.5" step="0.1" min="1" max="30" oninput="syncRate('input')" placeholder="e.g. 8.5"
-        style="width:100%;margin-top:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;box-sizing:border-box;"/>
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>6%</span><span>18%</span></div>
-    </div>
+    <!-- RESULT CARD -->
+    <div class="result-card" style="background:#1a3c2e;border-radius:24px;padding:28px;color:white;">
+      <h3 style="color:#6ee7b7;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">&#128202; EMI Breakdown</h3>
 
-    <div style="margin-bottom:8px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Loan Tenure</label>
-        <span id="tenureDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;">20 years</span>
+      <div style="text-align:center;background:rgba(255,255,255,.07);border-radius:16px;padding:20px;margin-bottom:16px;">
+        <p style="color:#a7f3d0;font-size:.8rem;margin-bottom:4px;">Monthly EMI</p>
+        <p id="emiVal" class="emi-val" style="font-size:2.4rem;font-weight:800;color:white;margin:0;word-break:break-word;"></p>
       </div>
-      <input type="range" id="tenureSlider" min="1" max="30" step="1" value="20" oninput="syncTenure('slider')"/>
-      <input type="number" id="tenureInput" value="20" min="1" max="30" oninput="syncTenure('input')" placeholder="Years"
-        style="width:100%;margin-top:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;box-sizing:border-box;"/>
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>1 yr</span><span>30 yrs</span></div>
+
+      <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Principal Amount</span><span id="rPrincipal"></span></div>
+      <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Total Interest Payable</span><span id="rInterest" style="color:#fbbf24;"></span></div>
+      <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Total Payment</span><span id="rTotal"></span></div>
+      <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Loan Tenure</span><span id="rTenure"></span></div>
+
+      <!-- Principal vs Interest Bar -->
+      <div style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;font-size:.75rem;color:#a7f3d0;margin-bottom:6px;">
+          <span>Principal</span><span>Interest</span>
+        </div>
+        <div style="background:rgba(255,255,255,.15);border-radius:999px;height:10px;overflow:hidden;">
+          <div id="principalBar" style="background:#6ee7b7;height:10px;border-radius:999px;transition:width .4s;"></div>
+        </div>
+        <div style="display:flex;gap:16px;margin-top:8px;font-size:.75rem;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:4px;color:#a7f3d0;"><span style="width:10px;height:10px;background:#6ee7b7;border-radius:2px;display:inline-block;flex-shrink:0;"></span><span id="pctPrincipal"></span></span>
+          <span style="display:flex;align-items:center;gap:4px;color:#a7f3d0;"><span style="width:10px;height:10px;background:#fbbf24;border-radius:2px;display:inline-block;flex-shrink:0;"></span><span id="pctInterest"></span></span>
+        </div>
+      </div>
+
+      <!-- FX GRID -->
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #14532d;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+          <span style="color:#6ee7b7;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">&#128178; Monthly EMI in Your Currency</span>
+          <span id="fxSt" style="color:#64748b;font-size:.75rem;"><span class="spin"></span></span>
+        </div>
+        <!-- FIX: auto-fit so 3 cols on desktop, wraps on mobile -->
+        <div id="fxGrid" class="fx-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;"></div>
+      </div>
+
+      <button onclick="doShare()" style="margin-top:16px;width:100%;background:#25D366;color:white;font-weight:700;font-size:.87rem;padding:12px;border-radius:12px;border:none;cursor:pointer;min-height:44px;">
+        &#128241; Share on WhatsApp
+      </button>
+      <a href="land-value.html" style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.08);color:#a7f3d0;font-weight:600;font-size:.82rem;padding:10px;border-radius:12px;text-decoration:none;min-height:44px;">
+        &#8592; Back to Land Value Estimator
+      </a>
     </div>
   </div>
 
-  <!-- RESULT CARD -->
-  <div id="resultCard" style="background:#1a3c2e;border-radius:24px;padding:28px;color:white;">
-    <h3 style="color:#6ee7b7;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">&#128202; EMI Breakdown</h3>
+  <!-- RIGHT -->
+  <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
 
-    <div style="text-align:center;background:rgba(255,255,255,.07);border-radius:16px;padding:20px;margin-bottom:16px;">
-      <p style="color:#a7f3d0;font-size:.8rem;margin-bottom:4px;">Monthly EMI</p>
-      <p id="emiVal" style="font-size:2.4rem;font-weight:800;color:white;margin:0;"></p>
-    </div>
-
-    <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Principal Amount</span><span id="rPrincipal" style="font-weight:600;"></span></div>
-    <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Total Interest Payable</span><span id="rInterest" style="font-weight:600;color:#fbbf24;"></span></div>
-    <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Total Payment</span><span id="rTotal" style="font-weight:700;"></span></div>
-    <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Loan Tenure</span><span id="rTenure" style="font-weight:600;"></span></div>
-
-    <div style="margin-top:16px;">
-      <div style="display:flex;justify-content:space-between;font-size:.75rem;color:#a7f3d0;margin-bottom:6px;">
-        <span>Principal</span><span>Interest</span>
-      </div>
-      <div style="background:rgba(255,255,255,.15);border-radius:999px;height:10px;overflow:hidden;">
-        <div id="principalBar" style="background:#6ee7b7;height:10px;border-radius:999px;transition:width .4s;"></div>
-      </div>
-      <div style="display:flex;gap:16px;margin-top:8px;font-size:.75rem;">
-        <span style="display:flex;align-items:center;gap:4px;color:#a7f3d0;"><span style="width:10px;height:10px;background:#6ee7b7;border-radius:2px;display:inline-block;"></span><span id="pctPrincipal"></span></span>
-        <span style="display:flex;align-items:center;gap:4px;color:#a7f3d0;"><span style="width:10px;height:10px;background:#fbbf24;border-radius:2px;display:inline-block;"></span><span id="pctInterest"></span></span>
+    <!-- AMORTIZATION TABLE -->
+    <div class="amort-card" style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#128196; Yearly Amortization</h2>
+      <p style="color:#94a3b8;font-size:.75rem;margin-bottom:16px;word-break:break-word;">Year-by-year loan repayment breakdown</p>
+      <!-- FIX: scroll wrapper around 5-col table -->
+      <div class="amort-wrap">
+        <div class="amort-table">
+          <div class="amort-row amort-head">
+            <span>Year</span><span>EMI Paid</span><span>Principal</span><span>Interest</span><span>Balance</span>
+          </div>
+          <div id="amortBody" style="max-height:360px;overflow-y:auto;"></div>
+        </div>
       </div>
     </div>
 
-    <div style="margin-top:20px;padding-top:16px;border-top:1px solid #14532d;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <span style="color:#6ee7b7;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">&#128178; Monthly EMI in Your Currency</span>
-        <span id="fxSt" style="color:#64748b;font-size:.75rem;"><span class="spin"></span></span>
+    <!-- NRI HOME LOAN FACTS -->
+    <div class="facts-card" style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#127968; NRI Home Loan — Key Facts</h2>
+      <p style="color:#94a3b8;font-size:.74rem;margin-bottom:14px;">Critical things Gulf NRIs must know before applying</p>
+
+      <div class="fact-item">
+        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+        <span><strong>Eligibility:</strong> NRIs with a valid Indian passport can apply for home loans from Indian banks and HFCs</span>
       </div>
-      <div id="fxGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
+      <div class="fact-item">
+        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+        <span><strong>LTV Ratio:</strong> Banks typically finance <strong>75–80%</strong> of property value — slightly more conservative than the 80–90% offered to resident Indians</span>
+      </div>
+      <div class="fact-item">
+        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+        <span><strong>EMI Repayment:</strong> Must be paid from NRE or NRO bank account only — direct foreign remittance is not accepted</span>
+      </div>
+      <div class="fact-item">
+        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+        <span><strong>Tenure:</strong> Up to 25–30 years depending on the bank, subject to the loan closing before the borrower turns 60–65 years</span>
+      </div>
+      <div class="fact-item">
+        <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
+        <span><strong>Interest Rate:</strong> NRI home loan rates are now largely on par with resident Indian rates at most banks (e.g. SBI: 7.25–8.7%). Always compare before choosing.</span>
+      </div>
+
+      <div class="fact-item" style="background:#f0fdf4;border-radius:10px;padding:10px;border-bottom:none;margin-top:4px;">
+        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+        <span><strong>Power of Attorney is Mandatory:</strong> Since NRIs cannot sign disbursement documents in India, banks require a local PoA — typically a blood relative (parent or sibling) residing in India — to represent you at every stage of the loan process
+          <span class="fact-badge" style="background:#dcfce7;color:#15803d;">Critical</span>
+        </span>
+      </div>
+
+      <div class="fact-item" style="background:#fefce8;border-radius:10px;padding:10px;border-bottom:none;margin-top:4px;">
+        <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
+        <span><strong>Dual Credit Score Check:</strong> Banks check both your Indian CIBIL score <em>and</em> the credit report from your country of residence — Al Etihad Credit Bureau (UAE), SIMAH (Saudi Arabia), etc. Maintain a clean score in both countries.
+          <span class="fact-badge" style="background:#fef9c3;color:#854d0e;">Gulf NRIs</span>
+        </span>
+      </div>
+
+      <div class="fact-item" style="background:#fff7ed;border-radius:10px;padding:10px;border-bottom:none;margin-top:4px;">
+        <span style="color:#ea580c;font-weight:700;flex-shrink:0;">&#9888;</span>
+        <span><strong>The Income Haircut Rule:</strong> Banks do <em>not</em> count 100% of your Gulf salary. To account for currency risk, banks apply a 10–20% haircut — so a salary of AED 10,000 may be treated as AED 8,000 for EMI eligibility purposes. Plan your loan accordingly.
+          <span class="fact-badge" style="background:#ffedd5;color:#9a3412;">Important</span>
+        </span>
+      </div>
+
+      <div class="fact-item" style="margin-top:4px;">
+        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+        <span><strong>Tax Benefit — Section 24(b):</strong> NRIs can claim deduction on home loan interest up to <strong>₹2 Lakh/year</strong> on a self-occupied property</span>
+      </div>
+      <div class="fact-item">
+        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+        <span><strong>Tax Benefit — Section 80C:</strong> NRIs can also claim deduction on principal repayment up to <strong>₹1.5 Lakh/year</strong> under Section 80C (combined with other 80C investments)</span>
+      </div>
+      <div class="fact-item">
+        <span style="color:#dc2626;font-weight:700;flex-shrink:0;">&#10007;</span>
+        <span><strong>Agricultural Land:</strong> NRI home loans cannot be used to purchase agricultural or plantation land</span>
+      </div>
+
+      <div style="margin-top:14px;background:#f8fafc;border-radius:12px;padding:12px;">
+        <p style="font-size:.78rem;font-weight:700;color:#334155;margin-bottom:8px;">&#127970; Top Banks Offering NRI Home Loans</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">SBI</span>
+          <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">HDFC</span>
+          <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">ICICI</span>
+          <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">Axis Bank</span>
+          <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">Federal Bank</span>
+          <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">LIC HFL</span>
+          <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">PNB Housing</span>
+        </div>
+      </div>
     </div>
 
-    <button onclick="doShare()" style="margin-top:16px;width:100%;background:#25D366;color:white;font-weight:700;font-size:.87rem;padding:12px;border-radius:12px;border:none;cursor:pointer;">
-      &#128241; Share on WhatsApp
-    </button>
-    <a href="land-value.html" style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.08);color:#a7f3d0;font-weight:600;font-size:.82rem;padding:10px;border-radius:12px;text-decoration:none;">
-      &#8592; Back to Land Value Estimator
-    </a>
+    <!-- TIPS -->
+    <div class="tips-card" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:24px;padding:24px;overflow:hidden;">
+      <h2 style="font-size:1rem;font-weight:700;color:#14532d;margin-bottom:12px;">&#128161; Tips to Reduce Your EMI</h2>
+      <ul class="tips-list" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;font-size:.85rem;color:#166534;">
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">1.</span><span>Increase your down payment — even 5% more reduces EMI significantly</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">2.</span><span>Choose longer tenure (25–30 yrs) to lower monthly outgo, then prepay when possible</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">3.</span><span>Compare banks — a 0.5% rate difference on ₹50L saves ~₹2,500/month</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">4.</span><span>Opt for floating rate if rates are expected to fall in the near future</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">5.</span><span>Make one extra EMI per year — this alone reduces your total tenure by 2–3 years</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">6.</span><span>Build your overseas credit score before applying — dual credit check is now standard</span></li>
+      </ul>
+    </div>
+
   </div>
 </div>
 
-<!-- RIGHT -->
-<div style="display:flex;flex-direction:column;gap:20px;">
-
-  <!-- AMORTIZATION TABLE -->
-  <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
-    <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#128196; Yearly Amortization</h2>
-    <p style="color:#94a3b8;font-size:.75rem;margin-bottom:16px;">Year-by-year loan repayment breakdown</p>
-    <div style="border-radius:12px;overflow:hidden;border:1px solid #f1f5f9;">
-      <div class="amort-row amort-head">
-        <span>Year</span><span>EMI Paid</span><span>Principal</span><span>Interest</span><span>Balance</span>
-      </div>
-      <div id="amortBody" style="max-height:360px;overflow-y:auto;"></div>
-    </div>
-  </div>
-
-  <!-- NRI HOME LOAN FACTS — UPDATED & EXPANDED -->
-  <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
-    <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#127968; NRI Home Loan — Key Facts</h2>
-    <p style="color:#94a3b8;font-size:.74rem;margin-bottom:14px;">Critical things Gulf NRIs must know before applying</p>
-
-    <div class="fact-item">
-      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-      <span><strong>Eligibility:</strong> NRIs with a valid Indian passport can apply for home loans from Indian banks and HFCs</span>
-    </div>
-    <div class="fact-item">
-      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-      <span><strong>LTV Ratio:</strong> Banks typically finance <strong>75–80%</strong> of property value — slightly more conservative than the 80–90% offered to resident Indians</span>
-    </div>
-    <div class="fact-item">
-      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-      <span><strong>EMI Repayment:</strong> Must be paid from NRE or NRO bank account only — direct foreign remittance is not accepted</span>
-    </div>
-    <div class="fact-item">
-      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-      <span><strong>Tenure:</strong> Up to 25–30 years depending on the bank, subject to the loan closing before the borrower turns 60–65 years</span>
-    </div>
-    <div class="fact-item">
-      <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
-      <span><strong>Interest Rate:</strong> NRI home loan rates are now largely on par with resident Indian rates at most banks (e.g. SBI: 7.25–8.7%). Always compare before choosing.</span>
-    </div>
-
-    <!-- NEW: POA -->
-    <div class="fact-item" style="background:#f0fdf4;border-radius:10px;padding:10px;border-bottom:none;margin-top:4px;">
-      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-      <span><strong>Power of Attorney is Mandatory:</strong> Since NRIs cannot sign disbursement documents in India, banks require a local PoA — typically a blood relative (parent or sibling) residing in India — to represent you at every stage of the loan process
-        <span class="fact-badge" style="background:#dcfce7;color:#15803d;">Critical</span>
-      </span>
-    </div>
-
-    <!-- NEW: DUAL CREDIT SCORE -->
-    <div class="fact-item" style="background:#fefce8;border-radius:10px;padding:10px;border-bottom:none;margin-top:4px;">
-      <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
-      <span><strong>Dual Credit Score Check:</strong> Banks check both your Indian CIBIL score <em>and</em> the credit report from your country of residence — Al Etihad Credit Bureau (UAE), SIMAH (Saudi Arabia), etc. Maintain a clean score in both countries.
-        <span class="fact-badge" style="background:#fef9c3;color:#854d0e;">Gulf NRIs</span>
-      </span>
-    </div>
-
-    <!-- NEW: INCOME HAIRCUT -->
-    <div class="fact-item" style="background:#fff7ed;border-radius:10px;padding:10px;border-bottom:none;margin-top:4px;">
-      <span style="color:#ea580c;font-weight:700;flex-shrink:0;">&#9888;</span>
-      <span><strong>The Income Haircut Rule:</strong> Banks do <em>not</em> count 100% of your Gulf salary. To account for currency risk, banks apply a 10–20% haircut — so a salary of AED 10,000 may be treated as AED 8,000 for EMI eligibility purposes. Plan your loan accordingly.
-        <span class="fact-badge" style="background:#ffedd5;color:#9a3412;">Important</span>
-      </span>
-    </div>
-
-    <!-- TAX BENEFITS — UPDATED WITH 80C -->
-    <div class="fact-item" style="margin-top:4px;">
-      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-      <span><strong>Tax Benefit — Section 24(b):</strong> NRIs can claim deduction on home loan interest up to <strong>₹2 Lakh/year</strong> on a self-occupied property</span>
-    </div>
-    <div class="fact-item">
-      <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-      <span><strong>Tax Benefit — Section 80C:</strong> NRIs can also claim deduction on principal repayment up to <strong>₹1.5 Lakh/year</strong> under Section 80C (combined with other 80C investments)</span>
-    </div>
-    <div class="fact-item">
-      <span style="color:#dc2626;font-weight:700;flex-shrink:0;">&#10007;</span>
-      <span><strong>Agricultural Land:</strong> NRI home loans cannot be used to purchase agricultural or plantation land</span>
-    </div>
-
-    <div style="margin-top:14px;background:#f8fafc;border-radius:12px;padding:12px;">
-      <p style="font-size:.78rem;font-weight:700;color:#334155;margin-bottom:8px;">&#127970; Top Banks Offering NRI Home Loans</p>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;">
-        <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">SBI</span>
-        <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">HDFC</span>
-        <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">ICICI</span>
-        <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">Axis Bank</span>
-        <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">Federal Bank</span>
-        <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">LIC HFL</span>
-        <span style="background:#e2e8f0;color:#475569;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;">PNB Housing</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- TIPS -->
-  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:24px;padding:24px;">
-    <h2 style="font-size:1rem;font-weight:700;color:#14532d;margin-bottom:12px;">&#128161; Tips to Reduce Your EMI</h2>
-    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;font-size:.85rem;color:#166534;">
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">1.</span><span>Increase your down payment — even 5% more reduces EMI significantly</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">2.</span><span>Choose longer tenure (25–30 yrs) to lower monthly outgo, then prepay when possible</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">3.</span><span>Compare banks — a 0.5% rate difference on ₹50L saves ~₹2,500/month</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">4.</span><span>Opt for floating rate if rates are expected to fall in the near future</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">5.</span><span>Make one extra EMI per year — this alone reduces your total tenure by 2–3 years</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">6.</span><span>Build your overseas credit score before applying — dual credit check is now standard</span></li>
-    </ul>
-  </div>
-
-</div>
-</div>
-
-<footer style="background:#0f172a;color:#64748b;padding:32px 16px;">
+<!-- FOOTER -->
+<footer style="background:#0f172a;color:#64748b;padding:32px 16px;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;">
     <p style="margin:0;">&#169; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community.</p>
-    <nav style="display:flex;flex-wrap:wrap;gap:16px;">
+    <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:16px;">
       <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
       <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
       <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
@@ -261,29 +383,29 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 
 <script>
 var CUR = [
-  {c:"AED", name:"UAE Dirham"},
-  {c:"USD", name:"US Dollar"},
-  {c:"GBP", name:"Pound"},
-  {c:"SAR", name:"Saudi Riyal"},
-  {c:"QAR", name:"Qatari Riyal"},
-  {c:"KWD", name:"Kuwaiti Dinar"}
+  {c:"AED",name:"UAE Dirham"},
+  {c:"USD",name:"US Dollar"},
+  {c:"GBP",name:"Pound"},
+  {c:"SAR",name:"Saudi Riyal"},
+  {c:"QAR",name:"Qatari Riyal"},
+  {c:"KWD",name:"Kuwaiti Dinar"}
 ];
-var FB = {AED:25.3, USD:93.1, GBP:116.0, SAR:24.8, QAR:25.6, KWD:303.0};
-var LR = {AED:25.3, USD:93.1, GBP:116.0, SAR:24.8, QAR:25.6, KWD:303.0};
+var FB  = {AED:25.3,USD:93.1,GBP:116.0,SAR:24.8,QAR:25.6,KWD:303.0};
+var LR  = {AED:25.3,USD:93.1,GBP:116.0,SAR:24.8,QAR:25.6,KWD:303.0};
 var fxReady = false;
-var gEMI=0, gPrincipal=0, gInterest=0, gTotal=0, gRate=0, gTenure=0;
+var gEMI=0,gPrincipal=0,gInterest=0,gTotal=0,gRate=0,gTenure=0;
 
-function fmt(n)  { return "₹" + Math.round(n).toLocaleString("en-IN"); }
+function fmt(n)  { return "\u20b9" + Math.round(n).toLocaleString("en-IN"); }
 function fmtL(n) {
-  if (n >= 10000000) return "₹" + (n/10000000).toFixed(2) + " Cr";
-  if (n >= 100000)   return "₹" + (n/100000).toFixed(2) + " L";
+  if (n >= 10000000) return "\u20b9" + (n/10000000).toFixed(2) + " Cr";
+  if (n >= 100000)   return "\u20b9" + (n/100000).toFixed(2) + " L";
   return fmt(n);
 }
 
-/* ---- PRE-FILL FROM LAND VALUE ---- */
-(function() {
+/* ── PRE-FILL FROM LAND VALUE ── */
+(function(){
   var params = new URLSearchParams(window.location.search);
-  var val = params.get("value");
+  var val    = params.get("value");
   if (val && !isNaN(val) && parseInt(val) > 0) {
     var loan = Math.round(parseInt(val) * 0.8 / 100000) * 100000;
     if (loan < 500000)   loan = 500000;
@@ -295,12 +417,12 @@ function fmtL(n) {
   calcEMI();
 })();
 
-/* ---- SYNC SLIDERS ---- */
+/* ── SYNC SLIDERS ── */
 function syncLoan(src) {
   var sl = document.getElementById("loanSlider");
   var ip = document.getElementById("loanInput");
   if (src === "slider") { ip.value = sl.value; }
-  else { var v = Math.min(30000000, Math.max(500000, parseInt(ip.value)||500000)); sl.value=v; ip.value=v; }
+  else { var v = Math.min(30000000,Math.max(500000,parseInt(ip.value)||500000)); sl.value=v; ip.value=v; }
   document.getElementById("loanDisp").textContent = fmtL(parseFloat(sl.value));
   calcEMI();
 }
@@ -308,7 +430,7 @@ function syncRate(src) {
   var sl = document.getElementById("rateSlider");
   var ip = document.getElementById("rateInput");
   if (src === "slider") { ip.value = parseFloat(sl.value).toFixed(1); }
-  else { var v = Math.min(18, Math.max(6, parseFloat(ip.value)||8.5)); sl.value=v; ip.value=v; }
+  else { var v = Math.min(18,Math.max(6,parseFloat(ip.value)||8.5)); sl.value=v; ip.value=v; }
   document.getElementById("rateDisp").textContent = parseFloat(sl.value).toFixed(1) + "%";
   calcEMI();
 }
@@ -316,12 +438,12 @@ function syncTenure(src) {
   var sl = document.getElementById("tenureSlider");
   var ip = document.getElementById("tenureInput");
   if (src === "slider") { ip.value = sl.value; }
-  else { var v = Math.min(30, Math.max(1, parseInt(ip.value)||20)); sl.value=v; ip.value=v; }
-  document.getElementById("tenureDisp").textContent = sl.value + " year" + (parseInt(sl.value) > 1 ? "s" : "");
+  else { var v = Math.min(30,Math.max(1,parseInt(ip.value)||20)); sl.value=v; ip.value=v; }
+  document.getElementById("tenureDisp").textContent = sl.value + " year" + (parseInt(sl.value)>1?"s":"");
   calcEMI();
 }
 
-/* ---- CORE CALC ---- */
+/* ── CORE CALC ── */
 function calcEMI() {
   var P = parseFloat(document.getElementById("loanInput").value)  || 5000000;
   var A = parseFloat(document.getElementById("rateInput").value)  || 8.5;
@@ -329,7 +451,7 @@ function calcEMI() {
 
   document.getElementById("loanDisp").textContent   = fmtL(P);
   document.getElementById("rateDisp").textContent   = A.toFixed(1) + "%";
-  document.getElementById("tenureDisp").textContent = Y + " year" + (Y > 1 ? "s" : "");
+  document.getElementById("tenureDisp").textContent = Y + " year" + (Y>1?"s":"");
 
   var r   = A / 12 / 100;
   var n   = Y * 12;
@@ -341,21 +463,21 @@ function calcEMI() {
 
   gEMI=emi; gPrincipal=P; gInterest=int; gTotal=tot; gRate=A; gTenure=Y;
 
-  document.getElementById("emiVal").textContent        = fmt(emi);
-  document.getElementById("rPrincipal").textContent    = fmtL(P);
-  document.getElementById("rInterest").textContent     = fmtL(int);
-  document.getElementById("rTotal").textContent        = fmtL(tot);
-  document.getElementById("rTenure").textContent       = Y + " years (" + n + " months)";
-  document.getElementById("principalBar").style.width  = pP + "%";
-  document.getElementById("pctPrincipal").textContent  = pP + "% principal";
-  document.getElementById("pctInterest").textContent   = pI + "% interest";
+  document.getElementById("emiVal").textContent       = fmt(emi);
+  document.getElementById("rPrincipal").textContent   = fmtL(P);
+  document.getElementById("rInterest").textContent    = fmtL(int);
+  document.getElementById("rTotal").textContent       = fmtL(tot);
+  document.getElementById("rTenure").textContent      = Y + " years (" + n + " months)";
+  document.getElementById("principalBar").style.width = pP + "%";
+  document.getElementById("pctPrincipal").textContent = pP + "% principal";
+  document.getElementById("pctInterest").textContent  = pI + "% interest";
 
   buildAmort(P, r, n, emi);
   drawFX();
   if (!fxReady) loadFX();
 }
 
-/* ---- AMORTIZATION ---- */
+/* ── AMORTIZATION ── */
 function buildAmort(P, r, n, emi) {
   var bal  = P;
   var html = "";
@@ -381,7 +503,7 @@ function buildAmort(P, r, n, emi) {
   document.getElementById("amortBody").innerHTML = html;
 }
 
-/* ---- FX ---- */
+/* ── FX ── */
 function loadFX() {
   fetch("https://latest.currency-api.pages.dev/v1/currencies/inr.json")
     .then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(applyFX)
@@ -406,16 +528,17 @@ function drawFX() {
     var val  = gEMI / rate;
     var dec  = (x.c === "KWD") ? 1 : 0;
     var str  = dec ? val.toFixed(1) : Math.round(val).toLocaleString("en-IN");
-    html += '<div style="background:#0f2a1e;border-radius:10px;padding:8px;text-align:center;">'
+    html += '<div style="background:#0f2a1e;border-radius:10px;padding:8px;text-align:center;min-width:0;">'
           + '<div style="color:#94a3b8;font-size:.7rem;">' + x.c + '</div>'
-          + '<div style="color:#6ee7b7;font-weight:700;font-size:.82rem;margin-top:2px;">' + str + '</div>'
+          + '<div style="color:#6ee7b7;font-weight:700;font-size:.82rem;margin-top:2px;word-break:break-word;">' + str + '</div>'
           + '<div style="color:#64748b;font-size:.65rem;">' + x.name + '</div>'
           + '</div>';
   });
   document.getElementById("fxGrid").innerHTML = html;
 }
 
-/* ---- SHARE ---- */
+/* ── SHARE ── */
+/* FIX WARNING 3: changed wa.me to api.whatsapp.com/send — more reliable on Android */
 function doShare() {
   if (!gEMI) return;
   var msg = "*Home Loan EMI Calculation*\n\n"
@@ -427,7 +550,7 @@ function doShare() {
           + "Total Payment: " + fmtL(gTotal) + "\n\n"
           + "Kerala NRI Toolkit\nhttps://kerala-nri-toolkit.vercel.app/emi-calculator.html\n"
           + "_Always verify loan terms with your bank before proceeding._";
-  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+  window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(msg), "_blank");
 }
 </script>
 </body>

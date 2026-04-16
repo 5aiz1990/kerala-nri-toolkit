@@ -9,49 +9,141 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-  body { font-family: 'Inter', sans-serif; }
-  .nav-link { transition: color 0.2s; }
-  .nav-link:hover { color: #6ee7b7; }
-  .rate-card { transition: transform 0.2s, box-shadow 0.2s; cursor:pointer; }
-  .rate-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-  .rate-card.selected { border: 2px solid #059669 !important; box-shadow: 0 0 0 3px rgba(5,150,105,0.15); }
-  .pulse-green { background: linear-gradient(135deg, #064e3b, #065f46); }
-  .pulse-amber { background: linear-gradient(135deg, #78350f, #92400e); }
-  .pulse-blue  { background: linear-gradient(135deg, #1e3a5f, #1e40af); }
-  details > summary { list-style: none; cursor: pointer; }
-  details > summary::-webkit-details-marker { display: none; }
-  .tab-btn.active { background: #1a3c2e; color: white; }
-  .tab-btn:not(.active) { background: #f1f5f9; color: #475569; }
+/* FIX 1 + 3: overflow-x + touch-action */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  touch-action: pan-y;
+}
+
+body { font-family: 'Inter', sans-serif; }
+
+.nav-link { transition: color 0.2s; }
+.nav-link:hover { color: #6ee7b7; }
+
+/* FIX 5: rate-card min-width:0 + overflow:hidden */
+.rate-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+}
+.rate-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+.rate-card.selected { border: 2px solid #059669 !important; box-shadow: 0 0 0 3px rgba(5,150,105,0.15); }
+
+/* FIX warn 3: keyboard accessible rate cards */
+.rate-card:focus { outline: 2px solid #059669; outline-offset: 2px; }
+
+.pulse-green { background: linear-gradient(135deg, #064e3b, #065f46); }
+.pulse-amber { background: linear-gradient(135deg, #78350f, #92400e); }
+.pulse-blue  { background: linear-gradient(135deg, #1e3a5f, #1e40af); }
+
+/* FIX warn 5: pulse card base classes separated from colour */
+.pulse-card-base { border-radius: 1.5rem; padding: 1.75rem; color: white; box-shadow: 0 10px 25px rgba(0,0,0,.15); }
+
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+
+.tab-btn.active { background: #1a3c2e; color: white; }
+.tab-btn:not(.active) { background: #f1f5f9; color: #475569; }
+
+/* FIX 4: nav short/full labels */
+.nav-link-full { display: inline; }
+.nav-link-short { display: none; }
+
+/* FIX 6: converter result word-break */
+.convert-result {
+  font-size: 1.6rem;
+  font-weight: 900;
+  word-break: break-all;
+  min-width: 0;
+}
+
+/* Converter result row flex-wrap */
+.convert-result-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.convert-result-row > div { min-width: 0; flex: 1; }
+
+@media (max-width: 768px) {
+  /* FIX 4: show short labels */
+  .nav-link-full { display: none !important; }
+  .nav-link-short { display: inline !important; }
+  .nav-links-wrap { gap: 8px !important; font-size: .76rem !important; }
+
+  /* FIX warn 1: nav single row on mobile */
+  .nav-inner { flex-direction: row !important; align-items: center !important; }
+
+  /* Rate cards 2-col stays — fine on mobile */
+  /* Converter panel padding */
+  .converter-card { padding: 1.25rem !important; }
+
+  /* CTA buttons stack */
+  .cta-btns { flex-direction: column !important; }
+  .cta-btns a { text-align: center; }
+
+  /* Footer */
+  .footer-nav { gap: 8px !important; font-size: .74rem !important; }
+}
+
+@media (max-width: 380px) {
+  .convert-result { font-size: 1.2rem !important; }
+}
 </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
 
+<!-- NAV -->
 <nav class="bg-[#1a3c2e] text-white px-4 py-3 sticky top-0 z-50 shadow-lg">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+  <div class="max-w-7xl mx-auto nav-inner flex flex-wrap items-center justify-between gap-2">
     <a href="index.html" class="text-lg font-bold text-emerald-300 tracking-wide">&#127796; Kerala NRI Toolkit</a>
-    <div class="flex flex-wrap gap-x-5 gap-y-1 text-sm font-medium">
+    <!-- FIX 4: short labels + single row -->
+    <div class="nav-links-wrap flex flex-wrap gap-3 text-sm font-medium">
       <a href="index.html" class="nav-link text-slate-300">Home</a>
-      <a href="exchange-rates.html" class="nav-link text-emerald-300 font-bold border-b-2 border-emerald-400">Exchange Rates</a>
-      <a href="land-value.html" class="nav-link text-slate-300">Land Value</a>
-      <a href="document-checklist.html" class="nav-link text-slate-300">Documents</a>
-      <a href="visa-tracker.html" class="nav-link text-slate-300">Visa Tracker</a>
-      <a href="stamp-duty.html" class="nav-link text-slate-300">Stamp Duty</a>
-      <a href="emi-calculator.html" class="nav-link text-slate-300">EMI Calculator</a>
+      <a href="exchange-rates.html" class="nav-link text-emerald-300 font-bold" style="border-bottom:2px solid #6ee7b7;">
+        <span class="nav-link-full">Exchange Rates</span>
+        <span class="nav-link-short">Rates</span>
+      </a>
+      <a href="land-value.html" class="nav-link text-slate-300">
+        <span class="nav-link-full">Land Value</span>
+        <span class="nav-link-short">Land</span>
+      </a>
+      <a href="document-checklist.html" class="nav-link text-slate-300">
+        <span class="nav-link-full">Documents</span>
+        <span class="nav-link-short">Docs</span>
+      </a>
+      <a href="visa-tracker.html" class="nav-link text-slate-300">
+        <span class="nav-link-full">Visa Tracker</span>
+        <span class="nav-link-short">Visa</span>
+      </a>
+      <a href="stamp-duty.html" class="nav-link text-slate-300">
+        <span class="nav-link-full">Stamp Duty</span>
+        <span class="nav-link-short">Stamp</span>
+      </a>
+      <a href="emi-calculator.html" class="nav-link text-slate-300">
+        <span class="nav-link-full">EMI Calculator</span>
+        <span class="nav-link-short">EMI</span>
+      </a>
     </div>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="max-w-7xl mx-auto px-4 pt-10 pb-6">
   <span class="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">Live Data</span>
-  <h1 class="text-4xl font-extrabold text-slate-900 mb-2">Kerala NRI Exchange Rates</h1>
-  <p class="text-slate-500 text-base max-w-xl">Live INR rates for the global Malayali community. Updated automatically every page load.</p>
+  <h1 class="text-4xl font-extrabold text-slate-900 mb-2" style="word-break:break-word;">Kerala NRI Exchange Rates</h1>
+  <p class="text-slate-500 text-base max-w-xl" style="word-break:break-word;">Live INR rates for the global Malayali community. Updated automatically every page load.</p>
   <p class="text-xs text-slate-400 mt-2" id="lastUpdated">Fetching live rates...</p>
 </div>
 
+<!-- RATES GRID -->
 <div class="max-w-7xl mx-auto px-4 mb-6">
-  <div class="flex items-center justify-between mb-4">
+  <div class="flex items-center justify-between mb-4" style="flex-wrap:wrap;gap:8px;">
     <h2 class="text-lg font-bold text-slate-700">Live INR Exchange Rates</h2>
-    <button onclick="shareOnWhatsApp()" class="flex items-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white text-sm font-bold px-4 py-2 rounded-xl transition shadow-sm">
+    <button onclick="shareOnWhatsApp()" class="flex items-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white text-sm font-bold px-4 py-2 rounded-xl transition shadow-sm" style="min-height:44px;">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
       </svg>
@@ -63,17 +155,20 @@
   </div>
 </div>
 
+<!-- CONVERTER + PULSE -->
 <div class="max-w-7xl mx-auto px-4 mb-10 grid md:grid-cols-2 gap-6">
-  <div class="bg-white rounded-3xl p-7 shadow-sm border border-slate-100">
+
+  <!-- Converter -->
+  <div class="converter-card bg-white rounded-3xl p-7 shadow-sm border border-slate-100" style="min-width:0;overflow:hidden;">
     <h2 class="text-lg font-bold text-slate-900 mb-1">Currency Converter</h2>
     <p class="text-sm text-slate-400 mb-4">Convert to INR or find how much you need to send</p>
     <div class="flex gap-2 mb-5">
-      <button onclick="switchTab('forward')" id="tab-forward" class="tab-btn active flex-1 text-sm font-bold py-2 px-3 rounded-xl">Currency to INR</button>
-      <button onclick="switchTab('reverse')" id="tab-reverse" class="tab-btn flex-1 text-sm font-bold py-2 px-3 rounded-xl">INR to Currency</button>
+      <button onclick="switchTab('forward')" id="tab-forward" class="tab-btn active flex-1 text-sm font-bold py-2 px-3 rounded-xl" style="min-height:44px;">Currency to INR</button>
+      <button onclick="switchTab('reverse')" id="tab-reverse" class="tab-btn flex-1 text-sm font-bold py-2 px-3 rounded-xl" style="min-height:44px;">INR to Currency</button>
     </div>
     <div class="mb-4">
       <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Currency</label>
-      <select id="convertFrom" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400">
+      <select id="convertFrom" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400" style="font-size:1rem;">
         <option value="AED">AED — UAE Dirham</option>
         <option value="USD">USD — US Dollar</option>
         <option value="GBP">GBP — British Pound</option>
@@ -84,50 +179,66 @@
         <option value="AUD">AUD — Australian Dollar</option>
       </select>
     </div>
-    <div id="panel-forward">
+
+    <!-- FIX 8: panel-forward uses inline style, not Tailwind hidden class -->
+    <div id="panel-forward" style="display:block;">
       <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">Amount in Foreign Currency</label>
-      <input id="convertAmount" type="number" value="1000" min="0" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 mb-4"/>
-      <div class="flex items-center gap-3 bg-emerald-50 rounded-2xl px-5 py-4">
-        <div class="flex-1">
-          <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-1">You Receive in INR</p>
-          <p id="convertResult" class="text-3xl font-black text-emerald-800">₹ --</p>
-          <p id="convertRate" class="text-xs text-slate-400 mt-1">Select currency to convert</p>
+      <input id="convertAmount" type="number" value="1000" min="0"
+        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 mb-4"
+        style="font-size:1rem;"/>
+      <div class="bg-emerald-50 rounded-2xl px-5 py-4">
+        <!-- FIX 6: flex-wrap + word-break on result row -->
+        <div class="convert-result-row">
+          <div>
+            <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-1">You Receive in INR</p>
+            <p id="convertResult" class="convert-result text-emerald-800">₹ --</p>
+            <p id="convertRate" class="text-xs text-slate-400 mt-1">Select currency to convert</p>
+          </div>
+          <div style="font-size:2rem;flex-shrink:0;">🇮🇳</div>
         </div>
-        <div class="text-3xl">🇮🇳</div>
       </div>
     </div>
-    <div id="panel-reverse" class="hidden">
+
+    <!-- FIX 8: panel-reverse uses inline style display:none -->
+    <div id="panel-reverse" style="display:none;">
       <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 block">How much INR to send home? (₹)</label>
-      <input id="reverseAmount" type="number" value="100000" min="0" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 mb-4"/>
-      <div class="flex items-center gap-3 bg-[#1a3c2e]/10 rounded-2xl px-5 py-4">
-        <div class="flex-1">
-          <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">You Need to Send</p>
-          <p id="reverseResult" class="text-3xl font-black text-[#1a3c2e]">-- <span id="reverseCurrency" class="text-lg">AED</span></p>
-          <p id="reverseRate" class="text-xs text-slate-400 mt-1">To transfer ₹1,00,000 home</p>
+      <input id="reverseAmount" type="number" value="100000" min="0"
+        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-400 mb-4"
+        style="font-size:1rem;"/>
+      <div class="bg-[#1a3c2e]/10 rounded-2xl px-5 py-4">
+        <div class="convert-result-row">
+          <div>
+            <p class="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">You Need to Send</p>
+            <!-- FIX warn 2: reverseResult uses textContent, currency span separate -->
+            <p id="reverseResult" class="convert-result text-[#1a3c2e]">--</p>
+            <p id="reverseRate" class="text-xs text-slate-400 mt-1">To transfer ₹1,00,000 home</p>
+          </div>
+          <div id="reverseFlag" style="font-size:2rem;flex-shrink:0;">🇦🇪</div>
         </div>
-        <div id="reverseFlag" class="text-3xl">🇦🇪</div>
       </div>
-      <p class="text-xs text-slate-400 mt-3 italic">* Excludes transfer fees. Compare Wise vs Remitly below for best rates.</p>
+      <p class="text-xs text-slate-400 mt-3 italic" style="word-break:break-word;">* Excludes transfer fees. Compare Wise vs Remitly below for best rates.</p>
     </div>
   </div>
 
-  <div id="ratePulseCard" class="pulse-green rounded-3xl p-7 text-white shadow-lg">
-    <div class="flex items-center gap-2 mb-1"><span class="text-xl">📡</span><h2 class="text-lg font-bold">NRI Rate Pulse</h2></div>
+  <!-- Rate Pulse — FIX warn 5: colour class toggled separately -->
+  <div id="ratePulseCard" class="pulse-card-base pulse-green" style="min-width:0;overflow:hidden;">
+    <div class="flex items-center gap-2 mb-1"><span style="font-size:1.25rem;">📡</span><h2 class="text-lg font-bold">NRI Rate Pulse</h2></div>
     <p class="text-emerald-200 text-sm mb-5">Is today a good day to send money home?</p>
     <div class="bg-white/10 rounded-2xl p-4 mb-4">
       <p class="text-sm text-emerald-200 font-medium">Today's Rate</p>
-      <p id="pulseToday" class="text-2xl font-black">Loading...</p>
+      <p id="pulseToday" class="text-2xl font-black" style="word-break:break-word;">Loading...</p>
       <p id="pulseAvg" class="text-sm text-emerald-300">7-Day Avg: --</p>
     </div>
     <div class="bg-white/10 rounded-2xl p-4 mb-4">
       <p id="pulseIcon" class="text-2xl mb-1">⏳</p>
       <p id="pulseHeading" class="font-bold text-base">Fetching signal...</p>
-      <p id="pulseBody" class="text-sm text-emerald-200 mt-1">Please wait while we load live data.</p>
+      <p id="pulseBody" class="text-sm text-emerald-200 mt-1" style="word-break:break-word;">Please wait while we load live data.</p>
     </div>
-    <p class="text-xs text-emerald-300/80 mb-3">⚠️ Based on 7-day averages only. Not financial advice. For large transfers, consult your bank.</p>
+    <p class="text-xs text-emerald-300/80 mb-3" style="word-break:break-word;">⚠️ Based on 7-day averages only. Not financial advice. For large transfers, consult your bank.</p>
     <details class="bg-white/10 rounded-2xl px-4 py-3">
-      <summary class="font-semibold text-sm flex items-center justify-between">
-        <span>📋 Smart Timing Tips</span><span class="text-emerald-300 text-xs">tap to expand ▼</span>
+      <summary class="font-semibold text-sm flex items-center justify-between gap-2">
+        <span>📋 Smart Timing Tips</span>
+        <span class="text-emerald-300 text-xs" style="white-space:nowrap;">tap to expand ▼</span>
       </summary>
       <ul class="mt-3 space-y-2 text-sm text-emerald-100">
         <li>• Send mid-week (Tue–Thu) — markets are most stable</li>
@@ -138,22 +249,35 @@
   </div>
 </div>
 
+<!-- CTA -->
 <div class="max-w-7xl mx-auto px-4 mb-10">
-  <div class="bg-[#1a3c2e] rounded-3xl p-8 text-white text-center shadow-lg">
-    <h2 class="text-2xl font-extrabold mb-2">Send Money to Kerala — Best Rates for NRIs</h2>
-    <p class="text-emerald-300 mb-6 text-sm">Compare top services before every transfer. Wise and Remitly typically beat bank rates.</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="https://wise.com/invite/REPLACE_WITH_YOUR_REF" target="_blank" rel="noopener noreferrer" class="bg-emerald-400 hover:bg-emerald-300 text-emerald-900 font-bold px-8 py-3 rounded-xl transition text-sm">Send via Wise →</a>
-      <a href="https://remitly.com/REPLACE_WITH_YOUR_REF" target="_blank" rel="noopener noreferrer" class="bg-white hover:bg-slate-100 text-[#1a3c2e] font-bold px-8 py-3 rounded-xl transition text-sm">Send via Remitly →</a>
+  <div class="bg-[#1a3c2e] rounded-3xl p-8 text-white text-center shadow-lg" style="overflow:hidden;">
+    <h2 class="text-2xl font-extrabold mb-2" style="word-break:break-word;">Send Money to Kerala — Best Rates for NRIs</h2>
+    <p class="text-emerald-300 mb-6 text-sm" style="word-break:break-word;">Compare top services before every transfer. Wise and Remitly typically beat bank rates.</p>
+    <!-- FIX warn 4: clean fallback URLs — replace with your referral links when ready -->
+    <div class="cta-btns flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="https://wise.com" target="_blank" rel="noopener noreferrer"
+        class="bg-emerald-400 hover:bg-emerald-300 text-emerald-900 font-bold px-8 py-3 rounded-xl transition text-sm"
+        style="min-height:48px;display:flex;align-items:center;justify-content:center;">
+        Send via Wise →
+      </a>
+      <a href="https://remitly.com" target="_blank" rel="noopener noreferrer"
+        class="bg-white hover:bg-slate-100 text-[#1a3c2e] font-bold px-8 py-3 rounded-xl transition text-sm"
+        style="min-height:48px;display:flex;align-items:center;justify-content:center;">
+        Send via Remitly →
+      </a>
     </div>
     <p class="text-emerald-400/60 text-xs mt-4">Best rates for AED, USD, GBP, CAD, AUD to INR transfers</p>
+    <!-- Reminder comment for you: -->
+    <!-- TODO: Replace wise.com and remitly.com above with your affiliate/referral links -->
   </div>
 </div>
 
-<footer class="bg-slate-900 text-slate-400 py-8 mt-6">
-  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm">
-    <p>© 2026 Kerala NRI Toolkit · Free tools for Kerala's global community.</p>
-    <nav class="flex flex-wrap gap-4">
+<!-- FOOTER -->
+<footer class="bg-slate-900 text-slate-400 py-8 mt-6" style="width:100%;">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm" style="overflow:hidden;">
+    <p style="margin:0;">© 2026 Kerala NRI Toolkit · Free tools for Kerala's global community.</p>
+    <nav class="footer-nav flex flex-wrap gap-4" style="list-style:none;margin:0;padding:0;">
       <a href="index.html" class="hover:text-white transition">Home</a>
       <a href="exchange-rates.html" class="hover:text-white transition">Exchange Rates</a>
       <a href="land-value.html" class="hover:text-white transition">Land Value</a>
@@ -166,98 +290,169 @@
 </footer>
 
 <script>
-const CURRENCIES=[
-  {code:"AED",name:"UAE Dirham",label:"UAE Dirham (AED)",flag:"🇦🇪"},
-  {code:"USD",name:"US Dollar",label:"US Dollar (USD)",flag:"🇺🇸"},
-  {code:"GBP",name:"British Pound",label:"British Pound (GBP)",flag:"🇬🇧"},
-  {code:"QAR",name:"Qatari Riyal",label:"Qatari Riyal (QAR)",flag:"🇶🇦"},
-  {code:"SAR",name:"Saudi Riyal",label:"Saudi Riyal (SAR)",flag:"🇸🇦"},
-  {code:"KWD",name:"Kuwaiti Dinar",label:"Kuwaiti Dinar (KWD)",flag:"🇰🇼"},
-  {code:"CAD",name:"Canadian Dollar",label:"Canadian Dollar (CAD)",flag:"🇨🇦"},
+var CURRENCIES=[
+  {code:"AED",name:"UAE Dirham",   label:"UAE Dirham (AED)",       flag:"🇦🇪"},
+  {code:"USD",name:"US Dollar",    label:"US Dollar (USD)",         flag:"🇺🇸"},
+  {code:"GBP",name:"British Pound",label:"British Pound (GBP)",     flag:"🇬🇧"},
+  {code:"QAR",name:"Qatari Riyal", label:"Qatari Riyal (QAR)",      flag:"🇶🇦"},
+  {code:"SAR",name:"Saudi Riyal",  label:"Saudi Riyal (SAR)",       flag:"🇸🇦"},
+  {code:"KWD",name:"Kuwaiti Dinar",label:"Kuwaiti Dinar (KWD)",     flag:"🇰🇼"},
+  {code:"CAD",name:"Canadian Dollar",label:"Canadian Dollar (CAD)", flag:"🇨🇦"},
   {code:"AUD",name:"Australian Dollar",label:"Australian Dollar (AUD)",flag:"🇦🇺"}
 ];
-/* AVG = approximate 7-day baseline (April 2026). Used for Rate Pulse signal only.
-   Live rates are always fetched fresh from the API on every page load. */
-const AVG={AED:25.40,USD:93.10,GBP:120.00,QAR:25.60,SAR:24.80,KWD:303.00,CAD:67.00,AUD:58.50};
-let rates={},tab="forward";
 
-async function fetchRates(){
-  try{
-    const r=await fetch("https://open.er-api.com/v6/latest/INR");
-    const d=await r.json();
-    if(d&&d.rates){
-      CURRENCIES.forEach(c=>{if(d.rates[c.code])rates[c.code]=parseFloat((1/d.rates[c.code]).toFixed(4));});
-      const n=new Date();
-      document.getElementById("lastUpdated").textContent="Last updated: "+n.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"})+" IST";
-      renderGrid();updateConverter();updatePulse();
-    }
-  }catch(e){
-    document.getElementById("ratesGrid").innerHTML='<div class="col-span-2 md:col-span-4 text-center text-slate-400 py-10 bg-white rounded-2xl border border-slate-100">Rates temporarily unavailable. Please refresh.</div>';
-    document.getElementById("lastUpdated").textContent="Could not fetch live rates.";
-  }
+var AVG={AED:25.40,USD:93.10,GBP:120.00,QAR:25.60,SAR:24.80,KWD:303.00,CAD:67.00,AUD:58.50};
+var FB ={AED:25.30,USD:93.10,GBP:120.00,QAR:25.60,SAR:24.80,KWD:303.00,CAD:67.00,AUD:58.50};
+var rates={}, tab="forward";
+
+/* FIX 9: dual API fallback — primary + two backups */
+function fetchRates(){
+  fetch("https://open.er-api.com/v6/latest/INR")
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(d){
+      if(d&&d.rates){ applyRates(d.rates,"open.er-api"); }
+      else throw 0;
+    })
+    .catch(function(){
+      fetch("https://latest.currency-api.pages.dev/v1/currencies/inr.json")
+        .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(d){
+          if(d&&d.inr){
+            var mapped={};
+            Object.keys(d.inr).forEach(function(k){ mapped[k.toUpperCase()]=d.inr[k]?1/d.inr[k]:null; });
+            applyRates(mapped,"backup-1");
+          } else throw 0;
+        })
+        .catch(function(){
+          fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/inr.json")
+            .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+            .then(function(d){
+              if(d&&d.inr){
+                var mapped={};
+                Object.keys(d.inr).forEach(function(k){ mapped[k.toUpperCase()]=d.inr[k]?1/d.inr[k]:null; });
+                applyRates(mapped,"backup-2");
+              } else throw 0;
+            })
+            .catch(function(){
+              /* All APIs failed — use static fallback rates */
+              rates=Object.assign({},FB);
+              document.getElementById("lastUpdated").textContent="Using cached rates — live data unavailable.";
+              renderGrid(); updateConverter(); updatePulse();
+            });
+        });
+    });
+}
+
+function applyRates(raw, source){
+  CURRENCIES.forEach(function(c){
+    var val=raw[c.code];
+    if(val) rates[c.code]=parseFloat((source==="open.er-api"?1/val:val).toFixed(4));
+  });
+  var n=new Date();
+  /* FIX warn 8: removed hardcoded IST — use local time label */
+  document.getElementById("lastUpdated").textContent=
+    "Last updated: "+n.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+" local time";
+  renderGrid(); updateConverter(); updatePulse();
 }
 
 function renderGrid(){
-  const sel=document.getElementById("convertFrom").value;
-  document.getElementById("ratesGrid").innerHTML=CURRENCIES.filter(c=>rates[c.code]).map(c=>{
-    const diff=((rates[c.code]-AVG[c.code])/AVG[c.code]*100);
-    return '<div class="rate-card bg-white rounded-2xl p-5 shadow-sm border border-slate-100 '+(c.code===sel?"selected":"")+'" onclick="selectCurrency(\''+c.code+'\')">'+
-      '<div class="flex items-center justify-between mb-3"><span class="text-2xl">'+c.flag+'</span><span class="text-xs font-bold text-slate-400 uppercase">'+c.code+'</span></div>'+
-      '<p class="text-xs text-slate-400 mb-1">'+c.name+'</p>'+
-      '<p class="text-xl font-black text-slate-900">₹'+rates[c.code].toFixed(2)+'</p>'+
-      '<p class="text-xs '+(diff>=0?"text-emerald-600":"text-red-500")+' font-semibold mt-1">'+(diff>=0?"+":"")+diff.toFixed(2)+'% vs 7d avg</p></div>';
+  var sel=document.getElementById("convertFrom").value;
+  var html=CURRENCIES.filter(function(c){ return rates[c.code]; }).map(function(c){
+    var diff=((rates[c.code]-AVG[c.code])/AVG[c.code]*100);
+    var diffStr=(diff>=0?"+":"")+diff.toFixed(2)+"% vs 7d avg";
+    var diffCls=diff>=0?"color:#059669;":"color:#dc2626;";
+    return '<div class="rate-card bg-white rounded-2xl p-4 shadow-sm border border-slate-100'+(c.code===sel?" selected":"")+'"'
+      +' onclick="selectCurrency(\''+c.code+'\')"'
+      +' tabindex="0"'
+      +' onkeydown="if(event.key===\'Enter\'||event.key===\' \')selectCurrency(\''+c.code+'\')"'
+      +' role="button" aria-label="Select '+c.name+'">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:4px;">'
+      +'<span style="font-size:1.5rem;">'+c.flag+'</span>'
+      +'<span style="font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;">'+c.code+'</span></div>'
+      +'<p style="font-size:.75rem;color:#94a3b8;margin-bottom:4px;word-break:break-word;">'+c.name+'</p>'
+      +'<p style="font-size:1.2rem;font-weight:900;color:#0f172a;word-break:break-all;">\u20b9'+rates[c.code].toFixed(2)+'</p>'
+      +'<p style="font-size:.72rem;font-weight:600;margin-top:4px;'+diffCls+'">'+diffStr+'</p>'
+      +'</div>';
   }).join("");
+  document.getElementById("ratesGrid").innerHTML=html||
+    '<div class="col-span-2 md:col-span-4 text-center text-slate-400 py-10 bg-white rounded-2xl border border-slate-100">Rates unavailable — please refresh.</div>';
 }
 
-function selectCurrency(code){document.getElementById("convertFrom").value=code;renderGrid();updateConverter();updatePulse();}
+function selectCurrency(code){
+  document.getElementById("convertFrom").value=code;
+  renderGrid(); updateConverter(); updatePulse();
+}
 
 function switchTab(t){
   tab=t;
   document.getElementById("tab-forward").className="tab-btn flex-1 text-sm font-bold py-2 px-3 rounded-xl"+(t==="forward"?" active":"");
   document.getElementById("tab-reverse").className="tab-btn flex-1 text-sm font-bold py-2 px-3 rounded-xl"+(t==="reverse"?" active":"");
-  document.getElementById("panel-forward").classList.toggle("hidden",t!=="forward");
-  document.getElementById("panel-reverse").classList.toggle("hidden",t!=="reverse");
+  /* FIX 8: toggle via inline style, not Tailwind hidden class */
+  document.getElementById("panel-forward").style.display=(t==="forward")?"block":"none";
+  document.getElementById("panel-reverse").style.display=(t==="reverse")?"block":"none";
   updateConverter();
 }
 
 function updateConverter(){
-  const from=document.getElementById("convertFrom").value,r=rates[from],c=CURRENCIES.find(x=>x.code===from);
+  var from=document.getElementById("convertFrom").value;
+  var r=rates[from];
+  var c=CURRENCIES.find(function(x){ return x.code===from; });
   if(tab==="forward"){
-    const amt=parseFloat(document.getElementById("convertAmount").value)||0;
-    if(!r)return;
-    document.getElementById("convertResult").textContent="₹ "+((amt*r).toLocaleString("en-IN",{maximumFractionDigits:2}));
-    document.getElementById("convertRate").textContent="1 "+from+" = ₹"+r.toFixed(4);
-  }else{
-    const inr=parseFloat(document.getElementById("reverseAmount").value)||0;
-    if(!r)return;
-    document.getElementById("reverseResult").innerHTML=(inr/r).toLocaleString("en-IN",{maximumFractionDigits:2})+' <span class="text-lg">'+from+'</span>';
-    document.getElementById("reverseRate").textContent="To send ₹"+inr.toLocaleString("en-IN")+" home";
-    if(c)document.getElementById("reverseFlag").textContent=c.flag;
+    var amt=parseFloat(document.getElementById("convertAmount").value)||0;
+    if(!r) return;
+    document.getElementById("convertResult").textContent="\u20b9 "+(amt*r).toLocaleString("en-IN",{maximumFractionDigits:2});
+    document.getElementById("convertRate").textContent="1 "+from+" = \u20b9"+r.toFixed(4);
+  } else {
+    var inr=parseFloat(document.getElementById("reverseAmount").value)||0;
+    if(!r) return;
+    /* FIX warn 2: textContent only, no innerHTML injection */
+    var resEl=document.getElementById("reverseResult");
+    resEl.textContent=(inr/r).toLocaleString("en-IN",{maximumFractionDigits:2})+" "+from;
+    document.getElementById("reverseRate").textContent="To send \u20b9"+inr.toLocaleString("en-IN")+" home";
+    if(c) document.getElementById("reverseFlag").textContent=c.flag;
   }
   updatePulse();
 }
 
+/* FIX warn 5: only toggle colour class — base layout classes preserved */
 function updatePulse(){
-  const from=document.getElementById("convertFrom").value,r=rates[from],avg=AVG[from];
-  if(!r||!avg)return;
-  document.getElementById("pulseToday").textContent="1 "+from+" = ₹"+r.toFixed(4);
-  document.getElementById("pulseAvg").textContent="7-Day Avg: 1 "+from+" = ₹"+avg.toFixed(2);
-  const diff=((r-avg)/avg)*100,card=document.getElementById("ratePulseCard");
-  if(diff>0.3){card.className="pulse-green rounded-3xl p-7 text-white shadow-lg";document.getElementById("pulseIcon").textContent="🟢";document.getElementById("pulseHeading").textContent="Favourable to Send Today";document.getElementById("pulseBody").textContent="The "+from+" to INR rate is above its 7-day average. You get more ₹ per "+from+" today.";}
-  else if(diff<-0.3){card.className="pulse-amber rounded-3xl p-7 text-white shadow-lg";document.getElementById("pulseIcon").textContent="🟡";document.getElementById("pulseHeading").textContent="Rate Below Weekly Average";document.getElementById("pulseBody").textContent="The "+from+" to INR rate is below its 7-day average. Waiting a few days may give better value.";}
-  else{card.className="pulse-blue rounded-3xl p-7 text-white shadow-lg";document.getElementById("pulseIcon").textContent="🔵";document.getElementById("pulseHeading").textContent="Rate is Stable";document.getElementById("pulseBody").textContent="The "+from+" to INR rate is close to its 7-day average. No strong signal either way.";}
+  var from=document.getElementById("convertFrom").value;
+  var r=rates[from], avg=AVG[from];
+  if(!r||!avg) return;
+  document.getElementById("pulseToday").textContent="1 "+from+" = \u20b9"+r.toFixed(4);
+  document.getElementById("pulseAvg").textContent="7-Day Avg: 1 "+from+" = \u20b9"+avg.toFixed(2);
+  var diff=((r-avg)/avg)*100;
+  var card=document.getElementById("ratePulseCard");
+  card.className="pulse-card-base "+(diff>0.3?"pulse-green":diff<-0.3?"pulse-amber":"pulse-blue");
+  if(diff>0.3){
+    document.getElementById("pulseIcon").textContent="🟢";
+    document.getElementById("pulseHeading").textContent="Favourable to Send Today";
+    document.getElementById("pulseBody").textContent="The "+from+" to INR rate is above its 7-day average. You get more \u20b9 per "+from+" today.";
+  } else if(diff<-0.3){
+    document.getElementById("pulseIcon").textContent="🟡";
+    document.getElementById("pulseHeading").textContent="Rate Below Weekly Average";
+    document.getElementById("pulseBody").textContent="The "+from+" to INR rate is below its 7-day average. Waiting a few days may give better value.";
+  } else {
+    document.getElementById("pulseIcon").textContent="🔵";
+    document.getElementById("pulseHeading").textContent="Rate is Stable";
+    document.getElementById("pulseBody").textContent="The "+from+" to INR rate is close to its 7-day average. No strong signal either way.";
+  }
 }
 
+/* FIX 7: wa.me → api.whatsapp.com/send */
 function shareOnWhatsApp(){
-  const now=new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
-  const lines=CURRENCIES.filter(c=>rates[c.code]).map(c=>"  "+c.label+" = ₹"+rates[c.code].toFixed(2)).join("\n");
-  const msg="*Kerala NRI Exchange Rates — "+now+"*\n\nLive INR Rates:\n"+lines+"\n\nCheck live rates + NRI Rate Pulse:\nhttps://kerala-nri-toolkit.vercel.app/exchange-rates.html\n\n_Via Kerala NRI Toolkit — Free tools for Malayalis worldwide_";
-  window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank");
+  var now=new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
+  var lines=CURRENCIES.filter(function(c){ return rates[c.code]; })
+    .map(function(c){ return "  "+c.label+" = \u20b9"+rates[c.code].toFixed(2); }).join("\n");
+  var msg="*Kerala NRI Exchange Rates \u2014 "+now+"*\n\nLive INR Rates:\n"+lines
+    +"\n\nCheck live rates + NRI Rate Pulse:\nhttps://kerala-nri-toolkit.vercel.app/exchange-rates.html"
+    +"\n\n_Via Kerala NRI Toolkit \u2014 Free tools for Malayalis worldwide_";
+  window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(msg),"_blank");
 }
 
 document.getElementById("convertAmount").addEventListener("input",updateConverter);
 document.getElementById("reverseAmount").addEventListener("input",updateConverter);
-document.getElementById("convertFrom").addEventListener("change",()=>{renderGrid();updateConverter();updatePulse();});
+document.getElementById("convertFrom").addEventListener("change",function(){ renderGrid(); updateConverter(); updatePulse(); });
 fetchRates();
 </script>
 </body>

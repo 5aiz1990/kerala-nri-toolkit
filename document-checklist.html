@@ -5,23 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>NRI Document Checklist Kerala | Property Purchase Guide</title>
 <meta name="description" content="Complete document checklist for Kerala NRIs. Covers identity, Power of Attorney, property documents, home loan and tax paperwork. Free tool."/>
-<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-body{font-family:'Inter',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;}
+
+html,body{
+  overflow-x:hidden;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  /* FIX 3: iOS Safari rubber-band horizontal drift blocked */
+  touch-action:pan-y;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#f8fafc;
+  min-height:100vh;
+  position:relative;
+  width:100%;
+}
+
+/* ── NAV ── */
+.nav-link-full{display:inline;}
+.nav-link-short{display:none;}
+
+/* ── SIDEBAR ── */
 .cat-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;cursor:pointer;transition:all .15s;border:none;background:transparent;width:100%;text-align:left;}
 .cat-btn:hover{background:#f1f5f9;}
 .cat-btn.on{background:#1a3c2e;color:white;}
 .cat-btn.on .cat-count{background:rgba(255,255,255,.2);color:white;}
 .cat-count{background:#f1f5f9;color:#64748b;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:auto;flex-shrink:0;}
+
+/* ── DOC ITEMS ── */
 .doc-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #f1f5f9;align-items:flex-start;}
 .doc-item:last-child{border:none;}
 .doc-item input[type=checkbox]{width:17px;height:17px;margin-top:2px;accent-color:#059669;flex-shrink:0;cursor:pointer;}
-.doc-body{flex:1;}
-.doc-title{font-size:.9rem;font-weight:600;color:#1e293b;line-height:1.3;}
-.doc-desc{font-size:.78rem;color:#64748b;margin-top:3px;line-height:1.5;}
+.doc-body{flex:1;min-width:0;}
+.doc-title{font-size:.9rem;font-weight:600;color:#1e293b;line-height:1.3;word-break:break-word;}
+.doc-desc{font-size:.78rem;color:#64748b;margin-top:3px;line-height:1.5;word-break:break-word;}
 .doc-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
-.badge{font-size:.67rem;font-weight:700;padding:2px 8px;border-radius:20px;}
+.badge{font-size:.67rem;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;word-break:break-word;white-space:normal;line-height:1.4;}
 .badge-where{background:#e0f2fe;color:#0369a1;}
 .badge-time{background:#f0fdf4;color:#166534;}
 .badge-warn{background:#fef9c3;color:#854d0e;}
@@ -29,35 +53,144 @@ body{font-family:'Inter',sans-serif;}
 .badge-critical{background:#fee2e2;color:#991b1b;}
 .done .doc-title{text-decoration:line-through;color:#94a3b8;}
 .done .doc-desc{color:#cbd5e1;}
+
+/* ── PROGRESS BAR ── */
 .mini-bar{height:4px;border-radius:2px;background:#e2e8f0;margin-top:4px;overflow:hidden;}
 .mini-fill{height:4px;border-radius:2px;background:#059669;transition:width .3s;}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+
+  .nav-link-full{display:none !important;}
+  .nav-link-short{display:inline !important;}
+
+  .nav-inner{gap:6px !important;}
+  .nav-links{gap:8px !important;font-size:.78rem !important;}
+
+  .hero-section{padding:16px 12px !important;}
+  h1{font-size:1.4rem !important;}
+
+  .progress-box{max-width:100% !important;}
+
+  .main-grid{
+    grid-template-columns:1fr !important;
+    padding:0 12px 32px !important;
+    gap:12px !important;
+  }
+
+  .checklist-col{min-width:0 !important;overflow:hidden !important;}
+
+  /* Sidebar → horizontal pill scroll */
+  .sidebar-card{
+    position:static !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    border:none !important;
+    border-radius:0 !important;
+    padding:4px 0 !important;
+    display:flex !important;
+    flex-direction:row !important;
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    -webkit-overflow-scrolling:touch;
+    /* FIX: pills scroll horizontally, page stays locked vertically */
+    touch-action:pan-x !important;
+    gap:6px !important;
+    scrollbar-width:none !important;
+  }
+  .sidebar-card::-webkit-scrollbar{display:none;}
+
+  .sidebar-label,.sidebar-legend{display:none !important;}
+
+  .cat-btn{
+    flex-shrink:0 !important;
+    width:auto !important;
+    white-space:nowrap !important;
+    padding:8px 14px !important;
+    font-size:.78rem !important;
+    border-radius:999px !important;
+    border:2px solid #e2e8f0 !important;
+    background:white !important;
+    color:#334155 !important;
+    min-height:40px !important;
+    box-shadow:0 1px 3px rgba(0,0,0,.07) !important;
+  }
+  .cat-btn.on{
+    background:#1a3c2e !important;
+    color:white !important;
+    border-color:#1a3c2e !important;
+  }
+  .cat-btn.on .cat-count{background:rgba(255,255,255,.25) !important;color:white !important;}
+  .cat-count{background:rgba(0,0,0,.07) !important;color:#475569 !important;}
+
+  /* FIX 2: overflow:hidden added back to checklist panel */
+  .checklist-panel{padding:14px !important;overflow:hidden !important;}
+
+  .cat-header{flex-direction:column !important;gap:4px !important;}
+  .cat-header-right{text-align:left !important;margin-left:0 !important;}
+  .mini-bar{width:100% !important;max-width:200px !important;}
+
+  .doc-item{gap:8px !important;padding:12px 0 !important;}
+  .doc-item input[type=checkbox]{width:20px !important;height:20px !important;}
+
+  .tips-box{padding:14px !important;font-size:.8rem !important;}
+
+  .footer-nav{gap:8px !important;font-size:.74rem !important;}
+}
+
+@media(max-width:380px){
+  .cat-btn{font-size:.72rem !important;padding:7px 10px !important;}
+  .doc-title{font-size:.83rem !important;}
+  .doc-desc{font-size:.74rem !important;}
+}
 </style>
 </head>
-<body style="background:#f8fafc;min-height:100vh;">
+<body>
 
-<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;">
-  <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
+<!-- NAV -->
+<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;width:100%;">
+  <div class="nav-inner" style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
+    <!-- FIX minor: removed white-space:nowrap from logo so it can wrap on tiny screens -->
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
-    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
+    <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
       <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">Exchange Rates</a>
-      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">Land Value</a>
-      <a href="document-checklist.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">Documents</a>
-      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">Visa Tracker</a>
-      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">Stamp Duty</a>
-      <a href="emi-calculator.html" style="color:#cbd5e1;text-decoration:none;">EMI Calculator</a>
+      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Exchange Rates</span>
+        <span class="nav-link-short">Rates</span>
+      </a>
+      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Land Value</span>
+        <span class="nav-link-short">Land</span>
+      </a>
+      <a href="document-checklist.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">
+        <span class="nav-link-full">Documents</span>
+        <span class="nav-link-short">Docs</span>
+      </a>
+      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Visa Tracker</span>
+        <span class="nav-link-short">Visa</span>
+      </a>
+      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Stamp Duty</span>
+        <span class="nav-link-short">Stamp</span>
+      </a>
+      <a href="emi-calculator.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">EMI Calculator</span>
+        <span class="nav-link-short">EMI</span>
+      </a>
     </div>
   </div>
 </nav>
 
-<div style="max-width:1280px;margin:0 auto;padding:36px 16px 20px;">
+<!-- HERO -->
+<div class="hero-section" style="max-width:1280px;margin:0 auto;padding:36px 16px 20px;width:100%;">
   <span style="background:#d1fae5;color:#065f46;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;">40 Documents Covered</span>
   <h1 style="font-size:2.2rem;font-weight:800;margin:12px 0 8px;">NRI Document Checklist</h1>
-  <p style="color:#64748b;max-width:640px;">Every document you need to buy property in Kerala as an NRI — from identity proof to post-registration. Tick each item as you collect it. Progress is saved automatically.</p>
+  <p style="color:#64748b;max-width:640px;margin:0;">Every document you need to buy property in Kerala as an NRI — from identity proof to post-registration. Tick each item as you collect it. Progress is saved automatically.</p>
 
   <!-- OVERALL PROGRESS -->
-  <div style="margin-top:20px;background:white;border-radius:16px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;max-width:600px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+  <div class="progress-box" style="margin-top:20px;background:white;border-radius:16px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;max-width:600px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
       <span style="font-weight:700;font-size:.9rem;">Overall Progress</span>
       <span id="overallCount" style="font-size:.85rem;font-weight:700;color:#059669;">0 / 40 documents</span>
     </div>
@@ -65,96 +198,74 @@ body{font-family:'Inter',sans-serif;}
       <div id="overallBar" style="background:linear-gradient(90deg,#059669,#10b981);height:10px;border-radius:999px;width:0%;transition:width .4s;"></div>
     </div>
     <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
-      <button onclick="shareWhatsApp()" style="background:#25D366;color:white;font-weight:700;font-size:.78rem;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;">&#128241; Share Progress</button>
-      <button id="resetBtn" onclick="resetAll()" style="background:#f1f5f9;color:#64748b;font-weight:600;font-size:.78rem;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;">&#8635; Reset All</button>
+      <button onclick="shareWhatsApp()" style="background:#25D366;color:white;font-weight:700;font-size:.78rem;padding:8px 16px;border-radius:8px;border:none;cursor:pointer;min-height:40px;">&#128241; Share Progress</button>
+      <button id="resetBtn" onclick="resetAll()" style="background:#f1f5f9;color:#64748b;font-weight:600;font-size:.78rem;padding:8px 16px;border-radius:8px;border:none;cursor:pointer;min-height:40px;">↻ Reset All</button>
     </div>
   </div>
 </div>
 
-<!-- MAIN LAYOUT -->
-<div style="max-width:1280px;margin:0 auto;padding:0 16px 48px;display:grid;grid-template-columns:260px 1fr;gap:20px;">
+<!-- MAIN GRID -->
+<div class="main-grid" style="max-width:1280px;margin:0 auto;padding:0 16px 48px;display:grid;grid-template-columns:260px 1fr;gap:20px;width:100%;">
 
-<!-- SIDEBAR: CATEGORIES -->
-<div>
-  <div style="background:white;border-radius:20px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;position:sticky;top:72px;">
-    <p style="font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:0 4px;">Categories</p>
-    <button class="cat-btn on" id="catbtn-0" onclick="showCat(0)">
-      <span>&#127482;&#127480; NRI Identity</span>
-      <span class="cat-count" id="catcount-0">0/7</span>
-    </button>
-    <button class="cat-btn" id="catbtn-1" onclick="showCat(1)">
-      <span>&#128196; Power of Attorney</span>
-      <span class="cat-count" id="catcount-1">0/4</span>
-    </button>
-    <button class="cat-btn" id="catbtn-2" onclick="showCat(2)">
-      <span>&#127968; Property Documents</span>
-      <span class="cat-count" id="catcount-2">0/9</span>
-    </button>
-    <button class="cat-btn" id="catbtn-3" onclick="showCat(3)">
-      <span>&#128176; Financial &amp; Tax</span>
-      <span class="cat-count" id="catcount-3">0/7</span>
-    </button>
-    <button class="cat-btn" id="catbtn-4" onclick="showCat(4)">
-      <span>&#129518; Home Loan Docs</span>
-      <span class="cat-count" id="catcount-4">0/6</span>
-    </button>
-    <button class="cat-btn" id="catbtn-5" onclick="showCat(5)">
-      <span>&#9989; After Registration</span>
-      <span class="cat-count" id="catcount-5">0/5</span>
-    </button>
-
-    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f1f5f9;">
-      <p style="font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Legend</p>
-      <div style="display:flex;flex-direction:column;gap:5px;font-size:.73rem;">
-        <span><span class="badge badge-where">&#128205; Where</span> Where to get it</span>
-        <span><span class="badge badge-time">&#128336; Time</span> How long it takes</span>
-        <span><span class="badge badge-apostille">&#10024; Apostille</span> Needs apostille</span>
-        <span><span class="badge badge-warn">&#9888; Note</span> Important caveat</span>
-        <span><span class="badge badge-critical">&#128683; Critical</span> Must-have item</span>
+  <!-- SIDEBAR -->
+  <div style="min-width:0;">
+    <div class="sidebar-card" style="background:white;border-radius:20px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;position:sticky;top:72px;">
+      <p class="sidebar-label" style="font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;padding:0 4px;">Categories</p>
+      <button class="cat-btn on" id="catbtn-0" onclick="showCat(0)"><span>&#127482;&#127480; NRI Identity</span><span class="cat-count" id="catcount-0">0/7</span></button>
+      <button class="cat-btn" id="catbtn-1" onclick="showCat(1)"><span>&#128196; Power of Attorney</span><span class="cat-count" id="catcount-1">0/4</span></button>
+      <button class="cat-btn" id="catbtn-2" onclick="showCat(2)"><span>&#127968; Property Documents</span><span class="cat-count" id="catcount-2">0/11</span></button>
+      <button class="cat-btn" id="catbtn-3" onclick="showCat(3)"><span>&#128176; Financial &amp; Tax</span><span class="cat-count" id="catcount-3">0/7</span></button>
+      <button class="cat-btn" id="catbtn-4" onclick="showCat(4)"><span>&#129518; Home Loan Docs</span><span class="cat-count" id="catcount-4">0/6</span></button>
+      <button class="cat-btn" id="catbtn-5" onclick="showCat(5)"><span>&#9989; After Registration</span><span class="cat-count" id="catcount-5">0/5</span></button>
+      <div class="sidebar-legend" style="margin-top:16px;padding-top:14px;border-top:1px solid #f1f5f9;">
+        <p style="font-size:.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Legend</p>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:.73rem;">
+          <span><span class="badge badge-where">&#128205; Where</span> Where to get it</span>
+          <span><span class="badge badge-time">&#128336; Time</span> How long it takes</span>
+          <span><span class="badge badge-apostille">&#10024; Apostille</span> Needs apostille</span>
+          <span><span class="badge badge-warn">&#9888; Note</span> Important caveat</span>
+          <span><span class="badge badge-critical">&#128683; Critical</span> Must-have item</span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- CHECKLIST PANEL -->
-<div>
-  <div style="background:white;border-radius:20px;padding:24px 28px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;">
-
-    <!-- CATEGORY HEADER -->
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
-      <div>
-        <h2 id="catTitle" style="font-size:1.2rem;font-weight:800;margin:0;"></h2>
-        <p id="catDesc" style="color:#64748b;font-size:.82rem;margin-top:4px;"></p>
+  <!-- CHECKLIST COLUMN -->
+  <div class="checklist-col" style="min-width:0;">
+    <div class="checklist-panel" style="background:white;border-radius:20px;padding:24px 28px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;overflow:hidden;">
+      <div class="cat-header" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;">
+        <div style="min-width:0;flex:1;">
+          <h2 id="catTitle" style="font-size:1.2rem;font-weight:800;margin:0;word-break:break-word;"></h2>
+          <p id="catDesc" style="color:#64748b;font-size:.82rem;margin-top:4px;word-break:break-word;"></p>
+        </div>
+        <div class="cat-header-right" style="text-align:right;flex-shrink:0;margin-left:16px;">
+          <span id="catProgress" style="font-size:.82rem;font-weight:700;color:#059669;white-space:nowrap;"></span>
+          <div class="mini-bar" style="width:100px;"><div id="catBar" class="mini-fill" style="width:0%;"></div></div>
+        </div>
       </div>
-      <div style="text-align:right;flex-shrink:0;margin-left:16px;">
-        <span id="catProgress" style="font-size:.82rem;font-weight:700;color:#059669;"></span>
-        <div class="mini-bar" style="width:100px;"><div id="catBar" class="mini-fill" style="width:0%;"></div></div>
-      </div>
+      <div id="itemsContainer" style="margin-top:16px;"></div>
     </div>
 
-    <!-- ITEMS CONTAINER -->
-    <div id="itemsContainer" style="margin-top:16px;"></div>
+    <!-- TIPS -->
+    <div class="tips-box" style="background:#fffbeb;border:1px solid #fcd34d;border-radius:20px;padding:20px 24px;margin-top:16px;">
+      <h3 style="font-size:.9rem;font-weight:700;color:#92400e;margin-bottom:10px;">&#128161; Pro Tips for Gulf NRIs</h3>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px;font-size:.83rem;color:#78350f;">
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">1.</span><span>Start the <strong>Apostille process</strong> at least 4–6 weeks before your registration date — Indian Embassy queues in Gulf are long</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">2.</span><span>Get <strong>10+ passport-size photos</strong> — banks, SRO, mutation office and your POA holder all need copies</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">3.</span><span>Your <strong>POA must be registered</strong> at a Kerala Sub-Registrar Office after apostille — an unregistered POA is not accepted by banks</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">4.</span><span>Always get <strong>2 sets of photocopies</strong> of every document — one for SRO, one for your records</span></li>
+        <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">5.</span><span>EC (Encumbrance Certificate) must be <strong>fresh</strong> — most banks reject ECs older than 3 months</span></li>
+      </ul>
+    </div>
   </div>
-
-  <!-- QUICK TIPS -->
-  <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:20px;padding:20px 24px;margin-top:16px;">
-    <h3 style="font-size:.9rem;font-weight:700;color:#92400e;margin-bottom:10px;">&#128161; Pro Tips for Gulf NRIs</h3>
-    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px;font-size:.83rem;color:#78350f;">
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">1.</span><span>Start the <strong>Apostille process</strong> at least 4–6 weeks before your registration date — Indian Embassy queues in Gulf are long</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">2.</span><span>Get <strong>10+ passport-size photos</strong> — banks, SRO, mutation office and your POA holder all need copies</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">3.</span><span>Your <strong>POA must be registered</strong> at a Kerala Sub-Registrar Office after apostille — an unregistered POA is not accepted by banks</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">4.</span><span>Always get <strong>2 sets of photocopies</strong> of every document — one for SRO, one for your records</span></li>
-      <li style="display:flex;gap:8px;"><span style="font-weight:700;">5.</span><span>EC (Encumbrance Certificate) must be <strong>fresh</strong> — most banks reject ECs older than 3 months</span></li>
-    </ul>
-  </div>
-</div>
 
 </div>
 
-<footer style="background:#0f172a;color:#64748b;padding:32px 16px;">
+<!-- FOOTER -->
+<footer style="background:#0f172a;color:#64748b;padding:32px 16px;width:100%;">
   <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;">
     <p style="margin:0;">&#169; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community.</p>
-    <nav style="display:flex;flex-wrap:wrap;gap:16px;">
+    <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:16px;">
       <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
       <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
       <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
@@ -168,412 +279,92 @@ body{font-family:'Inter',sans-serif;}
 
 <script>
 var CATS = [
-  {
-    title: "NRI Identity Documents",
-    desc:  "Your personal identity documents required for every stage of the property purchase.",
-    items: [
-      {
-        title: "Valid Indian Passport",
-        desc:  "Must have minimum 6 months validity at time of registration. Carry original + 3 self-attested photocopies.",
-        where: "Passport Seva Kendra",
-        time:  "Already have / renew 6 weeks ahead",
-        warn:  null,
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Visa / Residence Permit (Iqama / Emirates ID)",
-        desc:  "Your current valid Gulf residence permit. Banks and the SRO will ask for a copy to confirm NRI status.",
-        where: "GDRFA (UAE) / MOI (Saudi) / Ministry of Interior",
-        time:  "Already have",
-        warn:  "Must be valid — expired Iqama delays everything",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "OCI Card (Overseas Citizen of India)",
-        desc:  "Not mandatory but strongly recommended — simplifies bank account opening and SRO formalities significantly.",
-        where: "Indian Embassy / Consulate in your country",
-        time:  "6-8 weeks to process",
-        warn:  "OCI holders get smoother treatment at SRO",
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "PAN Card",
-        desc:  "Mandatory for property transactions above ₹10 Lakhs. Both buyer and seller must provide PAN. TDS filings also require it.",
-        where: "NSDL / UTIITSL online or NRI service centres",
-        time:  "2-3 weeks online",
-        warn:  null,
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Aadhaar Card (linked to Indian mobile number)",
-        desc:  "Required at Sub-Registrar Office for identity verification. Ensure it is linked to an active Indian mobile number you can access.",
-        where: "UIDAI.gov.in or Aadhaar enrolment centre",
-        time:  "Update takes 2-3 weeks",
-        warn:  "Without OTP access your Aadhaar is useless at SRO",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Passport-size Photographs (minimum 10 copies)",
-        desc:  "Needed for SRO, bank account, home loan application, POA registration and mutation. White background, recent.",
-        where: "Any photo studio",
-        time:  "Same day",
-        warn:  null,
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Address Proof — Country of Residence",
-        desc:  "A recent utility bill, bank statement or tenancy contract from your Gulf address. Needed for NRE/NRO account and home loan.",
-        where: "DEWA / SEWA / Bank statement",
-        time:  "Already have",
-        warn:  "Must be less than 3 months old",
-        apostille: false,
-        critical:  false
-      }
-    ]
-  },
-  {
-    title: "Power of Attorney (POA)",
-    desc:  "NRIs cannot be physically present at every stage. A registered POA holder in India acts on your behalf.",
-    items: [
-      {
-        title: "Draft POA reviewed by a Kerala lawyer",
-        desc:  "Have a qualified Kerala advocate draft or review the POA specifically mentioning property purchase, SRO registration, bank dealings and mutation. A generic POA is often rejected.",
-        where: "Kerala-registered advocate",
-        time:  "2-3 days",
-        warn:  "A generic POA from the internet may be rejected by SRO",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "POA signed at Indian Embassy / Consulate",
-        desc:  "Visit your nearest Indian Embassy or Consulate to sign and get the POA notarised. Book an appointment in advance — queues can be 2-4 weeks long in the Gulf.",
-        where: "Indian Embassy / Consulate in UAE/Saudi/Qatar etc.",
-        time:  "Book 4-6 weeks ahead",
-        warn:  "Appointment slots fill up fast — book early",
-        apostille: true,
-        critical:  true
-      },
-      {
-        title: "Apostille stamp on POA",
-        desc:  "After Embassy notarisation, the POA must be apostilled by the Ministry of External Affairs (MEA) in India, OR the Embassy itself may apply the Hague Convention apostille. Confirm which process applies in your country.",
-        where: "MEA India or Embassy apostille counter",
-        time:  "1-3 weeks",
-        warn:  null,
-        apostille: true,
-        critical:  true
-      },
-      {
-        title: "POA registered at Kerala Sub-Registrar Office",
-        desc:  "After receiving the apostilled POA in India, your representative MUST register it at the local SRO before using it. An unregistered POA is legally invalid for property transactions.",
-        where: "Local Sub-Registrar Office (SRO), Kerala",
-        time:  "Same day — walk-in",
-        warn:  "Banks and SRO WILL NOT accept unregistered POA",
-        apostille: false,
-        critical:  true
-      }
-    ]
-  },
-  {
-    title: "Property Documents (Seller Side)",
-    desc:  "Documents you must collect from the seller and verify before paying any money.",
-    items: [
-      {
-        title: "Original Title Deed / Parent Documents",
-        desc:  "The chain of ownership documents from at least the last 30 years. Verify each link in the ownership chain is clean with no gaps.",
-        where: "Seller must provide originals",
-        time:  "Collect from seller",
-        warn:  "Never pay advance without seeing originals",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Encumbrance Certificate (EC) — Last 30 Years",
-        desc:  "Confirms no mortgage, lien or legal dispute on the property. Get a fresh EC (not older than 3 months) directly from the SRO — do not rely on the seller's copy.",
-        where: "Sub-Registrar Office (SRO) or igr.kerala.gov.in",
-        time:  "2-3 working days",
-        warn:  "Get your own fresh EC — do not trust the seller's copy",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Possession Certificate",
-        desc:  "Confirms actual physical possession of the land. Issued by the Village Office (Taluk Office). Required by banks for home loans.",
-        where: "Village Office / Taluk Office",
-        time:  "1-2 weeks",
-        warn:  null,
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Survey Sketch (Thandaper)",
-        desc:  "Official survey map of the plot showing boundaries, area and survey number. Get a certified copy from the Survey Department.",
-        where: "District Survey Office, Kerala",
-        time:  "1-2 weeks",
-        warn:  "Verify actual land dimensions on site match the sketch",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Latest Land Tax Receipt (Pattayam)",
-        desc:  "Proof that land tax is paid and up to date. The seller must provide receipts for the last 3 years minimum.",
-        where: "Village Office",
-        time:  "Collect from seller",
-        warn:  "Unpaid land tax becomes buyer's liability after registration",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Building Tax Receipt (if constructed property)",
-        desc:  "Proof of Panchayat / Corporation building tax payment. If buying a house, ensure all tax receipts are up to date.",
-        where: "Panchayat / Municipality / Corporation office",
-        time:  "Collect from seller",
-        warn:  null,
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "No Objection Certificate (NOC) from Bank",
-        desc:  "If the property has an existing home loan or mortgage on it, the seller must get a NOC from their bank before selling. Without this, the sale is illegal.",
-        where: "Seller's bank — original mortgage holder",
-        time:  "1-2 weeks from seller's bank",
-        warn:  "Property with mortgage CANNOT be sold without this NOC",
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Approved Building Plan (for constructed property)",
-        desc:  "Municipality/Panchayat-approved building plan showing the structure is legally constructed. Needed for flats and villas.",
-        where: "Seller / Builder / Local Body",
-        time:  "Collect from seller/builder",
-        warn:  "Illegal constructions cannot be mortgaged or easily sold later",
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Lawyer's Title Verification Report",
-        desc:  "Get an independent Kerala advocate to review all property documents and issue a written title clearance report before signing any agreement.",
-        where: "Hire an independent Kerala advocate",
-        time:  "3-7 days",
-        warn:  "Never skip this — even if the seller seems trustworthy",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Occupancy Certificate (OC) — for Flats / Apartments",
-        desc:  "Issued by the local body (Panchayat/Municipality/Corporation) confirming the building is legally fit for occupation. Without a valid OC, the building is technically illegal and banks will refuse home loans on it.",
-        where: "Panchayat / Municipality / Corporation office",
-        time:  "Collect from builder / seller",
-        warn:  "Never buy a flat without verifying the OC — this is non-negotiable",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "RERA Registration Certificate (for new builder projects)",
-        desc:  "All new housing projects in Kerala must be registered under Kerala RERA (K-RERA). Verify the project's RERA registration number at rera.kerala.gov.in before paying any advance to a builder.",
-        where: "rera.kerala.gov.in (verify online)",
-        time:  "Check online instantly",
-        warn:  "Unregistered projects offer zero legal protection to buyers",
-        apostille: false,
-        critical:  false
-      }
-    ]
-  },
-  {
-    title: "Financial & Tax Documents",
-    desc:  "Documents for payment, tax compliance and bank account requirements.",
-    items: [
-      {
-        title: "NRE / NRO Bank Account (active in India)",
-        desc:  "All property payments including stamp duty and registration fee MUST be made from an NRE or NRO account. Direct foreign currency payment is not permitted under FEMA.",
-        where: "SBI / HDFC / ICICI / Federal Bank etc.",
-        time:  "2-4 weeks to open if new",
-        warn:  "Cash payments for property are illegal above ₹20,000",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Demand Draft for Stamp Duty (8%) + Registration Fee (2%)",
-        desc:  "Get a DD from your NRE/NRO account payable to the Sub-Registrar. Amount = 10% of property value (use our Stamp Duty Calculator for exact amount).",
-        where: "Your NRE/NRO bank in India",
-        time:  "Same day at bank",
-        warn:  null,
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Form 15CA / 15CB (for remittance above ₹5 Lakhs)",
-        desc:  "If transferring money from abroad for property purchase, Form 15CA (self-declaration) and Form 15CB (CA certificate) are needed. Your Chartered Accountant in India files these online.",
-        where: "Chartered Accountant in India",
-        time:  "3-5 working days",
-        warn:  "Required for every foreign remittance above ₹5L",
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "PAN Card of Seller (for TDS compliance)",
-        desc:  "You must deduct TDS if the property value exceeds ₹50 Lakhs. If the seller is an NRI, TDS rate is 12.5-20%. You need their PAN to file the TDS return.",
-        where: "Collect from seller",
-        time:  "Collect from seller",
-        warn:  "Buyer is legally responsible for TDS deduction — not the seller",
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Last 2 Years Income Tax Returns (India ITR)",
-        desc:  "Required by banks for home loan processing. If you have rental or other income in India, file your ITR regularly.",
-        where: "CA or incometax.gov.in",
-        time:  "File ahead of loan application",
-        warn:  null,
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Sale Agreement / Advance Receipt",
-        desc:  "A registered sale agreement (prior to final registration) protects your advance payment legally. Always register the agreement — an unregistered agreement offers limited legal protection.",
-        where: "Sub-Registrar Office with advocate",
-        time:  "Same day at SRO",
-        warn:  "Pay advance ONLY after signing a registered sale agreement",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Witness Aadhaar Cards (2 witnesses)",
-        desc:  "Both buyer and seller must bring 2 witnesses each to the SRO on registration day. All witnesses must have valid Aadhaar cards.",
-        where: "Arrange local relatives or friends",
-        time:  "Coordinate in advance",
-        warn:  "Registration cannot proceed without witnesses",
-        apostille: false,
-        critical:  true
-      }
-    ]
-  },
-  {
-    title: "Home Loan Documents",
-    desc:  "Additional documents required if applying for an NRI home loan from an Indian bank.",
-    items: [
-      {
-        title: "Salary Certificate / Employment Letter",
-        desc:  "Official letter from your Gulf employer confirming designation, salary and employment duration. Must be on company letterhead, signed and stamped. Banks may ask for it to be attested.",
-        where: "Your employer's HR department",
-        time:  "3-7 days",
-        warn:  "Banks apply a 10-20% income haircut on Gulf salaries",
-        apostille: true,
-        critical:  true
-      },
-      {
-        title: "Last 6 Months Salary Slips",
-        desc:  "Payslips for the last 6 consecutive months. If self-employed, audited financial statements for the last 2 years are required instead.",
-        where: "Your employer / HR portal",
-        time:  "Already have",
-        warn:  null,
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Last 6 Months Bank Statements (India + Abroad)",
-        desc:  "Both your Indian NRE/NRO account statement AND your overseas salary account statement for the last 6 months. Shows salary credit regularity to the bank.",
-        where: "Your bank portals",
-        time:  "Download online",
-        warn:  "Both India and overseas statements required",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Overseas Credit Report",
-        desc:  "Most top banks now pull your credit report from Al Etihad Credit Bureau (UAE), SIMAH (Saudi Arabia) or equivalent. Check and fix your overseas credit score before applying.",
-        where: "Al Etihad (UAE) / SIMAH (Saudi) / local credit bureau",
-        time:  "Get report 2-4 weeks before applying",
-        warn:  "A bad overseas credit score can get your loan rejected",
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Property Valuation Report",
-        desc:  "Bank-approved valuer's report on the property value. The bank arranges this, but you pay the fee (~₹3,000-10,000). Banks lend only up to 75-80% of the valuation, not sale price.",
-        where: "Bank's empanelled valuer",
-        time:  "3-5 working days",
-        warn:  "Bank's valuation may be lower than sale price — budget accordingly",
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Processing Fee Payment",
-        desc:  "Banks charge a non-refundable loan processing fee (typically 0.5-1% of loan amount). Paid upfront when submitting the home loan application.",
-        where: "Your chosen bank",
-        time:  "At application",
-        warn:  "Non-refundable even if loan is rejected",
-        apostille: false,
-        critical:  false
-      }
-    ]
-  },
-  {
-    title: "After Registration",
-    desc:  "Steps to complete after the sale deed is registered at the SRO.",
-    items: [
-      {
-        title: "Collect Registered Sale Deed (Original)",
-        desc:  "Collect the original registered sale deed from the SRO (usually ready in 1-7 days after registration). Store safely — this is the most important document you own.",
-        where: "Sub-Registrar Office",
-        time:  "1-7 days after registration",
-        warn:  "Keep multiple scanned digital copies in cloud storage",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Apply for Mutation (Pokkuvaravu)",
-        desc:  "Mutation transfers the property to your name in Village Office / Panchayat / Corporation records. File the application with a copy of the registered sale deed within 3 months of registration.",
-        where: "Village Office / Panchayat / Corporation",
-        time:  "4-8 weeks",
-        warn:  "Mutation does not happen automatically — you must apply",
-        apostille: false,
-        critical:  true
-      },
-      {
-        title: "Update Property Tax Records",
-        desc:  "After mutation is approved, update the property tax records in your name at the local body. Ensures future tax bills come in your name.",
-        where: "Panchayat / Municipality / Corporation",
-        time:  "2-4 weeks after mutation",
-        warn:  null,
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Get Updated Encumbrance Certificate",
-        desc:  "Obtain a fresh EC after registration to confirm the sale has been recorded and the property is now in your name with no encumbrances.",
-        where: "Sub-Registrar Office or igr.kerala.gov.in",
-        time:  "1-2 working days",
-        warn:  null,
-        apostille: false,
-        critical:  false
-      },
-      {
-        title: "Secure Document Storage",
-        desc:  "Store all original documents in a waterproof file or bank locker. Scan all documents to Google Drive / iCloud. Share access with a trusted family member in India.",
-        where: "Bank locker / fireproof safe",
-        time:  "Immediately after registration",
-        warn:  "Lost original sale deed = expensive court process to replace",
-        apostille: false,
-        critical:  true
-      }
-    ]
-  }
+{
+  title:"NRI Identity Documents",
+  desc:"Your personal identity documents required for every stage of the property purchase.",
+  items:[
+    {title:"Valid Indian Passport",desc:"Must have minimum 6 months validity at time of registration. Carry original + 3 self-attested photocopies.",where:"Passport Seva Kendra",time:"Already have / renew 6 weeks ahead",warn:null,apostille:false,critical:true},
+    {title:"Visa / Residence Permit (Iqama / Emirates ID)",desc:"Your current valid Gulf residence permit. Banks and the SRO will ask for a copy to confirm NRI status.",where:"GDRFA (UAE) / MOI (Saudi) / Ministry of Interior",time:"Already have",warn:"Must be valid — expired Iqama delays everything",apostille:false,critical:true},
+    {title:"OCI Card (Overseas Citizen of India)",desc:"Not mandatory but strongly recommended — simplifies bank account opening and SRO formalities significantly.",where:"Indian Embassy / Consulate in your country",time:"6-8 weeks to process",warn:"OCI holders get smoother treatment at SRO",apostille:false,critical:false},
+    {title:"PAN Card",desc:"Mandatory for property transactions above Rs.10 Lakhs. Both buyer and seller must provide PAN. TDS filings also require it.",where:"NSDL / UTIITSL online or NRI service centres",time:"2-3 weeks online",warn:null,apostille:false,critical:true},
+    {title:"Aadhaar Card (linked to Indian mobile number)",desc:"Required at Sub-Registrar Office for identity verification. Ensure it is linked to an active Indian mobile number you can access.",where:"UIDAI.gov.in or Aadhaar enrolment centre",time:"Update takes 2-3 weeks",warn:"Without OTP access your Aadhaar is useless at SRO",apostille:false,critical:true},
+    {title:"Passport-size Photographs (minimum 10 copies)",desc:"Needed for SRO, bank account, home loan application, POA registration and mutation. White background, recent.",where:"Any photo studio",time:"Same day",warn:null,apostille:false,critical:false},
+    {title:"Address Proof — Country of Residence",desc:"A recent utility bill, bank statement or tenancy contract from your Gulf address. Needed for NRE/NRO account and home loan.",where:"DEWA / SEWA / Bank statement",time:"Already have",warn:"Must be less than 3 months old",apostille:false,critical:false}
+  ]
+},
+{
+  title:"Power of Attorney (POA)",
+  desc:"NRIs cannot be physically present at every stage. A registered POA holder in India acts on your behalf.",
+  items:[
+    {title:"Draft POA reviewed by a Kerala lawyer",desc:"Have a qualified Kerala advocate draft or review the POA specifically mentioning property purchase, SRO registration, bank dealings and mutation. A generic POA is often rejected.",where:"Kerala-registered advocate",time:"2-3 days",warn:"A generic POA from the internet may be rejected by SRO",apostille:false,critical:true},
+    {title:"POA signed at Indian Embassy / Consulate",desc:"Visit your nearest Indian Embassy or Consulate to sign and get the POA notarised. Book an appointment in advance — queues can be 2-4 weeks long in the Gulf.",where:"Indian Embassy / Consulate in UAE/Saudi/Qatar etc.",time:"Book 4-6 weeks ahead",warn:"Appointment slots fill up fast — book early",apostille:true,critical:true},
+    {title:"Apostille stamp on POA",desc:"After Embassy notarisation, the POA must be apostilled by the Ministry of External Affairs (MEA) in India, OR the Embassy itself may apply the Hague Convention apostille.",where:"MEA India or Embassy apostille counter",time:"1-3 weeks",warn:null,apostille:true,critical:true},
+    {title:"POA registered at Kerala Sub-Registrar Office",desc:"After receiving the apostilled POA in India, your representative MUST register it at the local SRO before using it. An unregistered POA is legally invalid for property transactions.",where:"Local Sub-Registrar Office (SRO), Kerala",time:"Same day — walk-in",warn:"Banks and SRO WILL NOT accept unregistered POA",apostille:false,critical:true}
+  ]
+},
+{
+  title:"Property Documents (Seller Side)",
+  desc:"Documents you must collect from the seller and verify before paying any money.",
+  items:[
+    {title:"Original Title Deed / Parent Documents",desc:"The chain of ownership documents from at least the last 30 years. Verify each link in the ownership chain is clean with no gaps.",where:"Seller must provide originals",time:"Collect from seller",warn:"Never pay advance without seeing originals",apostille:false,critical:true},
+    {title:"Encumbrance Certificate (EC) — Last 30 Years",desc:"Confirms no mortgage, lien or legal dispute on the property. Get a fresh EC (not older than 3 months) directly from the SRO — do not rely on the seller's copy.",where:"Sub-Registrar Office (SRO) or igr.kerala.gov.in",time:"2-3 working days",warn:"Get your own fresh EC — do not trust the seller's copy",apostille:false,critical:true},
+    {title:"Possession Certificate",desc:"Confirms actual physical possession of the land. Issued by the Village Office (Taluk Office). Required by banks for home loans.",where:"Village Office / Taluk Office",time:"1-2 weeks",warn:null,apostille:false,critical:true},
+    {title:"Survey Sketch (Thandaper)",desc:"Official survey map of the plot showing boundaries, area and survey number. Get a certified copy from the Survey Department.",where:"District Survey Office, Kerala",time:"1-2 weeks",warn:"Verify actual land dimensions on site match the sketch",apostille:false,critical:true},
+    {title:"Latest Land Tax Receipt (Pattayam)",desc:"Proof that land tax is paid and up to date. The seller must provide receipts for the last 3 years minimum.",where:"Village Office",time:"Collect from seller",warn:"Unpaid land tax becomes buyer's liability after registration",apostille:false,critical:true},
+    {title:"Building Tax Receipt (if constructed property)",desc:"Proof of Panchayat / Corporation building tax payment. If buying a house, ensure all tax receipts are up to date.",where:"Panchayat / Municipality / Corporation office",time:"Collect from seller",warn:null,apostille:false,critical:false},
+    {title:"No Objection Certificate (NOC) from Bank",desc:"If the property has an existing home loan or mortgage on it, the seller must get a NOC from their bank before selling. Without this, the sale is illegal.",where:"Seller's bank — original mortgage holder",time:"1-2 weeks from seller's bank",warn:"Property with mortgage CANNOT be sold without this NOC",apostille:false,critical:false},
+    {title:"Approved Building Plan (for constructed property)",desc:"Municipality/Panchayat-approved building plan showing the structure is legally constructed. Needed for flats and villas.",where:"Seller / Builder / Local Body",time:"Collect from seller/builder",warn:"Illegal constructions cannot be mortgaged or easily sold later",apostille:false,critical:false},
+    {title:"Lawyer's Title Verification Report",desc:"Get an independent Kerala advocate to review all property documents and issue a written title clearance report before signing any agreement.",where:"Hire an independent Kerala advocate",time:"3-7 days",warn:"Never skip this — even if the seller seems trustworthy",apostille:false,critical:true},
+    {title:"Occupancy Certificate (OC) — for Flats / Apartments",desc:"Issued by the local body confirming the building is legally fit for occupation. Without a valid OC, the building is technically illegal and banks will refuse home loans on it.",where:"Panchayat / Municipality / Corporation office",time:"Collect from builder / seller",warn:"Never buy a flat without verifying the OC — this is non-negotiable",apostille:false,critical:true},
+    {title:"RERA Registration Certificate (for new builder projects)",desc:"All new housing projects in Kerala must be registered under Kerala RERA (K-RERA). Verify the project RERA number at rera.kerala.gov.in before paying any advance to a builder.",where:"rera.kerala.gov.in (verify online)",time:"Check online instantly",warn:"Unregistered projects offer zero legal protection to buyers",apostille:false,critical:false}
+  ]
+},
+{
+  title:"Financial & Tax Documents",
+  desc:"Documents for payment, tax compliance and bank account requirements.",
+  items:[
+    {title:"NRE / NRO Bank Account (active in India)",desc:"All property payments including stamp duty and registration fee MUST be made from an NRE or NRO account. Direct foreign currency payment is not permitted under FEMA.",where:"SBI / HDFC / ICICI / Federal Bank etc.",time:"2-4 weeks to open if new",warn:"Cash payments for property are illegal above Rs.20,000",apostille:false,critical:true},
+    {title:"Demand Draft for Stamp Duty (8%) + Registration Fee (2%)",desc:"Get a DD from your NRE/NRO account payable to the Sub-Registrar. Amount = 10% of property value (use our Stamp Duty Calculator for exact amount).",where:"Your NRE/NRO bank in India",time:"Same day at bank",warn:null,apostille:false,critical:true},
+    {title:"Form 15CA / 15CB (for remittance above Rs.5 Lakhs)",desc:"If transferring money from abroad for property purchase, Form 15CA (self-declaration) and Form 15CB (CA certificate) are needed. Your Chartered Accountant in India files these online.",where:"Chartered Accountant in India",time:"3-5 working days",warn:"Required for every foreign remittance above Rs.5L",apostille:false,critical:false},
+    {title:"PAN Card of Seller (for TDS compliance)",desc:"You must deduct TDS if the property value exceeds Rs.50 Lakhs. If the seller is an NRI, TDS rate is 12.5-20%. You need their PAN to file the TDS return.",where:"Collect from seller",time:"Collect from seller",warn:"Buyer is legally responsible for TDS deduction — not the seller",apostille:false,critical:false},
+    {title:"Last 2 Years Income Tax Returns (India ITR)",desc:"Required by banks for home loan processing. If you have rental or other income in India, file your ITR regularly.",where:"CA or incometax.gov.in",time:"File ahead of loan application",warn:null,apostille:false,critical:false},
+    {title:"Sale Agreement / Advance Receipt",desc:"A registered sale agreement (prior to final registration) protects your advance payment legally. Always register the agreement — an unregistered agreement offers limited legal protection.",where:"Sub-Registrar Office with advocate",time:"Same day at SRO",warn:"Pay advance ONLY after signing a registered sale agreement",apostille:false,critical:true},
+    {title:"Witness Aadhaar Cards (2 witnesses)",desc:"Both buyer and seller must bring 2 witnesses each to the SRO on registration day. All witnesses must have valid Aadhaar cards.",where:"Arrange local relatives or friends",time:"Coordinate in advance",warn:"Registration cannot proceed without witnesses",apostille:false,critical:true}
+  ]
+},
+{
+  title:"Home Loan Documents",
+  desc:"Additional documents required if applying for an NRI home loan from an Indian bank.",
+  items:[
+    {title:"Salary Certificate / Employment Letter",desc:"Official letter from your Gulf employer confirming designation, salary and employment duration. Must be on company letterhead, signed and stamped. Banks may ask for it to be attested.",where:"Your employer's HR department",time:"3-7 days",warn:"Banks apply a 10-20% income haircut on Gulf salaries",apostille:true,critical:true},
+    {title:"Last 6 Months Salary Slips",desc:"Payslips for the last 6 consecutive months. If self-employed, audited financial statements for the last 2 years are required instead.",where:"Your employer / HR portal",time:"Already have",warn:null,apostille:false,critical:true},
+    {title:"Last 6 Months Bank Statements (India + Abroad)",desc:"Both your Indian NRE/NRO account statement AND your overseas salary account statement for the last 6 months. Shows salary credit regularity to the bank.",where:"Your bank portals",time:"Download online",warn:"Both India and overseas statements required",apostille:false,critical:true},
+    {title:"Overseas Credit Report",desc:"Most top banks now pull your credit report from Al Etihad Credit Bureau (UAE), SIMAH (Saudi Arabia) or equivalent. Check and fix your overseas credit score before applying.",where:"Al Etihad (UAE) / SIMAH (Saudi) / local credit bureau",time:"Get report 2-4 weeks before applying",warn:"A bad overseas credit score can get your loan rejected",apostille:false,critical:false},
+    {title:"Property Valuation Report",desc:"Bank-approved valuer's report on the property value. The bank arranges this, but you pay the fee. Banks lend only up to 75-80% of the valuation, not sale price.",where:"Bank's empanelled valuer",time:"3-5 working days",warn:"Bank's valuation may be lower than sale price — budget accordingly",apostille:false,critical:false},
+    {title:"Processing Fee Payment",desc:"Banks charge a non-refundable loan processing fee (typically 0.5-1% of loan amount). Paid upfront when submitting the home loan application.",where:"Your chosen bank",time:"At application",warn:"Non-refundable even if loan is rejected",apostille:false,critical:false}
+  ]
+},
+{
+  title:"After Registration",
+  desc:"Steps to complete after the sale deed is registered at the SRO.",
+  items:[
+    {title:"Collect Registered Sale Deed (Original)",desc:"Collect the original registered sale deed from the SRO (usually ready in 1-7 days after registration). Store safely — this is the most important document you own.",where:"Sub-Registrar Office",time:"1-7 days after registration",warn:"Keep multiple scanned digital copies in cloud storage",apostille:false,critical:true},
+    {title:"Apply for Mutation (Pokkuvaravu)",desc:"Mutation transfers the property to your name in Village Office / Panchayat / Corporation records. File the application within 3 months of registration.",where:"Village Office / Panchayat / Corporation",time:"4-8 weeks",warn:"Mutation does not happen automatically — you must apply",apostille:false,critical:true},
+    {title:"Update Property Tax Records",desc:"After mutation is approved, update the property tax records in your name at the local body. Ensures future tax bills come in your name.",where:"Panchayat / Municipality / Corporation",time:"2-4 weeks after mutation",warn:null,apostille:false,critical:false},
+    {title:"Get Updated Encumbrance Certificate",desc:"Obtain a fresh EC after registration to confirm the sale has been recorded and the property is now in your name with no encumbrances.",where:"Sub-Registrar Office or igr.kerala.gov.in",time:"1-2 working days",warn:null,apostille:false,critical:false},
+    {title:"Secure Document Storage",desc:"Store all original documents in a waterproof file or bank locker. Scan all documents to Google Drive / iCloud. Share access with a trusted family member in India.",where:"Bank locker / fireproof safe",time:"Immediately after registration",warn:"Lost original sale deed = expensive court process to replace",apostille:false,critical:true}
+  ]
+}
 ];
 
-var TOTAL = 40;
+// AUTO-CALCULATE TOTAL — no hardcoding
+var TOTAL = 0;
+CATS.forEach(function(cat){ TOTAL += cat.items.length; });
+
 var selCat = 0;
 var saved = {};
-
-/* ---- LOAD SAVED STATE ---- */
 try { saved = JSON.parse(localStorage.getItem("nriDocs") || "{}"); } catch(e) {}
 
-/* ---- SHOW CATEGORY ---- */
 function showCat(idx) {
   selCat = idx;
   for (var i = 0; i < CATS.length; i++) {
@@ -582,7 +373,6 @@ function showCat(idx) {
   var cat = CATS[idx];
   document.getElementById("catTitle").textContent = cat.title;
   document.getElementById("catDesc").textContent  = cat.desc;
-
   var html = "";
   cat.items.forEach(function(item, i) {
     var id   = "d" + idx + "_" + i;
@@ -600,7 +390,6 @@ function buildItem(item, id, done) {
   if (item.apostille) badges += '<span class="badge badge-apostille">&#10024; Apostille Required</span>';
   if (item.warn)      badges += '<span class="badge badge-warn">&#9888; ' + item.warn + '</span>';
   if (item.critical)  badges += '<span class="badge badge-critical">&#128683; Critical</span>';
-
   return '<div class="doc-item' + (done ? ' done' : '') + '" id="row_' + id + '">'
        + '<input type="checkbox" id="' + id + '" ' + (done ? 'checked' : '') + ' onchange="toggle(\'' + id + '\')" />'
        + '<div class="doc-body">'
@@ -610,7 +399,6 @@ function buildItem(item, id, done) {
        + '</div></div>';
 }
 
-/* ---- TOGGLE ---- */
 function toggle(id) {
   var el  = document.getElementById(id);
   var row = document.getElementById("row_" + id);
@@ -621,45 +409,40 @@ function toggle(id) {
   updateOverall();
 }
 
-/* ---- UPDATE CAT PROGRESS ---- */
 function updateCatProgress(idx) {
   var cat  = CATS[idx];
   var done = 0;
-  cat.items.forEach(function(item, i) {
-    if (saved["d" + idx + "_" + i]) done++;
-  });
+  cat.items.forEach(function(item, i) { if (saved["d" + idx + "_" + i]) done++; });
   var total = cat.items.length;
   var pct   = total > 0 ? Math.round((done / total) * 100) : 0;
-  document.getElementById("catProgress").textContent = done + " / " + total + " collected";
-  document.getElementById("catBar").style.width      = pct + "%";
+  document.getElementById("catProgress").textContent      = done + " / " + total + " collected";
+  document.getElementById("catBar").style.width           = pct + "%";
   document.getElementById("catcount-" + idx).textContent = done + "/" + total;
 }
 
-/* ---- UPDATE OVERALL ---- */
 function updateOverall() {
   var done = 0;
   CATS.forEach(function(cat, ci) {
-    cat.items.forEach(function(item, i) {
-      if (saved["d" + ci + "_" + i]) done++;
-    });
     var catDone = 0;
-    cat.items.forEach(function(item, i) { if (saved["d" + ci + "_" + i]) catDone++; });
+    cat.items.forEach(function(item, i) {
+      if (saved["d" + ci + "_" + i]) { done++; catDone++; }
+    });
     document.getElementById("catcount-" + ci).textContent = catDone + "/" + cat.items.length;
   });
   document.getElementById("overallCount").textContent = done + " / " + TOTAL + " documents";
   document.getElementById("overallBar").style.width   = Math.round((done / TOTAL) * 100) + "%";
 }
 
-/* ---- RESET ---- */
 function resetAll() {
   var btn = document.getElementById("resetBtn");
   if (btn.getAttribute("data-confirm") !== "yes") {
     btn.textContent = "Tap again to confirm reset";
     btn.style.background = "#fee2e2";
     btn.style.color = "#991b1b";
-    btn.setAttribute("data-confirm","yes");
-    setTimeout(function(){ 
-      btn.textContent = "\u8635 Reset All";
+    btn.setAttribute("data-confirm", "yes");
+    setTimeout(function(){
+      // FIX BUG 1: use actual ↻ character, not unicode escape string
+      btn.textContent = "↻ Reset All";
       btn.style.background = "#f1f5f9";
       btn.style.color = "#64748b";
       btn.removeAttribute("data-confirm");
@@ -674,13 +457,13 @@ function resetAll() {
     document.getElementById("catcount-" + i).textContent = "0/" + CATS[i].items.length;
   }
   var b = document.getElementById("resetBtn");
-  b.textContent = "\u8635 Reset All";
+  // FIX BUG 1: actual ↻ character
+  b.textContent = "↻ Reset All";
   b.style.background = "#f1f5f9";
   b.style.color = "#64748b";
   b.removeAttribute("data-confirm");
 }
 
-/* ---- WHATSAPP SHARE ---- */
 function shareWhatsApp() {
   var done = 0;
   var missing = [];
@@ -691,15 +474,17 @@ function shareWhatsApp() {
     });
   });
   var pct = Math.round((done / TOTAL) * 100);
+  // FIX BUG 2 & 3: use actual \n newline character (single backslash), not \\n
   var topMissing = missing.slice(0, 8).join("\n");
   var msg = "*Kerala NRI Document Checklist*\n\n"
           + "Progress: " + done + " / " + TOTAL + " documents (" + pct + "%)\n\n"
-          + (missing.length > 0 ? "*Still needed:*\n" + topMissing + (missing.length > 8 ? "\n...and " + (missing.length-8) + " more" : "") : "*All documents collected!*")
-          + "\n\nKeralaNRIToolkit.com";
-  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+          + (missing.length > 0
+              ? "*Still needed:*\n" + topMissing + (missing.length > 8 ? "\n...and " + (missing.length - 8) + " more" : "")
+              : "*All documents collected! \u2714\uFE0F*")
+          + "\n\nhttps://kerala-nri-toolkit.vercel.app/document-checklist.html";
+  window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(msg), "_blank");
 }
 
-/* ---- INIT ---- */
 showCat(0);
 updateOverall();
 </script>

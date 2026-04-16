@@ -3,239 +3,408 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Kerala Stamp Duty Calculator 2025 | Property Registration Charges</title>
+<title>Kerala Stamp Duty Calculator 2026 | Property Registration Charges</title>
 <meta name="description" content="Calculate Kerala stamp duty and registration charges instantly. Covers sale deed, gift deed, settlement deed for all property types. Free NRI tool."/>
-<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-body{font-family:'Inter',sans-serif;}
-.rrow{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.87rem;}
+*,*::before,*::after{box-sizing:border-box;}
+
+/* FIX 1 + 4: overflow-x + touch-action */
+html,body{
+  overflow-x:hidden;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  touch-action:pan-y;
+}
+
+/* FIX 2: Tailwind removed — plain CSS replaces bg-slate-50 min-h-screen */
+body{
+  font-family:'Inter',sans-serif;
+  background:#f8fafc;
+  min-height:100vh;
+  width:100%;
+}
+
+/* ── NAV short/full labels ── */
+.nav-link-full{display:inline;}
+.nav-link-short{display:none;}
+
+/* FIX 7: flex-wrap + word-break on result rows */
+.rrow{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:4px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  font-size:.87rem;
+  word-break:break-word;
+}
 .rrow:last-child{border:none;}
+.rrow span:last-child{font-weight:600;}
+
+/* Range slider */
 input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:#e2e8f0;outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#059669;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2);}
-.deed-btn{border:2px solid #e2e8f0;font-weight:700;border-radius:12px;padding:10px 8px;font-size:.78rem;cursor:pointer;background:white;width:100%;transition:all .18s;line-height:1.3;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#059669;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+
+/* Deed buttons */
+.deed-btn{
+  border:2px solid #e2e8f0;
+  font-weight:700;
+  border-radius:12px;
+  padding:12px 8px;
+  font-size:.78rem;
+  cursor:pointer;
+  background:white;
+  width:100%;
+  transition:all .18s;
+  line-height:1.3;
+  min-height:56px;
+  word-break:break-word;
+}
 .deed-btn:hover,.deed-btn.on{background:#1a3c2e;color:white;border-color:#1a3c2e;}
-.rate-card{border-radius:12px;padding:10px 14px;margin-bottom:6px;font-size:.84rem;display:flex;justify-content:space-between;align-items:center;}
+
+/* Rate card */
+.rate-card{border-radius:12px;padding:10px 14px;margin-bottom:6px;font-size:.84rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;word-break:break-word;}
+
+/* Spinner */
 .spin{display:inline-block;width:12px;height:12px;border:2px solid #444;border-top-color:#10b981;border-radius:50%;animation:sp .7s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg);}}
+
+/* ── GRIDS ── */
+.main-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  width:100%;
+}
+/* FIX 3: min-width:0 on all grid children */
+.main-grid > div{min-width:0;}
+
+.deed-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+/* FIX warn 2: auto-fit for consistency */
+.fx-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(80px,1fr));
+  gap:8px;
+}
+
+.rate-table-grid{
+  display:grid;
+  grid-template-columns:1.6fr 0.8fr 0.8fr;
+  word-break:break-word;
+}
+
+/* FIX warn 5: NRI notes list */
+.nri-notes-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:.86rem;color:#475569;}
+.nri-notes-list li{display:flex;gap:10px;align-items:flex-start;}
+.nri-notes-list li span:last-child{word-break:break-word;min-width:0;flex:1;}
+
+/* FIX warn 6: compare states rows */
+.compare-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:9px 12px;border-radius:8px;word-break:break-word;}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+
+  /* Nav */
+  .nav-link-full{display:none !important;}
+  .nav-link-short{display:inline !important;}
+  .nav-links{gap:8px !important;font-size:.78rem !important;}
+
+  /* Hero */
+  .hero-wrap{padding:20px 12px 16px !important;}
+  h1{font-size:1.5rem !important;}
+
+  /* Grid → single column */
+  .main-grid{
+    grid-template-columns:1fr !important;
+    padding:0 12px 32px !important;
+    gap:16px !important;
+  }
+
+  /* Deed buttons stay 2 cols — fine on mobile */
+  .deed-grid{
+    grid-template-columns:1fr 1fr !important;
+    gap:6px !important;
+  }
+  .deed-btn{
+    font-size:.73rem !important;
+    padding:10px 6px !important;
+    min-height:52px !important;
+  }
+
+  /* Rate table scroll */
+  .rate-table-wrap{overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
+  .rate-table-grid{min-width:300px;}
+
+  /* Inputs bigger tap targets */
+  input[type=number]{padding:13px 14px !important;font-size:1rem !important;}
+  input[type=range]::-webkit-slider-thumb{width:26px !important;height:26px !important;}
+
+  /* Button row → stacked */
+  .btn-row{grid-template-columns:1fr !important;}
+
+  /* Footer */
+  .footer-nav{gap:8px !important;font-size:.74rem !important;}
+}
+
+@media(max-width:380px){
+  .deed-btn{font-size:.68rem !important;padding:8px 4px !important;}
+  h1{font-size:1.3rem !important;}
+}
 </style>
 </head>
-<body style="background:#f8fafc;min-height:100vh;font-family:Inter,sans-serif;">
+<!-- FIX 2: removed Tailwind CDN entirely, removed Tailwind classes from body -->
+<body>
 
-<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;">
+<!-- NAV -->
+<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
-    <div style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
+    <!-- FIX 5: short labels added -->
+    <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;">
       <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">Exchange Rates</a>
-      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">Land Value</a>
-      <a href="document-checklist.html" style="color:#cbd5e1;text-decoration:none;">Documents</a>
-      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">Visa Tracker</a>
-      <a href="stamp-duty.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">Stamp Duty</a>
-      <a href="emi-calculator.html" style="color:#cbd5e1;text-decoration:none;">EMI Calculator</a>
+      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Exchange Rates</span>
+        <span class="nav-link-short">Rates</span>
+      </a>
+      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Land Value</span>
+        <span class="nav-link-short">Land</span>
+      </a>
+      <a href="document-checklist.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Documents</span>
+        <span class="nav-link-short">Docs</span>
+      </a>
+      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Visa Tracker</span>
+        <span class="nav-link-short">Visa</span>
+      </a>
+      <a href="stamp-duty.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">
+        <span class="nav-link-full">Stamp Duty</span>
+        <span class="nav-link-short">Stamp</span>
+      </a>
+      <a href="emi-calculator.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">EMI Calculator</span>
+        <span class="nav-link-short">EMI</span>
+      </a>
     </div>
   </div>
 </nav>
 
-<div style="max-width:1200px;margin:0 auto;padding:40px 16px 24px;">
+<!-- HERO -->
+<div class="hero-wrap" style="max-width:1200px;margin:0 auto;padding:40px 16px 24px;width:100%;">
   <span style="background:#d1fae5;color:#065f46;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;">2026 Official Rates</span>
   <h1 style="font-size:2.2rem;font-weight:800;margin:12px 0 8px;">Kerala Stamp Duty Calculator</h1>
-  <p style="color:#64748b;max-width:640px;">Calculate stamp duty and registration charges for all deed types in Kerala. Rates current as of 2026 — verified against Kerala Registration Department.</p>
+  <p style="color:#64748b;max-width:640px;margin:0;word-break:break-word;">Calculate stamp duty and registration charges for all deed types in Kerala. Rates current as of 2026 — verified against Kerala Registration Department.</p>
   <p style="color:#94a3b8;font-size:.76rem;margin-top:6px;">Always verify at <a href="https://registration.kerala.gov.in" target="_blank" style="color:#059669;">registration.kerala.gov.in</a></p>
 </div>
 
-<div style="max-width:1200px;margin:0 auto;padding:0 16px 48px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+<!-- MAIN GRID -->
+<div style="max-width:1200px;margin:0 auto;padding:0 16px 48px;" class="main-grid">
 
-<!-- LEFT -->
-<div style="display:flex;flex-direction:column;gap:20px;">
+  <!-- LEFT -->
+  <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
 
-  <!-- DEED TYPE -->
-  <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
-    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:6px;">&#128196; Deed Type</h2>
-    <p style="color:#94a3b8;font-size:.76rem;margin-bottom:14px;">Select the type of property transaction</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
-      <button onclick="setDeed('sale',this)" id="deed-sale" class="deed-btn on">&#127968; Sale Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">8% + 2%</span></button>
-      <button onclick="setDeed('gift_family',this)" id="deed-gift_family" class="deed-btn">&#10084; Gift Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Blood Relative</span></button>
-      <button onclick="setDeed('gift_other',this)" id="deed-gift_other" class="deed-btn">&#127873; Gift Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Non-Relative</span></button>
-      <button onclick="setDeed('settlement',this)" id="deed-settlement" class="deed-btn">&#128058; Settlement Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Family</span></button>
-      <button onclick="setDeed('partition_family',this)" id="deed-partition_family" class="deed-btn">&#9878;&#65039; Partition Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Family</span></button>
-      <button onclick="setDeed('partition_other',this)" id="deed-partition_other" class="deed-btn">&#128196; Partition Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Non-Family</span></button>
+    <!-- DEED TYPE -->
+    <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:6px;">&#128196; Deed Type</h2>
+      <p style="color:#94a3b8;font-size:.76rem;margin-bottom:14px;">Select the type of property transaction</p>
+      <div class="deed-grid">
+        <button onclick="setDeed('sale',this)" id="deed-sale" class="deed-btn on">&#127968; Sale Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">8% + 2%</span></button>
+        <button onclick="setDeed('gift_family',this)" id="deed-gift_family" class="deed-btn">&#10084; Gift Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Blood Relative</span></button>
+        <button onclick="setDeed('gift_other',this)" id="deed-gift_other" class="deed-btn">&#127873; Gift Deed<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Non-Relative</span></button>
+        <button onclick="setDeed('settlement',this)" id="deed-settlement" class="deed-btn">&#128058; Settlement<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Family</span></button>
+        <button onclick="setDeed('partition_family',this)" id="deed-partition_family" class="deed-btn">&#9878;&#65039; Partition<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Family</span></button>
+        <button onclick="setDeed('partition_other',this)" id="deed-partition_other" class="deed-btn">&#128196; Partition<br/><span style="font-weight:400;font-size:.72rem;opacity:.8;">Non-Family</span></button>
+      </div>
+      <div id="deedNote" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;font-size:.8rem;color:#166534;margin-top:8px;word-break:break-word;"></div>
     </div>
-    <div id="deedNote" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;font-size:.8rem;color:#166534;margin-top:8px;"></div>
+
+    <!-- PROPERTY VALUE -->
+    <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
+      <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">&#128176; Property Value</h2>
+      <div style="margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
+          <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Property Value</label>
+          <span id="valDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;word-break:break-word;"></span>
+        </div>
+        <input type="range" id="valSlider" min="500000" max="50000000" step="100000" value="5000000" oninput="syncVal('slider')"/>
+        <input type="number" id="valInput" value="5000000" oninput="syncVal('input')" placeholder="Enter property value in ₹"
+          style="width:100%;margin-top:10px;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;"/>
+        <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>₹5L</span><span>₹5Cr</span></div>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:12px 14px;word-break:break-word;">
+        <p style="font-size:.8rem;font-weight:700;color:#92400e;margin-bottom:6px;">&#9888; Stamp Duty is on the HIGHER Value</p>
+        <p style="font-size:.78rem;color:#78350f;margin:0;">Kerala calculates stamp duty on whichever is higher — the actual sale price or the SRO guideline value. NRIs buying at market price (2-3x SRO) will pay stamp duty on the full market price.</p>
+      </div>
+    </div>
+
+    <!-- RESULT CARD -->
+    <div style="background:#1a3c2e;border-radius:24px;padding:24px;color:white;overflow:hidden;">
+      <h3 style="color:#6ee7b7;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">&#128202; Charges Breakdown</h3>
+      <div id="deedLabel" style="text-align:center;background:rgba(255,255,255,.07);border-radius:12px;padding:12px;margin-bottom:16px;font-size:.85rem;font-weight:600;color:#a7f3d0;word-break:break-word;"></div>
+
+      <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Property Value</span><span id="r0"></span></div>
+      <div class="rrow">
+        <span style="color:#a7f3d0;font-size:.8rem;">Stamp Duty <span id="sdRateLabel" style="font-size:.72rem;opacity:.7;"></span></span>
+        <span id="r1" style="color:#fbbf24;"></span>
+      </div>
+      <div class="rrow">
+        <span style="color:#a7f3d0;font-size:.8rem;">Registration Fee <span id="regRateLabel" style="font-size:.72rem;opacity:.7;"></span></span>
+        <span id="r2" style="color:#fbbf24;"></span>
+      </div>
+      <div class="rrow" style="border-top:1px solid #065f46;margin-top:4px;padding-top:10px;border-bottom:none;font-size:1rem;font-weight:800;">
+        <span style="color:#6ee7b7;">Total Charges</span><span id="r3"></span>
+      </div>
+      <div class="rrow" style="border:none;padding-top:4px;">
+        <span style="color:#a7f3d0;font-size:.8rem;">Total Cash Needed</span>
+        <span id="r4" style="font-weight:700;color:white;font-size:1.05rem;"></span>
+      </div>
+
+      <!-- FX -->
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid #14532d;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
+          <span style="color:#6ee7b7;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">&#128178; Total Charges in Your Currency</span>
+          <span id="fxSt" style="color:#64748b;font-size:.75rem;"><span class="spin"></span></span>
+        </div>
+        <div id="fxGrid" class="fx-grid"></div>
+      </div>
+
+      <!-- FIX 6: wa.me → api.whatsapp.com/send -->
+      <button onclick="doShare()" style="margin-top:16px;width:100%;background:#25D366;color:white;font-weight:700;font-size:.9rem;padding:14px;border-radius:12px;border:none;cursor:pointer;min-height:48px;">
+        &#128241; Share on WhatsApp
+      </button>
+      <div class="btn-row" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+        <a href="land-value.html" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.08);color:#a7f3d0;font-weight:600;font-size:.8rem;padding:12px;border-radius:12px;text-decoration:none;min-height:44px;">
+          &#127968; Land Value
+        </a>
+        <a href="emi-calculator.html" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.08);color:#a7f3d0;font-weight:600;font-size:.8rem;padding:12px;border-radius:12px;text-decoration:none;min-height:44px;">
+          &#129518; EMI Calc
+        </a>
+      </div>
+    </div>
   </div>
 
-  <!-- PROPERTY VALUE -->
-  <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
-    <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">&#128176; Property Value</h2>
+  <!-- RIGHT -->
+  <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
 
-    <div style="margin-bottom:20px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Property Value / Consideration</label>
-        <span id="valDisp" style="font-size:1rem;font-weight:800;color:#1a3c2e;"></span>
+    <!-- RATE TABLE — FIX warn 3: overflow:hidden on parent card -->
+    <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#128218; Kerala Stamp Duty Rate Table</h2>
+      <p style="color:#94a3b8;font-size:.75rem;margin-bottom:16px;">Current rates — Verified 2026 | Kerala Registration Dept</p>
+      <!-- FIX warn 3+7: scroll wrapper with word-break inside -->
+      <div class="rate-table-wrap" style="border-radius:14px;overflow:hidden;border:1px solid #f1f5f9;">
+        <div style="min-width:300px;">
+          <div class="rate-table-grid" style="background:#f8fafc;padding:8px 12px;font-size:.73rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.04em;">
+            <span>Deed Type</span><span>Stamp Duty</span><span>Reg Fee</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#fef9f0;">
+            <span style="font-weight:700;color:#1a3c2e;">Sale Deed</span><span style="color:#dc2626;font-weight:700;">8%</span><span style="color:#dc2626;font-weight:700;">2%</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
+            <span style="font-weight:600;">Gift (Blood Relative)</span><span style="color:#059669;font-weight:700;">2%</span><span style="color:#059669;font-weight:700;">1%</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
+            <span style="font-weight:600;">Gift (Non-Relative)</span><span style="color:#dc2626;font-weight:700;">8%</span><span style="color:#dc2626;font-weight:700;">2%</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
+            <span style="font-weight:600;">Settlement (Family)</span><span style="color:#059669;font-weight:700;">1%</span><span style="color:#059669;font-weight:700;">1%</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
+            <span style="font-weight:600;">Partition (Family)</span><span style="color:#059669;font-weight:700;">0.15%*</span><span style="color:#059669;font-weight:700;">1%</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
+            <span style="font-weight:600;">Partition (Others)</span><span style="color:#d97706;font-weight:700;">6%</span><span style="color:#d97706;font-weight:700;">2%</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
+            <span style="font-weight:600;">Will</span><span style="color:#059669;font-weight:700;">NIL</span><span style="color:#64748b;">₹525 fixed</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
+            <span style="font-weight:600;">Power of Attorney</span><span style="color:#059669;font-weight:700;">NIL</span><span style="color:#64748b;">₹210 fixed</span>
+          </div>
+          <div class="rate-table-grid" style="padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
+            <span style="font-weight:600;">Mortgage Deed</span><span style="color:#d97706;font-weight:700;">0.8%</span><span style="color:#d97706;font-weight:700;">2%</span>
+          </div>
+        </div>
       </div>
-      <input type="range" id="valSlider" min="500000" max="50000000" step="100000" value="5000000" oninput="syncVal('slider')"/>
-      <input type="number" id="valInput" value="5000000" oninput="syncVal('input')" placeholder="Enter property value in ₹"
-        style="width:100%;margin-top:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.95rem;font-weight:600;background:#f8fafc;outline:none;box-sizing:border-box;"/>
-      <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>₹5L</span><span>₹5Cr</span></div>
+      <p style="font-size:.7rem;color:#94a3b8;margin-top:8px;word-break:break-word;">*Min ₹1,000 for partition &amp; gift deeds to family. Always verify at igr.kerala.gov.in</p>
     </div>
 
-    <!-- MARKET vs SRO toggle -->
-    <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:12px;padding:12px 14px;">
-      <p style="font-size:.8rem;font-weight:700;color:#92400e;margin-bottom:6px;">&#9888; Stamp Duty is on the HIGHER Value</p>
-      <p style="font-size:.78rem;color:#78350f;">Kerala calculates stamp duty on whichever is higher — the actual sale price or the SRO guideline value. NRIs buying at market price (2-3x SRO) will pay stamp duty on the full market price.</p>
+    <!-- NRI NOTES — FIX warn 5: word-break on all li text -->
+    <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
+      <h2 style="font-size:1rem;font-weight:700;margin-bottom:12px;">&#128205; What NRIs Must Know</h2>
+      <ul class="nri-notes-list">
+        <li>
+          <span style="color:#dc2626;font-weight:700;flex-shrink:0;margin-top:1px;">&#9888;</span>
+          <span><strong>Market Price vs SRO Value:</strong> Stamp duty is levied on the <em>higher</em> of the actual sale price or SRO guideline value. NRIs typically pay on full market price.</span>
+        </li>
+        <li>
+          <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+          <span><strong>No Gender Concession:</strong> Kerala does not offer reduced rates for women buyers. Same 8% applies to all.</span>
+        </li>
+        <li>
+          <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+          <span><strong>Payment Method:</strong> Stamp duty must be paid via Demand Draft or e-challan. NRIs must route funds from NRE/NRO account.</span>
+        </li>
+        <li>
+          <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+          <span><strong>Gift Deed Advantage:</strong> Receiving from parents/siblings? Gift Deed (Blood Relative) at 2%+1% = 3% total is far cheaper than Sale Deed at 10%.</span>
+        </li>
+        <li>
+          <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
+          <span><strong>Undervaluation Penalty:</strong> Underpaying stamp duty attracts a penalty of 2% per month on the deficient amount.</span>
+        </li>
+        <li>
+          <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
+          <span><strong>Blood Relatives Covered:</strong> Spouse, parents, children, siblings, grandparents, grandchildren, and their spouses.</span>
+        </li>
+      </ul>
     </div>
-  </div>
 
-  <!-- RESULT CARD -->
-  <div style="background:#1a3c2e;border-radius:24px;padding:28px;color:white;">
-    <h3 style="color:#6ee7b7;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">&#128202; Charges Breakdown</h3>
-
-    <div id="deedLabel" style="text-align:center;background:rgba(255,255,255,.07);border-radius:12px;padding:12px;margin-bottom:16px;font-size:.85rem;font-weight:600;color:#a7f3d0;"></div>
-
-    <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Property Value</span><span id="r0" style="font-weight:600;"></span></div>
-    <div class="rrow">
-      <span style="color:#a7f3d0;font-size:.8rem;">Stamp Duty <span id="sdRateLabel" style="font-size:.72rem;opacity:.7;"></span></span>
-      <span id="r1" style="font-weight:600;color:#fbbf24;"></span>
-    </div>
-    <div class="rrow">
-      <span style="color:#a7f3d0;font-size:.8rem;">Registration Fee <span id="regRateLabel" style="font-size:.72rem;opacity:.7;"></span></span>
-      <span id="r2" style="font-weight:600;color:#fbbf24;"></span>
-    </div>
-    <div class="rrow" style="border-top:1px solid #065f46;margin-top:4px;padding-top:10px;border-bottom:none;font-size:1rem;font-weight:800;">
-      <span style="color:#6ee7b7;">Total Charges</span><span id="r3"></span>
-    </div>
-    <div class="rrow" style="border:none;padding-top:4px;">
-      <span style="color:#a7f3d0;font-size:.8rem;">Total Cash Needed</span>
-      <span id="r4" style="font-weight:700;color:white;font-size:1.05rem;"></span>
-    </div>
-
-    <!-- FX SECTION -->
-    <div style="margin-top:16px;padding-top:16px;border-top:1px solid #14532d;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <span style="color:#6ee7b7;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">&#128178; Total Charges in Your Currency</span>
-        <span id="fxSt" style="color:#64748b;font-size:.75rem;"><span class="spin"></span></span>
+    <!-- COMPARE STATES — FIX warn 6: flex-wrap on rows -->
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:24px;padding:24px;overflow:hidden;">
+      <h2 style="font-size:1rem;font-weight:700;color:#14532d;margin-bottom:12px;">&#127758; Kerala vs Other States (Sale Deed)</h2>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:.84rem;">
+        <div class="compare-row" style="background:white;border:2px solid #059669;">
+          <span style="font-weight:700;color:#1a3c2e;">Kerala</span>
+          <span style="font-weight:800;color:#dc2626;">8% + 2% = 10%</span>
+        </div>
+        <div class="compare-row" style="background:rgba(255,255,255,.6);">
+          <span style="color:#475569;">Maharashtra (urban)</span>
+          <span style="color:#475569;">5% + 1% = 6%</span>
+        </div>
+        <div class="compare-row" style="background:rgba(255,255,255,.6);">
+          <span style="color:#475569;">Karnataka</span>
+          <span style="color:#475569;">5% + 1% = 6%</span>
+        </div>
+        <div class="compare-row" style="background:rgba(255,255,255,.6);">
+          <span style="color:#475569;">Tamil Nadu</span>
+          <span style="color:#475569;">7% + 1% = 8%</span>
+        </div>
+        <div class="compare-row" style="background:rgba(255,255,255,.6);">
+          <span style="color:#475569;">Delhi</span>
+          <span style="color:#475569;">4-6% + 1% = 5-7%</span>
+        </div>
       </div>
-      <div id="fxGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;"></div>
+      <p style="font-size:.74rem;color:#166534;margin-top:10px;word-break:break-word;">&#128161; Kerala's combined 10% is among the higher rates in India. On a ₹1Cr property, that's ₹10L just in charges.</p>
     </div>
 
-    <button onclick="doShare()" style="margin-top:16px;width:100%;background:#25D366;color:white;font-weight:700;font-size:.87rem;padding:12px;border-radius:12px;border:none;cursor:pointer;">
-      &#128241; Share on WhatsApp
-    </button>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
-      <a href="land-value.html" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.08);color:#a7f3d0;font-weight:600;font-size:.8rem;padding:10px;border-radius:12px;text-decoration:none;">
-        &#127968; Land Value
-      </a>
-      <a href="emi-calculator.html" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.08);color:#a7f3d0;font-weight:600;font-size:.8rem;padding:10px;border-radius:12px;text-decoration:none;">
-        &#129518; EMI Calc
-      </a>
-    </div>
   </div>
 </div>
 
-<!-- RIGHT -->
-<div style="display:flex;flex-direction:column;gap:20px;">
-
-  <!-- ALL DEED RATES REFERENCE TABLE -->
-  <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
-    <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#128218; Kerala Stamp Duty Rate Table</h2>
-    <p style="color:#94a3b8;font-size:.75rem;margin-bottom:16px;">Current rates — Verified 2026 | Kerala Registration Dept</p>
-
-    <div style="border-radius:14px;overflow:hidden;border:1px solid #f1f5f9;">
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;background:#f8fafc;padding:8px 12px;font-size:.73rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.04em;">
-        <span>Deed Type</span><span>Stamp Duty</span><span>Reg Fee</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#fef9f0;">
-        <span style="font-weight:700;color:#1a3c2e;">Sale Deed</span><span style="color:#dc2626;font-weight:700;">8%</span><span style="color:#dc2626;font-weight:700;">2%</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
-        <span style="font-weight:600;">Gift Deed (Blood Relative)</span><span style="color:#059669;font-weight:700;">2%</span><span style="color:#059669;font-weight:700;">1%</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
-        <span style="font-weight:600;">Gift Deed (Non-Relative)</span><span style="color:#dc2626;font-weight:700;">8%</span><span style="color:#dc2626;font-weight:700;">2%</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
-        <span style="font-weight:600;">Settlement Deed (Family)</span><span style="color:#059669;font-weight:700;">1%</span><span style="color:#059669;font-weight:700;">1%</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
-        <span style="font-weight:600;">Partition Deed (Family)</span><span style="color:#059669;font-weight:700;">0.15%*</span><span style="color:#059669;font-weight:700;">1%</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
-        <span style="font-weight:600;">Partition Deed (Others)</span><span style="color:#d97706;font-weight:700;">6%</span><span style="color:#d97706;font-weight:700;">2%</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
-        <span style="font-weight:600;">Will</span><span style="color:#059669;font-weight:700;">NIL</span><span style="color:#64748b;">₹525 fixed</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;">
-        <span style="font-weight:600;">Power of Attorney</span><span style="color:#059669;font-weight:700;">NIL</span><span style="color:#64748b;">₹210 fixed</span>
-      </div>
-      <div style="display:grid;grid-template-columns:1.6fr 0.8fr 0.8fr;padding:10px 12px;border-top:1px solid #f1f5f9;font-size:.82rem;background:#f8fafc;">
-        <span style="font-weight:600;">Mortgage Deed</span><span style="color:#d97706;font-weight:700;">0.8%</span><span style="color:#d97706;font-weight:700;">2%</span>
-      </div>
-    </div>
-    <p style="font-size:.7rem;color:#94a3b8;margin-top:8px;">*Min ₹1,000 for partition &amp; gift deeds to family. Always verify at igr.kerala.gov.in</p>
-  </div>
-
-  <!-- NRI SPECIFIC NOTES -->
-  <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
-    <h2 style="font-size:1rem;font-weight:700;margin-bottom:12px;">&#128205; What NRIs Must Know</h2>
-    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:.86rem;color:#475569;">
-      <li style="display:flex;gap:10px;align-items:flex-start;">
-        <span style="color:#dc2626;font-weight:700;flex-shrink:0;margin-top:1px;">&#9888;</span>
-        <span><strong>Market Price vs SRO Value:</strong> Stamp duty is levied on the <em>higher</em> of the actual sale price or SRO guideline value. Since NRIs typically buy at market price (2-3x SRO), they pay stamp duty on the full market price — not the SRO rate.</span>
-      </li>
-      <li style="display:flex;gap:10px;align-items:flex-start;">
-        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-        <span><strong>No Gender Concession:</strong> Kerala does not offer any reduced rate for women buyers. The same 8% applies to men, women, and joint purchases.</span>
-      </li>
-      <li style="display:flex;gap:10px;align-items:flex-start;">
-        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-        <span><strong>Payment Method:</strong> Stamp duty and registration fee must be paid via Demand Draft or e-challan at the Sub-Registrar Office. NRIs must route funds from NRE/NRO account.</span>
-      </li>
-      <li style="display:flex;gap:10px;align-items:flex-start;">
-        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-        <span><strong>Gift Deed Advantage:</strong> If receiving property from parents/siblings already in India, a Gift Deed (Blood Relative) at 2%+1% = 3% total is far cheaper than a Sale Deed at 10%.</span>
-      </li>
-      <li style="display:flex;gap:10px;align-items:flex-start;">
-        <span style="color:#d97706;font-weight:700;flex-shrink:0;">&#9888;</span>
-        <span><strong>Undervaluation Penalty:</strong> If the registrar suspects undervaluation, they can refer the deed for market value assessment. Underpaying stamp duty can attract a penalty of 2% per month on the deficient amount.</span>
-      </li>
-      <li style="display:flex;gap:10px;align-items:flex-start;">
-        <span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span>
-        <span><strong>Blood Relatives Covered:</strong> For reduced gift/settlement rates, blood relatives include spouse, parents, children, siblings, grandparents, grandchildren, and their spouses.</span>
-      </li>
-    </ul>
-  </div>
-
-  <!-- COMPARE OTHER STATES -->
-  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:24px;padding:24px;">
-    <h2 style="font-size:1rem;font-weight:700;color:#14532d;margin-bottom:12px;">&#127758; Kerala vs Other States (Sale Deed)</h2>
-    <div style="display:flex;flex-direction:column;gap:6px;font-size:.84rem;">
-      <div style="display:flex;justify-content:space-between;padding:7px 10px;background:white;border-radius:8px;border:2px solid #059669;">
-        <span style="font-weight:700;color:#1a3c2e;">Kerala</span><span style="font-weight:800;color:#dc2626;">8% + 2% = 10%</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:7px 10px;background:rgba(255,255,255,.6);border-radius:8px;">
-        <span style="color:#475569;">Maharashtra (urban)</span><span style="color:#475569;">5% + 1% = 6%</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:7px 10px;background:rgba(255,255,255,.6);border-radius:8px;">
-        <span style="color:#475569;">Karnataka</span><span style="color:#475569;">5% + 1% = 6%</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:7px 10px;background:rgba(255,255,255,.6);border-radius:8px;">
-        <span style="color:#475569;">Tamil Nadu</span><span style="color:#475569;">7% + 1% = 8%</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:7px 10px;background:rgba(255,255,255,.6);border-radius:8px;">
-        <span style="color:#475569;">Delhi</span><span style="color:#475569;">4-6% + 1% = 5-7%</span>
-      </div>
-    </div>
-    <p style="font-size:.74rem;color:#166534;margin-top:10px;">&#128161; Kerala's combined 10% is among the higher rates in India. Budget accordingly — on a ₹1Cr property, you pay ₹10L just in stamp duty + registration.</p>
-  </div>
-
-</div>
-</div>
-
-<footer style="background:#0f172a;color:#64748b;padding:32px 16px;">
+<!-- FOOTER -->
+<footer style="background:#0f172a;color:#64748b;padding:32px 16px;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;">
     <p style="margin:0;">&#169; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community.</p>
-    <nav style="display:flex;flex-wrap:wrap;gap:16px;">
+    <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:12px;">
       <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
       <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
       <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
@@ -249,12 +418,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 
 <script>
 var DEEDS = {
-  sale:             {label:"Sale Deed",                    sd:0.08,  reg:0.02, note:"Standard purchase transaction. Calculated on higher of sale price or SRO market value."},
-  gift_family:      {label:"Gift Deed \u2014 Blood Relative",sd:0.02, reg:0.01, note:"For transfers to spouse, parents, children, siblings, grandparents, grandchildren. Min stamp duty ₹1,000."},
-  gift_other:       {label:"Gift Deed \u2014 Non-Relative",  sd:0.08,  reg:0.02, note:"Same rate as a sale deed. No concession for gifts to non-family members."},
-  settlement:       {label:"Settlement Deed (Family)",     sd:0.01,  reg:0.01, note:"Family settlement of property. Eligible relatives: spouse, children, parents, siblings."},
-  partition_family: {label:"Partition Deed (Family)",      sd:0.0015,reg:0.01, note:"Partition among legal heirs / family members. Min stamp duty ₹1,000."},
-  partition_other:  {label:"Partition Deed (Others)",      sd:0.06,  reg:0.02, note:"Partition among non-family members. Applied on value of separated share."}
+  sale:             {label:"Sale Deed",                     sd:0.08,   reg:0.02, note:"Standard purchase transaction. Calculated on higher of sale price or SRO market value."},
+  gift_family:      {label:"Gift Deed \u2014 Blood Relative",sd:0.02,  reg:0.01, note:"For transfers to spouse, parents, children, siblings, grandparents, grandchildren. Min stamp duty \u20b91,000."},
+  gift_other:       {label:"Gift Deed \u2014 Non-Relative",  sd:0.08,   reg:0.02, note:"Same rate as a sale deed. No concession for gifts to non-family members."},
+  settlement:       {label:"Settlement Deed (Family)",      sd:0.01,   reg:0.01, note:"Family settlement of property. Eligible relatives: spouse, children, parents, siblings."},
+  partition_family: {label:"Partition Deed (Family)",       sd:0.0015, reg:0.01, note:"Partition among legal heirs / family members. Min stamp duty \u20b91,000."},
+  partition_other:  {label:"Partition Deed (Others)",       sd:0.06,   reg:0.02, note:"Partition among non-family members. Applied on value of separated share."}
 };
 
 var CUR = [
@@ -265,66 +434,55 @@ var CUR = [
   {c:"QAR",name:"Qatari Riyal"},
   {c:"KWD",name:"Kuwaiti Dinar"}
 ];
-var FB = {AED:25.3, USD:93.1, GBP:116.0, SAR:24.8, QAR:25.6, KWD:303.0};
-var LR = {AED:25.3, USD:93.1, GBP:116.0, SAR:24.8, QAR:25.6, KWD:303.0};
-var fxReady = false;
-var selDeed = "sale";
-var gTotal = 0, gPropVal = 0, gSD = 0, gReg = 0;
+var FB  = {AED:25.3,USD:93.1,GBP:116.0,SAR:24.8,QAR:25.6,KWD:303.0};
+var LR  = {AED:25.3,USD:93.1,GBP:116.0,SAR:24.8,QAR:25.6,KWD:303.0};
+var fxReady=false, selDeed="sale";
+var gTotal=0, gPropVal=0, gSD=0, gReg=0;
 
-function fmt(n)  { return "₹" + Math.round(n).toLocaleString("en-IN"); }
+function fmt(n)  { return "\u20b9"+Math.round(n).toLocaleString("en-IN"); }
 function fmtL(n) {
-  if (n >= 10000000) return "₹" + (n/10000000).toFixed(2) + " Cr";
-  if (n >= 100000)   return "₹" + (n/100000).toFixed(2) + " L";
+  if (n>=10000000) return "\u20b9"+(n/10000000).toFixed(2)+" Cr";
+  if (n>=100000)   return "\u20b9"+(n/100000).toFixed(2)+" L";
   return fmt(n);
 }
-function pct(r)  { return (r*100 % 1 === 0) ? (r*100)+"%" : (r*100).toFixed(2)+"%"; }
+function pct(r) { return (r*100%1===0)?(r*100)+"%":(r*100).toFixed(2)+"%"; }
 
-/* ---- DEED TOGGLE ---- */
-function setDeed(key, btn) {
-  selDeed = key;
-  Object.keys(DEEDS).forEach(function(k) {
-    document.getElementById("deed-"+k).classList.remove("on");
-  });
+function setDeed(key,btn) {
+  selDeed=key;
+  Object.keys(DEEDS).forEach(function(k){ document.getElementById("deed-"+k).classList.remove("on"); });
   btn.classList.add("on");
   calc();
 }
 
-/* ---- SYNC SLIDER ---- */
 function syncVal(src) {
-  var sl = document.getElementById("valSlider");
-  var ip = document.getElementById("valInput");
-  if (src === "slider") { ip.value = sl.value; }
-  else { var v = Math.min(50000000, Math.max(100000, parseInt(ip.value)||5000000)); sl.value=v; ip.value=v; }
+  var sl=document.getElementById("valSlider");
+  var ip=document.getElementById("valInput");
+  if (src==="slider"){ ip.value=sl.value; }
+  else { var v=Math.min(50000000,Math.max(100000,parseInt(ip.value)||5000000)); sl.value=v; ip.value=v; }
   calc();
 }
 
-/* ---- CORE CALC ---- */
 function calc() {
-  var val = parseFloat(document.getElementById("valInput").value) || 5000000;
-  document.getElementById("valDisp").textContent = fmtL(val);
-
-  var d   = DEEDS[selDeed];
-  var sd  = Math.max(d.sd * val, selDeed === "gift_family" || selDeed === "partition_family" ? 1000 : 0);
-  var reg = d.reg * val;
-  var tot = sd + reg;
-
-  gPropVal = val; gSD = sd; gReg = reg; gTotal = tot;
-
-  document.getElementById("deedLabel").textContent = d.label;
-  document.getElementById("deedNote").textContent  = d.note;
-  document.getElementById("sdRateLabel").textContent  = "(" + pct(d.sd) + ")";
-  document.getElementById("regRateLabel").textContent = "(" + pct(d.reg) + ")";
-  document.getElementById("r0").textContent = fmtL(val);
-  document.getElementById("r1").textContent = fmtL(sd);
-  document.getElementById("r2").textContent = fmtL(reg);
-  document.getElementById("r3").textContent = fmtL(tot);
-  document.getElementById("r4").textContent = fmtL(val + tot) + " total";
-
+  var val=parseFloat(document.getElementById("valInput").value)||5000000;
+  document.getElementById("valDisp").textContent=fmtL(val);
+  var d=DEEDS[selDeed];
+  var sd=Math.max(d.sd*val,(selDeed==="gift_family"||selDeed==="partition_family")?1000:0);
+  var reg=d.reg*val;
+  var tot=sd+reg;
+  gPropVal=val; gSD=sd; gReg=reg; gTotal=tot;
+  document.getElementById("deedLabel").textContent=d.label;
+  document.getElementById("deedNote").textContent=d.note;
+  document.getElementById("sdRateLabel").textContent="("+pct(d.sd)+")";
+  document.getElementById("regRateLabel").textContent="("+pct(d.reg)+")";
+  document.getElementById("r0").textContent=fmtL(val);
+  document.getElementById("r1").textContent=fmtL(sd);
+  document.getElementById("r2").textContent=fmtL(reg);
+  document.getElementById("r3").textContent=fmtL(tot);
+  document.getElementById("r4").textContent=fmtL(val+tot)+" total";
   drawFX();
   if (!fxReady) loadFX();
 }
 
-/* ---- FX ---- */
 function loadFX() {
   fetch("https://latest.currency-api.pages.dev/v1/currencies/inr.json")
     .then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(applyFX)
@@ -335,46 +493,38 @@ function loadFX() {
     });
 }
 function applyFX(data) {
-  var inr = data.inr;
+  var inr=data.inr;
   CUR.forEach(function(x){ var k=x.c.toLowerCase(); if(inr[k]) LR[x.c]=1/inr[k]; });
-  fxReady = true;
-  document.getElementById("fxSt").textContent = "Live rates";
+  fxReady=true;
+  document.getElementById("fxSt").textContent="Live rates";
   drawFX();
 }
 function drawFX() {
   if (!gTotal) return;
-  var html = "";
-  CUR.forEach(function(x) {
-    var rate = LR[x.c] || FB[x.c];
-    var val  = gTotal / rate;
-    var dec  = (x.c === "KWD") ? 1 : 0;
-    var str  = dec ? val.toFixed(1) : Math.round(val).toLocaleString("en-IN");
-    html += '<div style="background:#0f2a1e;border-radius:10px;padding:8px;text-align:center;">'
-          + '<div style="color:#94a3b8;font-size:.7rem;">' + x.c + '</div>'
-          + '<div style="color:#6ee7b7;font-weight:700;font-size:.82rem;margin-top:2px;">' + str + '</div>'
-          + '<div style="color:#64748b;font-size:.65rem;">' + x.name + '</div>'
-          + '</div>';
+  var html="";
+  CUR.forEach(function(x){
+    var rate=LR[x.c]||FB[x.c];
+    var val=gTotal/rate;
+    var dec=(x.c==="KWD")?1:0;
+    var str=dec?val.toFixed(1):Math.round(val).toLocaleString("en-IN");
+    /* FIX warn 1: min-width:0 on each FX cell */
+    html+='<div style="background:#0f2a1e;border-radius:10px;padding:8px;text-align:center;min-width:0;">'
+        +'<div style="color:#94a3b8;font-size:.7rem;">'+x.c+'</div>'
+        +'<div style="color:#6ee7b7;font-weight:700;font-size:.82rem;margin-top:2px;word-break:break-word;">'+str+'</div>'
+        +'<div style="color:#64748b;font-size:.65rem;">'+x.name+'</div>'
+        +'</div>';
   });
-  document.getElementById("fxGrid").innerHTML = html;
+  document.getElementById("fxGrid").innerHTML=html;
 }
 
-/* ---- SHARE ---- */
+/* FIX 6: wa.me → api.whatsapp.com/send */
 function doShare() {
   if (!gTotal) return;
-  var d = DEEDS[selDeed];
-  var msg = "*Kerala Stamp Duty Calculation*\n\n"
-          + "Deed Type: " + d.label + "\n"
-          + "Property Value: " + fmtL(gPropVal) + "\n\n"
-          + "Stamp Duty (" + pct(d.sd) + "): " + fmtL(gSD) + "\n"
-          + "Registration Fee (" + pct(d.reg) + "): " + fmtL(gReg) + "\n"
-          + "Total Charges: " + fmtL(gTotal) + "\n\n"
-          + "Total Cash Needed: " + fmtL(gPropVal + gTotal) + "\n\n"
-          + "Kerala NRI Toolkit\nhttps://kerala-nri-toolkit.vercel.app/stamp-duty.html\n"
-          + "_Verify rates at registration.kerala.gov.in_";
-  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+  var d=DEEDS[selDeed];
+  var msg="*Kerala Stamp Duty Calculation*\n\nDeed Type: "+d.label+"\nProperty Value: "+fmtL(gPropVal)+"\n\nStamp Duty ("+pct(d.sd)+"): "+fmtL(gSD)+"\nRegistration Fee ("+pct(d.reg)+"): "+fmtL(gReg)+"\nTotal Charges: "+fmtL(gTotal)+"\n\nTotal Cash Needed: "+fmtL(gPropVal+gTotal)+"\n\nKerala NRI Toolkit\nhttps://kerala-nri-toolkit.vercel.app/stamp-duty.html\n_Verify rates at registration.kerala.gov.in_";
+  window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(msg),"_blank");
 }
 
-/* ---- INIT ---- */
 calc();
 </script>
 </body>
