@@ -10,164 +10,106 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-/* FIX 2 + 3: overflow-x + touch-action */
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
-  touch-action: pan-y;
-}
-
+html, body { overflow-x: hidden; max-width: 100%; touch-action: pan-y; }
 body { font-family: 'Inter', sans-serif; }
 
-/* FIX 6: stat-card grid children min-width:0 */
 .stat-card {
-  background: white;
-  border-radius: 20px;
-  padding: 20px 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,.06);
-  border: 1px solid #f1f5f9;
-  transition: transform .2s;
-  min-width: 0;
-  overflow: hidden;
+  background: white; border-radius: 20px; padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid #f1f5f9;
+  transition: transform .2s; min-width: 0; overflow: hidden;
 }
 .stat-card:hover { transform: translateY(-2px); }
-
-/* FIX warn 1: live rate word-break safety */
 #liveRate { word-break: break-all; }
 
-/* FIX 7: tool-card overflow:hidden */
 .tool-card {
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,.07);
-  border: 1px solid #f1f5f9;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: all .2s;
-  overflow: hidden;
-  min-width: 0;
+  background: white; border-radius: 24px; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  border: 1px solid #f1f5f9; padding: 24px; display: flex; flex-direction: column;
+  gap: 10px; transition: all .2s; overflow: hidden; min-width: 0;
 }
 .tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.1); }
 
 .chart-card {
-  background: white;
-  border-radius: 24px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,.06);
-  border: 1px solid #f1f5f9;
-  overflow: hidden;
-  min-width: 0;
+  background: white; border-radius: 24px; padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid #f1f5f9;
+  overflow: hidden; min-width: 0;
 }
 
 .hero-bg { background: linear-gradient(135deg,#1a3c2e 0%,#14532d 40%,#065f46 100%); }
 
 .badge {
-  display: inline-block;
-  font-size: .7rem;
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  word-break: break-word;
+  display: inline-block; font-size: .7rem; font-weight: 700; padding: 2px 10px;
+  border-radius: 20px; text-transform: uppercase; letter-spacing: .05em; word-break: break-word;
 }
 
 .open-btn {
-  display: inline-block;
-  background: #1a3c2e;
-  color: white;
-  padding: 9px 20px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: .85rem;
-  text-decoration: none;
-  transition: background .15s;
-  text-align: center;
+  display: inline-block; background: #1a3c2e; color: white; padding: 9px 20px;
+  border-radius: 10px; font-weight: 700; font-size: .85rem; text-decoration: none;
+  transition: background .15s; text-align: center;
 }
 .open-btn:hover { background: #14532d; }
 
-/* FIX warn 3: range slider thumb bigger for touch */
-input[type=range] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 5px;
-  border-radius: 3px;
-  background: #94a3b8;
-  outline: none;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #059669;
-  cursor: pointer;
-}
+input[type=range] { -webkit-appearance: none; width: 100%; height: 5px; border-radius: 3px; background: #94a3b8; outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #059669; cursor: pointer; }
 
 @keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:.4;} }
-.live-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: #10b981;
-  border-radius: 50%;
-  animation: pulse-dot 1.4s infinite;
-  margin-right: 5px;
-}
+.live-dot { display: inline-block; width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse-dot 1.4s infinite; margin-right: 5px; }
 
-/* FIX 8: canvas max-width:100% — prevents iOS Safari chart overflow */
 canvas { max-width: 100% !important; }
 
-/* FIX 4: nav short/full labels */
+/* NAVBAR — horizontal scroll, never wrap */
+.nav-ul {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav-ul::-webkit-scrollbar { display: none; }
+.nav-ul li a { white-space: nowrap; text-decoration: none; }
 .nav-link-full { display: inline; }
 .nav-link-short { display: none; }
 
-/* FIX warn 6: hero heading size on small screens */
+/* HERO STATS — number + label locked together */
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px 32px;
+  align-items: center;
+}
+.hero-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+.hero-stat-num { font-size: 2rem; font-weight: 800; color: #6ee7b7; line-height: 1; }
+.hero-stat-label { font-size: .78rem; color: #94a3b8; margin-top: 4px; white-space: nowrap; }
+.hero-divider { width: 1px; background: rgba(255,255,255,.2); height: 48px; flex-shrink: 0; }
+
 .hero-h1 { font-size: 3rem; line-height: 1.1; }
 .hero-h2 { font-size: 2.5rem; line-height: 1.1; }
 
-/* FIX warn 7: AdSense placeholder */
-.adsense-wrap {
-  min-height: 90px;
-  overflow: hidden;
-  border: 2px dashed #d1d5db;
-  padding: 32px;
-  border-radius: 12px;
-  text-align: center;
-}
-
-/* FIX 9: footer district links wrapper */
-.footer-district-wrap {
-  max-width: 100%;
-  overflow: hidden;
-}
+.adsense-wrap { min-height: 90px; overflow: hidden; border: 2px dashed #d1d5db; padding: 32px; border-radius: 12px; text-align: center; }
+.footer-district-wrap { max-width: 100%; overflow: hidden; }
 
 @media (max-width: 768px) {
-  /* FIX 4: nav short labels on mobile */
   .nav-link-full { display: none !important; }
   .nav-link-short { display: inline !important; }
-  .nav-ul { gap: 8px !important; font-size: .76rem !important; }
-
-  /* FIX warn 6: smaller hero headings */
+  .nav-ul { gap: 6px !important; font-size: .76rem !important; }
   .hero-h1 { font-size: 2rem !important; }
   .hero-h2 { font-size: 1.6rem !important; }
-
-  /* Hero stat description text */
-  .hero-stat-desc { font-size: .72rem !important; }
-
-  /* Stat cards — ensure no overflow in 2-col grid */
+  .hero-stat-num { font-size: 1.6rem !important; }
+  .hero-stat-label { font-size: .7rem !important; }
+  .hero-divider { display: none !important; }
   .stat-card { padding: 14px 12px !important; }
   .stat-card .stat-num { font-size: 1.6rem !important; }
-
-  /* Tool cards */
   .tool-card { padding: 18px !important; }
-
-  /* Chart cards — full width on mobile */
   .chart-card { padding: 16px !important; }
-
-  /* Footer nav */
   .footer-nav { gap: 8px !important; font-size: .74rem !important; }
   .footer-district-wrap a { font-size: .68rem !important; padding: 3px 8px !important; }
 }
@@ -181,90 +123,73 @@ canvas { max-width: 100% !important; }
 </head>
 <body class="bg-[#f8fafc]">
 
-<!-- ═══════════════════════════════════════════════ NAVBAR ═══ -->
+<!-- NAVBAR -->
 <nav class="bg-[#1a3c2e] text-white px-4 py-3 sticky top-0 z-50 shadow-lg">
-  <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
-    <a href="index.html" class="text-lg font-extrabold text-emerald-300">&#127796; Kerala NRI Toolkit</a>
-    <!-- FIX 4: short labels for mobile -->
-    <ul class="nav-ul flex flex-wrap gap-3 text-sm" style="list-style:none;margin:0;padding:0;">
-      <li><a href="index.html" class="text-emerald-300 font-bold" style="border-bottom:2px solid #6ee7b7;padding-bottom:2px;text-decoration:none;">Home</a></li>
-      <li><a href="exchange-rates.html" class="text-slate-300 hover:text-white" style="text-decoration:none;">
-        <span class="nav-link-full">Exchange Rates</span>
-        <span class="nav-link-short">Rates</span>
+  <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+    <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;white-space:nowrap;">&#127796; Kerala NRI Toolkit</a>
+    <ul class="nav-ul text-sm">
+      <li><a href="index.html" style="color:#6ee7b7;font-weight:700;border-bottom:2px solid #6ee7b7;padding-bottom:2px;">Home</a></li>
+      <li><a href="exchange-rates.html" class="text-slate-300 hover:text-white">
+        <span class="nav-link-full">Exchange Rates</span><span class="nav-link-short">Rates</span>
       </a></li>
-      <li><a href="land-value.html" class="text-slate-300 hover:text-white" style="text-decoration:none;">
-        <span class="nav-link-full">Land Value</span>
-        <span class="nav-link-short">Land</span>
+      <li><a href="land-value.html" class="text-slate-300 hover:text-white">
+        <span class="nav-link-full">Land Value</span><span class="nav-link-short">Land</span>
       </a></li>
-      <li><a href="document-checklist.html" class="text-slate-300 hover:text-white" style="text-decoration:none;">
-        <span class="nav-link-full">Documents</span>
-        <span class="nav-link-short">Docs</span>
+      <li><a href="document-checklist.html" class="text-slate-300 hover:text-white">
+        <span class="nav-link-full">Documents</span><span class="nav-link-short">Docs</span>
       </a></li>
-      <li><a href="visa-tracker.html" class="text-slate-300 hover:text-white" style="text-decoration:none;">
-        <span class="nav-link-full">Visa Tracker</span>
-        <span class="nav-link-short">Visa</span>
+      <li><a href="visa-tracker.html" class="text-slate-300 hover:text-white">
+        <span class="nav-link-full">Visa Tracker</span><span class="nav-link-short">Visa</span>
       </a></li>
-      <li><a href="stamp-duty.html" class="text-slate-300 hover:text-white" style="text-decoration:none;">
-        <span class="nav-link-full">Stamp Duty</span>
-        <span class="nav-link-short">Stamp</span>
+      <li><a href="stamp-duty.html" class="text-slate-300 hover:text-white">
+        <span class="nav-link-full">Stamp Duty</span><span class="nav-link-short">Stamp</span>
       </a></li>
-      <li><a href="emi-calculator.html" class="text-slate-300 hover:text-white" style="text-decoration:none;">
-        <span class="nav-link-full">EMI Calculator</span>
-        <span class="nav-link-short">EMI</span>
+      <li><a href="emi-calculator.html" class="text-slate-300 hover:text-white">
+        <span class="nav-link-full">EMI Calculator</span><span class="nav-link-short">EMI</span>
       </a></li>
     </ul>
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════ HERO ════ -->
+<!-- HERO -->
 <section class="hero-bg text-white py-16 px-4">
   <div class="max-w-4xl mx-auto text-center">
-    <span class="badge" style="background:rgba(16,185,129,.2);color:#6ee7b7;margin-bottom:16px;">FREE NRI TOOLS &mdash; 2026</span>
+    <span class="badge" style="background:rgba(16,185,129,.2);color:#6ee7b7;margin-bottom:16px;display:inline-block;">FREE NRI TOOLS &mdash; 2026</span>
     <h1 class="hero-h1 font-extrabold mb-3">Kerala is Calling.</h1>
     <h2 class="hero-h2 font-extrabold mb-6 text-emerald-300">We'll Handle the Numbers.</h2>
-    <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10" style="word-break:break-word;">Live exchange rates, property calculators, visa tracking and 40-point document checklists — all free, all built for Gulf Malayalis.</p>
+    <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10" style="word-break:break-word;">Live exchange rates, property calculators, visa tracking and 40-point document checklists &mdash; all free, all built for Gulf Malayalis.</p>
 
-    <!-- FIX 5: dividers hidden on mobile, flex-wrap safe -->
-    <div class="flex flex-wrap justify-center gap-6 items-center">
-      <div class="text-center">
-        <div class="text-3xl font-extrabold text-emerald-300">6</div>
-        <div class="hero-stat-desc text-sm text-slate-400 mt-1">Free Tools</div>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Free Tools</div>
       </div>
-      <!-- FIX 5: dividers use CSS to hide on small screens -->
-      <div class="hero-divider" style="width:1px;background:rgba(255,255,255,.2);height:48px;"></div>
-      <div class="text-center">
-        <div class="text-3xl font-extrabold text-emerald-300">40</div>
-        <div class="hero-stat-desc text-sm text-slate-400 mt-1">Documents Covered</div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">40</div>
+        <div class="hero-stat-label">Documents Covered</div>
       </div>
-      <div class="hero-divider" style="width:1px;background:rgba(255,255,255,.2);height:48px;"></div>
-      <div class="text-center">
-        <div class="text-3xl font-extrabold text-emerald-300">14</div>
-        <div class="hero-stat-desc text-sm text-slate-400 mt-1">Kerala Districts</div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">14</div>
+        <div class="hero-stat-label">Kerala Districts</div>
       </div>
-      <div class="hero-divider" style="width:1px;background:rgba(255,255,255,.2);height:48px;"></div>
-      <div class="text-center">
-        <div class="text-3xl font-extrabold text-emerald-300">6</div>
-        <div class="hero-stat-desc text-sm text-slate-400 mt-1">Gulf Countries</div>
+      <div class="hero-divider"></div>
+      <div class="hero-stat-item">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Gulf Countries</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- add divider hide rule inside the style block via a responsive trick -->
-<style>
-@media(max-width:600px){
-  .hero-divider{ display:none !important; }
-}
-</style>
-
-<!-- ═══════════════════════════════════════════ LIVE STATS BAR ═══ -->
+<!-- LIVE STATS BAR -->
 <section class="py-8 px-4" style="background:linear-gradient(180deg,#065f46 0%,#f8fafc 60%);">
   <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
 
-    <!-- Stat 1: Live AED/INR -->
     <div class="stat-card">
       <div class="flex items-center justify-between mb-1" style="flex-wrap:wrap;gap:4px;">
-        <span style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">AED → INR</span>
+        <span style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">AED &rarr; INR</span>
         <span id="rateStatus" style="font-size:.68rem;color:#94a3b8;"><span class="live-dot"></span>Live</span>
       </div>
       <div id="liveRate" class="stat-num font-extrabold text-[#1a3c2e]" style="font-size:1.8rem;">25.30</div>
@@ -272,7 +197,6 @@ canvas { max-width: 100% !important; }
       <a href="exchange-rates.html" class="text-xs text-emerald-700 font-semibold mt-2 block">All currencies &rarr;</a>
     </div>
 
-    <!-- Stat 2: Days to tax year end -->
     <div class="stat-card">
       <div style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Tax Year Ends</div>
       <div id="taxDays" class="stat-num font-extrabold text-[#1a3c2e]" style="font-size:1.8rem;">—</div>
@@ -280,7 +204,6 @@ canvas { max-width: 100% !important; }
       <div class="text-xs font-semibold mt-2" style="color:#d97706;word-break:break-word;">&#9888; File ITR before deadline</div>
     </div>
 
-    <!-- Stat 3: Nearest visa expiry -->
     <div class="stat-card" id="visaStat">
       <div style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Nearest Visa Expiry</div>
       <div id="visaDays" class="stat-num font-extrabold text-[#1a3c2e]" style="font-size:1.8rem;">—</div>
@@ -288,7 +211,6 @@ canvas { max-width: 100% !important; }
       <a href="visa-tracker.html" id="visaLink" class="text-xs text-emerald-700 font-semibold mt-2 block">Add visa &rarr;</a>
     </div>
 
-    <!-- Stat 4: Doc checklist progress -->
     <div class="stat-card">
       <div style="font-size:.72rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">Documents Collected</div>
       <div id="docCount" class="stat-num font-extrabold text-[#1a3c2e]" style="font-size:1.8rem;">0/40</div>
@@ -301,7 +223,7 @@ canvas { max-width: 100% !important; }
   </div>
 </section>
 
-<!-- ════════════════════════════════════════════ TOOLS GRID ═══ -->
+<!-- TOOLS GRID -->
 <section class="py-14 px-4 bg-white">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-10">
@@ -336,7 +258,6 @@ canvas { max-width: 100% !important; }
 
       <div class="tool-card border-l-4 border-amber-400">
         <div style="font-size:1.8rem;">&#9992;&#65039;</div>
-        <!-- FIX 7: long badge text gets word-break via .badge class -->
         <div><span class="badge" style="background:#fef9c3;color:#854d0e;">UAE &bull; SAUDI &bull; UK &bull; US</span></div>
         <h3 class="text-lg font-bold">Visa Tracker</h3>
         <p class="text-sm text-gray-500">Track Iqama, Emirates ID, BRP, Green Card expiry with colour-coded countdown alerts</p>
@@ -363,59 +284,49 @@ canvas { max-width: 100% !important; }
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════ CHARTS ════ -->
+<!-- CHARTS -->
 <section class="py-14 px-4 bg-[#f8fafc]">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-10">
       <h2 class="text-3xl font-extrabold text-gray-900">Live Market Snapshot</h2>
       <p class="text-gray-500 mt-2">Data updated automatically — always current</p>
     </div>
-
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-      <!-- Chart 1: AED/INR Trend -->
       <div class="chart-card">
         <div class="flex items-center justify-between mb-1" style="flex-wrap:wrap;gap:4px;">
-          <h3 class="font-bold text-gray-800">AED → INR Trend</h3>
+          <h3 class="font-bold text-gray-800">AED &rarr; INR Trend</h3>
           <span style="font-size:.7rem;color:#059669;font-weight:700;white-space:nowrap;"><span class="live-dot"></span>Live endpoint</span>
         </div>
         <p class="text-xs text-gray-400 mb-4">6-month movement — INR weakening vs AED</p>
-        <!-- FIX 8: canvas max-width:100% applied via CSS rule above -->
         <canvas id="trendChart" height="200"></canvas>
       </div>
 
-      <!-- Chart 2: Stamp Duty State Comparison -->
       <div class="chart-card">
         <h3 class="font-bold text-gray-800 mb-1">Stamp Duty by State</h3>
         <p class="text-xs text-gray-400 mb-4">Sale deed — combined stamp duty + registration fee (%)</p>
         <canvas id="stampChart" height="200"></canvas>
       </div>
 
-      <!-- Chart 3: EMI Preview -->
       <div class="chart-card">
         <h3 class="font-bold text-gray-800 mb-1">EMI Preview</h3>
         <p class="text-xs text-gray-400 mb-3">Adjust loan amount &amp; rate — quick estimate</p>
-
         <div class="mb-3">
           <div class="flex justify-between text-xs font-semibold text-gray-600 mb-1" style="flex-wrap:wrap;gap:2px;">
-            <span>Loan Amount</span>
-            <span id="loanDisp" class="text-emerald-700">₹50 L</span>
+            <span>Loan Amount</span><span id="loanDisp" class="text-emerald-700">&#8377;50 L</span>
           </div>
           <input type="range" id="loanSlider" min="500000" max="20000000" step="500000" value="5000000" oninput="updateEMI()"/>
         </div>
         <div class="mb-4">
           <div class="flex justify-between text-xs font-semibold text-gray-600 mb-1" style="flex-wrap:wrap;gap:2px;">
-            <span>Interest Rate</span>
-            <span id="rateDisp" class="text-emerald-700">8.5%</span>
+            <span>Interest Rate</span><span id="rateDisp" class="text-emerald-700">8.5%</span>
           </div>
           <input type="range" id="rateSlider" min="6" max="13" step="0.25" value="8.5" oninput="updateEMI()"/>
         </div>
-
         <div class="flex justify-between text-xs text-gray-500 mb-3" style="flex-wrap:wrap;gap:4px;">
           <span>Tenure: <strong class="text-gray-700">20 years</strong></span>
-          <span id="emiResult" class="font-extrabold text-[#1a3c2e] text-sm">EMI: ₹43,391</span>
+          <span id="emiResult" class="font-extrabold text-[#1a3c2e] text-sm">EMI: &#8377;43,391</span>
         </div>
-
         <canvas id="emiChart" height="160"></canvas>
         <a href="emi-calculator.html" class="open-btn block mt-4 text-sm">Full EMI Breakdown &rarr;</a>
       </div>
@@ -424,8 +335,7 @@ canvas { max-width: 100% !important; }
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════ ADSENSE ════ -->
-<!-- FIX warn 7: min-height + overflow:hidden for layout shift prevention -->
+<!-- ADSENSE -->
 <section class="py-10 px-4">
   <div class="max-w-4xl mx-auto text-center">
     <div class="adsense-wrap">
@@ -434,12 +344,11 @@ canvas { max-width: 100% !important; }
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════ FOOTER ════ -->
+<!-- FOOTER -->
 <footer class="bg-[#0f172a] text-white py-10 px-4" style="width:100%;">
   <div class="max-w-6xl mx-auto" style="overflow:hidden;">
     <div class="flex flex-wrap items-center justify-between gap-4 text-sm">
       <p class="text-slate-400" style="margin:0;">&copy; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community</p>
-      <!-- FIX 9: footer nav wrap -->
       <ul class="footer-nav flex flex-wrap gap-4 text-slate-400" style="list-style:none;margin:0;padding:0;">
         <li><a href="index.html" class="hover:text-emerald-300" style="text-decoration:none;">Home</a></li>
         <li><a href="exchange-rates.html" class="hover:text-emerald-300" style="text-decoration:none;">Exchange Rates</a></li>
@@ -450,10 +359,8 @@ canvas { max-width: 100% !important; }
         <li><a href="emi-calculator.html" class="hover:text-emerald-300" style="text-decoration:none;">EMI Calculator</a></li>
       </ul>
     </div>
-
-    <!-- FIX 9: district links wrapper max-width:100% -->
     <div class="footer-district-wrap" style="margin-top:20px;padding-top:16px;border-top:1px solid #1e293b;">
-      <p style="font-size:.68rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">&#127968; Kerala Districts &mdash; Land Value Guide</p>
+      <p style="font-size:.68rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">&#127968; Kerala Districts — Land Value Guide</p>
       <div style="display:flex;flex-wrap:wrap;gap:6px;max-width:100%;">
         <a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Thiruvananthapuram</a>
         <a href="land-value.html" style="background:#1e293b;color:#94a3b8;font-size:.72rem;padding:4px 10px;border-radius:6px;text-decoration:none;white-space:nowrap;" onmouseover="this.style.color='#6ee7b7'" onmouseout="this.style.color='#94a3b8'">Kollam</a>
@@ -475,183 +382,143 @@ canvas { max-width: 100% !important; }
 </footer>
 
 <script>
-/* ══ STAT BAR: Tax Year countdown ══ */
 (function(){
-  var now = new Date();
-  var end = new Date("2027-03-31");
-  var days = Math.ceil((end - now) / 86400000);
-  document.getElementById("taxDays").textContent = days;
+  var now=new Date();
+  var end=new Date("2027-03-31");
+  document.getElementById("taxDays").textContent=Math.ceil((end-now)/86400000);
 })();
 
-/* ══ STAT BAR: Visa nearest expiry ══ */
 (function(){
-  try {
-    var visas = JSON.parse(localStorage.getItem("nriVisas") || "[]");
-    if (visas.length === 0) return;
-    visas.sort(function(a,b){ return new Date(a.expiry) - new Date(b.expiry); });
-    var nearest = visas[0];
-    var days = Math.ceil((new Date(nearest.expiry) - new Date()) / 86400000);
-    var el = document.getElementById("visaDays");
-    el.textContent = days < 0 ? "Expired" : days + "d";
-    el.style.color = days < 0 ? "#dc2626" : days <= 30 ? "#ea580c" : days <= 90 ? "#ca8a04" : "#1a3c2e";
-    document.getElementById("visaName").textContent = nearest.name + " — " + nearest.type;
-    document.getElementById("visaLink").textContent = "View tracker \u2192";
-  } catch(e) {}
+  try{
+    var visas=JSON.parse(localStorage.getItem("nriVisas")||"[]");
+    if(!visas.length)return;
+    visas.sort(function(a,b){return new Date(a.expiry)-new Date(b.expiry);});
+    var v=visas[0];
+    var days=Math.ceil((new Date(v.expiry)-new Date())/86400000);
+    var el=document.getElementById("visaDays");
+    el.textContent=days<0?"Expired":days+"d";
+    el.style.color=days<0?"#dc2626":days<=30?"#ea580c":days<=90?"#ca8a04":"#1a3c2e";
+    document.getElementById("visaName").textContent=v.name+" — "+v.type;
+    document.getElementById("visaLink").textContent="View tracker →";
+  }catch(e){}
 })();
 
-/* ══ STAT BAR: Doc checklist progress ══ */
 (function(){
-  try {
-    var saved = JSON.parse(localStorage.getItem("nriDocs") || "{}");
-    var done = Object.values(saved).filter(Boolean).length;
-    document.getElementById("docCount").textContent = done + "/40";
-    document.getElementById("docBar").style.width = Math.round((done/40)*100) + "%";
-  } catch(e) {}
+  try{
+    var saved=JSON.parse(localStorage.getItem("nriDocs")||"{}");
+    var done=Object.values(saved).filter(Boolean).length;
+    document.getElementById("docCount").textContent=done+"/40";
+    document.getElementById("docBar").style.width=Math.round((done/40)*100)+"%";
+  }catch(e){}
 })();
 
-/* ══ LIVE AED/INR RATE ══ */
-function loadRate() {
+function loadRate(){
   fetch("https://latest.currency-api.pages.dev/v1/currencies/aed.json")
-    .then(function(r){ return r.json(); })
+    .then(function(r){return r.json();})
     .then(function(d){
-      var rate = d.aed.inr;
-      if (!rate) throw 0;
-      document.getElementById("liveRate").textContent = rate.toFixed(2);
-      document.getElementById("rateChange").textContent = "1 AED = \u20b9" + rate.toFixed(4);
+      var rate=d.aed.inr;
+      if(!rate)throw 0;
+      document.getElementById("liveRate").textContent=rate.toFixed(2);
+      document.getElementById("rateChange").textContent="1 AED = ₹"+rate.toFixed(4);
     })
     .catch(function(){
       fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/aed.json")
-        .then(function(r){ return r.json(); })
+        .then(function(r){return r.json();})
         .then(function(d){
-          var rate = d.aed.inr;
-          document.getElementById("liveRate").textContent = rate.toFixed(2);
-          document.getElementById("rateChange").textContent = "1 AED = \u20b9" + rate.toFixed(4);
+          var rate=d.aed.inr;
+          document.getElementById("liveRate").textContent=rate.toFixed(2);
+          document.getElementById("rateChange").textContent="1 AED = ₹"+rate.toFixed(4);
         })
         .catch(function(){
-          document.getElementById("liveRate").textContent = "25.30";
-          document.getElementById("rateChange").textContent = "Backup rate — AED/INR";
-          document.getElementById("rateStatus").innerHTML = '<span style="color:#94a3b8;font-size:.68rem;">Backup</span>';
+          document.getElementById("liveRate").textContent="25.30";
+          document.getElementById("rateChange").textContent="Backup rate — AED/INR";
+          document.getElementById("rateStatus").innerHTML='<span style="color:#94a3b8;font-size:.68rem;">Backup</span>';
         });
     });
 }
 loadRate();
 
-/* ══ CHART 1: AED/INR Trend ══ */
 (function(){
-  var ctx = document.getElementById("trendChart").getContext("2d");
-  new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: ["Nov '25","Dec '25","Jan '26","Feb '26","Mar '26","Apr '26"],
-      datasets: [{
-        label: "AED → INR",
-        data: [23.1, 23.5, 23.9, 24.4, 24.9, 25.3],
-        borderColor: "#059669",
-        backgroundColor: "rgba(5,150,105,.08)",
-        borderWidth: 2.5,
-        pointRadius: [3,3,3,3,3,6],
-        pointBackgroundColor: ["#059669","#059669","#059669","#059669","#059669","#10b981"],
-        fill: true,
-        tension: 0.4
+  var ctx=document.getElementById("trendChart").getContext("2d");
+  new Chart(ctx,{
+    type:"line",
+    data:{
+      labels:["Nov '25","Dec '25","Jan '26","Feb '26","Mar '26","Apr '26"],
+      datasets:[{
+        label:"AED → INR",
+        data:[23.1,23.5,23.9,24.4,24.9,25.3],
+        borderColor:"#059669",backgroundColor:"rgba(5,150,105,.08)",
+        borderWidth:2.5,pointRadius:[3,3,3,3,3,6],
+        pointBackgroundColor:["#059669","#059669","#059669","#059669","#059669","#10b981"],
+        fill:true,tension:0.4
       }]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {
-        legend: {display: false},
-        tooltip: {callbacks:{label:function(c){return "1 AED = \u20b9"+c.parsed.y;}}}
-      },
-      scales: {
-        y: {
-          min: 22.5, max: 26,
-          ticks: {callback: function(v){ return "\u20b9"+v; }, font:{size:10}},
-          grid: {color:"#f1f5f9"}
-        },
-        x: {ticks:{font:{size:10},maxRotation:45,minRotation:0}, grid:{display:false}}
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return "1 AED = ₹"+c.parsed.y;}}}},
+      scales:{
+        y:{min:22.5,max:26,ticks:{callback:function(v){return "₹"+v;},font:{size:10}},grid:{color:"#f1f5f9"}},
+        x:{ticks:{font:{size:10},maxRotation:45,minRotation:0},grid:{display:false}}
       }
     }
   });
 })();
 
-/* ══ CHART 2: Stamp Duty — FIX warn 2: smaller font on x-axis ══ */
 (function(){
-  var ctx = document.getElementById("stampChart").getContext("2d");
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["Kerala","Tamil Nadu","Telangana","Goa","Karnataka","Maha.","Delhi"],
-      datasets: [{
-        label: "Total %",
-        data: [10, 8, 7.5, 6.5, 6, 6, 6],
-        backgroundColor: ["#dc2626","#f97316","#f59e0b","#84cc16","#10b981","#10b981","#10b981"],
-        borderRadius: 6,
-        borderSkipped: false
+  var ctx=document.getElementById("stampChart").getContext("2d");
+  new Chart(ctx,{
+    type:"bar",
+    data:{
+      labels:["Kerala","Tamil Nadu","Telangana","Goa","Karnataka","Maha.","Delhi"],
+      datasets:[{
+        label:"Total %",
+        data:[10,8,7.5,6.5,6,6,6],
+        backgroundColor:["#dc2626","#f97316","#f59e0b","#84cc16","#10b981","#10b981","#10b981"],
+        borderRadius:6,borderSkipped:false
       }]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: {
-        legend: {display: false},
-        tooltip: {callbacks:{label:function(c){return c.parsed.y + "% (SD + Reg)";}}}
-      },
-      scales: {
-        y: {
-          max: 12,
-          ticks: {callback:function(v){return v+"%";}, font:{size:10}},
-          grid: {color:"#f1f5f9"}
-        },
-        /* FIX warn 2: font size 8px + shortened label "Maha." for Maharashtra */
-        x: {ticks:{font:{size:8},maxRotation:45,minRotation:0}, grid:{display:false}}
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.parsed.y+"% (SD + Reg)";}} }},
+      scales:{
+        y:{max:12,ticks:{callback:function(v){return v+"%";},font:{size:10}},grid:{color:"#f1f5f9"}},
+        x:{ticks:{font:{size:8},maxRotation:45,minRotation:0},grid:{display:false}}
       }
     }
   });
 })();
 
-/* ══ CHART 3: EMI Donut ══ */
 var emiChart;
-function buildEMI(principal, interest) {
-  var ctx = document.getElementById("emiChart").getContext("2d");
-  if (emiChart) emiChart.destroy();
-  emiChart = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: ["Principal","Total Interest"],
-      datasets: [{
-        data: [principal, interest],
-        backgroundColor: ["#059669","#fcd34d"],
-        borderWidth: 0,
-        hoverOffset: 6
-      }]
+function buildEMI(principal,interest){
+  var ctx=document.getElementById("emiChart").getContext("2d");
+  if(emiChart)emiChart.destroy();
+  emiChart=new Chart(ctx,{
+    type:"doughnut",
+    data:{
+      labels:["Principal","Total Interest"],
+      datasets:[{data:[principal,interest],backgroundColor:["#059669","#fcd34d"],borderWidth:0,hoverOffset:6}]
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      cutout: "70%",
-      plugins: {
-        legend: {position:"bottom", labels:{font:{size:10}, boxWidth:12}},
-        tooltip: {callbacks:{label:function(c){
-          return c.label + ": \u20b9" + Math.round(c.parsed).toLocaleString("en-IN");
-        }}}
+    options:{
+      responsive:true,maintainAspectRatio:true,cutout:"70%",
+      plugins:{
+        legend:{position:"bottom",labels:{font:{size:10},boxWidth:12}},
+        tooltip:{callbacks:{label:function(c){return c.label+": ₹"+Math.round(c.parsed).toLocaleString("en-IN");}}}
       }
     }
   });
 }
 
-function updateEMI() {
-  var P = parseFloat(document.getElementById("loanSlider").value);
-  var ann = parseFloat(document.getElementById("rateSlider").value);
-  var n = 240;
-  var r = ann / 12 / 100;
-  var emi = P * r * Math.pow(1+r,n) / (Math.pow(1+r,n) - 1);
-  var total = emi * n;
-  var interest = total - P;
-  var lakh = function(v){ return v >= 10000000 ? (v/10000000).toFixed(1)+" Cr" : (v/100000).toFixed(0)+" L"; };
-  document.getElementById("loanDisp").textContent   = "\u20b9" + lakh(P);
-  document.getElementById("rateDisp").textContent   = ann.toFixed(2) + "%";
-  document.getElementById("emiResult").textContent  = "EMI: \u20b9" + Math.round(emi).toLocaleString("en-IN");
-  buildEMI(P, interest);
+function updateEMI(){
+  var P=parseFloat(document.getElementById("loanSlider").value);
+  var ann=parseFloat(document.getElementById("rateSlider").value);
+  var n=240,r=ann/12/100;
+  var emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  var total=emi*n,interest=total-P;
+  var lakh=function(v){return v>=10000000?(v/10000000).toFixed(1)+" Cr":(v/100000).toFixed(0)+" L";};
+  document.getElementById("loanDisp").textContent="₹"+lakh(P);
+  document.getElementById("rateDisp").textContent=ann.toFixed(2)+"%";
+  document.getElementById("emiResult").textContent="EMI: ₹"+Math.round(emi).toLocaleString("en-IN");
+  buildEMI(P,interest);
 }
 updateEMI();
 </script>
