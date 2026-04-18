@@ -25,6 +25,35 @@ body{
   width:100%;
 }
 
+/* TOP NAV LINKS */
+.nav-links a,
+.nav-links a:link,
+.nav-links a:visited {
+  color: #6ee7b7 !important;
+  text-decoration: none !important;
+}
+.nav-links a:hover {
+  color: #ffffff !important;
+}
+.nav-links a.active,
+.nav-links a.active:link,
+.nav-links a.active:visited {
+  color: #6ee7b7 !important;
+  font-weight: 700 !important;
+  border-bottom: 2px solid #6ee7b7 !important;
+}
+
+/* FOOTER NAV LINKS */
+.footer-nav a,
+.footer-nav a:link,
+.footer-nav a:visited {
+  color: #94a3b8 !important;
+  text-decoration: none !important;
+}
+.footer-nav a:hover {
+  color: #ffffff !important;
+}
+
 /* ── NAV ── */
 .nav-link-full{display:inline;}
 .nav-link-short{display:none;}
@@ -72,41 +101,23 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 
 /* ── MOBILE ── */
 @media(max-width:768px){
-
-  /* Nav */
   .nav-link-full{display:none !important;}
   .nav-link-short{display:inline !important;}
   .nav-links{gap:8px !important;font-size:.78rem !important;}
-
-  /* Hero */
   .hero-section{padding:20px 12px 16px !important;}
   h1{font-size:1.4rem !important;}
-
-  /* Grid → single column */
   .main-grid{
     grid-template-columns:1fr !important;
     padding:0 12px 32px !important;
     gap:16px !important;
   }
-
-  /* Input cards */
   .input-card{padding:18px !important;}
-
-  /* Result card */
   .result-card{padding:20px !important;}
-
-  /* EMI value font */
   .emi-val{font-size:1.9rem !important;}
-
-  /* FX grid — auto-fit on mobile */
   .fx-grid{grid-template-columns:repeat(auto-fit,minmax(80px,1fr)) !important;}
-
-  /* Amort + facts */
   .amort-card{padding:16px !important;}
   .facts-card{padding:16px !important;}
   .tips-card{padding:16px !important;}
-
-  /* Footer */
   .footer-nav{gap:8px !important;font-size:.74rem !important;}
 }
 
@@ -124,28 +135,32 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
     <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
-      <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="index.html">Home</a>
+      <a href="exchange-rates.html">
         <span class="nav-link-full">Exchange Rates</span>
         <span class="nav-link-short">Rates</span>
       </a>
-      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="gold-rate.html">
+        <span class="nav-link-full">Gold Rate</span>
+        <span class="nav-link-short">Gold</span>
+      </a>
+      <a href="land-value.html">
         <span class="nav-link-full">Land Value</span>
         <span class="nav-link-short">Land</span>
       </a>
-      <a href="document-checklist.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="document-checklist.html">
         <span class="nav-link-full">Documents</span>
         <span class="nav-link-short">Docs</span>
       </a>
-      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="visa-tracker.html">
         <span class="nav-link-full">Visa Tracker</span>
         <span class="nav-link-short">Visa</span>
       </a>
-      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="stamp-duty.html">
         <span class="nav-link-full">Stamp Duty</span>
         <span class="nav-link-short">Stamp</span>
       </a>
-      <a href="emi-calculator.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">
+      <a href="emi-calculator.html" class="active">
         <span class="nav-link-full">EMI Calculator</span>
         <span class="nav-link-short">EMI</span>
       </a>
@@ -166,14 +181,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 <!-- MAIN GRID -->
 <div class="main-grid">
 
-  <!-- LEFT: INPUTS + RESULT -->
   <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
-
-    <!-- INPUT CARD -->
     <div class="input-card" style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">&#129518; Loan Details</h2>
 
-      <!-- Loan Amount -->
       <div style="margin-bottom:22px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
           <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Loan Amount</label>
@@ -185,7 +196,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>₹5L</span><span>₹3Cr</span></div>
       </div>
 
-      <!-- Interest Rate -->
       <div style="margin-bottom:22px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
           <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Interest Rate (per annum)</label>
@@ -197,7 +207,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;margin-top:4px;"><span>6%</span><span>18%</span></div>
       </div>
 
-      <!-- Tenure -->
       <div style="margin-bottom:8px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px;">
           <label style="font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;">Loan Tenure</label>
@@ -210,7 +219,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       </div>
     </div>
 
-    <!-- RESULT CARD -->
     <div class="result-card" style="background:#1a3c2e;border-radius:24px;padding:28px;color:white;">
       <h3 style="color:#6ee7b7;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">&#128202; EMI Breakdown</h3>
 
@@ -224,7 +232,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Total Payment</span><span id="rTotal"></span></div>
       <div class="rrow"><span style="color:#a7f3d0;font-size:.8rem;">Loan Tenure</span><span id="rTenure"></span></div>
 
-      <!-- Principal vs Interest Bar -->
       <div style="margin-top:16px;">
         <div style="display:flex;justify-content:space-between;font-size:.75rem;color:#a7f3d0;margin-bottom:6px;">
           <span>Principal</span><span>Interest</span>
@@ -238,13 +245,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         </div>
       </div>
 
-      <!-- FX GRID -->
       <div style="margin-top:20px;padding-top:16px;border-top:1px solid #14532d;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
           <span style="color:#6ee7b7;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;">&#128178; Monthly EMI in Your Currency</span>
           <span id="fxSt" style="color:#64748b;font-size:.75rem;"><span class="spin"></span></span>
         </div>
-        <!-- FIX: auto-fit so 3 cols on desktop, wraps on mobile -->
         <div id="fxGrid" class="fx-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;"></div>
       </div>
 
@@ -257,14 +262,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
     </div>
   </div>
 
-  <!-- RIGHT -->
   <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
-
-    <!-- AMORTIZATION TABLE -->
     <div class="amort-card" style="background:white;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
       <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#128196; Yearly Amortization</h2>
       <p style="color:#94a3b8;font-size:.75rem;margin-bottom:16px;word-break:break-word;">Year-by-year loan repayment breakdown</p>
-      <!-- FIX: scroll wrapper around 5-col table -->
       <div class="amort-wrap">
         <div class="amort-table">
           <div class="amort-row amort-head">
@@ -275,7 +276,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       </div>
     </div>
 
-    <!-- NRI HOME LOAN FACTS -->
     <div class="facts-card" style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
       <h2 style="font-size:1rem;font-weight:700;margin-bottom:4px;">&#127968; NRI Home Loan — Key Facts</h2>
       <p style="color:#94a3b8;font-size:.74rem;margin-bottom:14px;">Critical things Gulf NRIs must know before applying</p>
@@ -349,7 +349,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
       </div>
     </div>
 
-    <!-- TIPS -->
     <div class="tips-card" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:24px;padding:24px;overflow:hidden;">
       <h2 style="font-size:1rem;font-weight:700;color:#14532d;margin-bottom:12px;">&#128161; Tips to Reduce Your EMI</h2>
       <ul class="tips-list" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;font-size:.85rem;color:#166534;">
@@ -361,7 +360,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
         <li style="display:flex;gap:8px;"><span style="font-weight:700;flex-shrink:0;">6.</span><span>Build your overseas credit score before applying — dual credit check is now standard</span></li>
       </ul>
     </div>
-
   </div>
 </div>
 
@@ -370,13 +368,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;">
     <p style="margin:0;">&#169; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community.</p>
     <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:16px;">
-      <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
-      <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
-      <a href="document-checklist.html" style="color:#94a3b8;text-decoration:none;">Documents</a>
-      <a href="visa-tracker.html" style="color:#94a3b8;text-decoration:none;">Visa Tracker</a>
-      <a href="stamp-duty.html" style="color:#94a3b8;text-decoration:none;">Stamp Duty</a>
-      <a href="emi-calculator.html" style="color:#94a3b8;text-decoration:none;">EMI Calculator</a>
+      <a href="index.html">Home</a>
+      <a href="exchange-rates.html">Exchange Rates</a>
+      <a href="gold-rate.html">Gold Rate</a>
+      <a href="land-value.html">Land Value</a>
+      <a href="document-checklist.html">Documents</a>
+      <a href="visa-tracker.html">Visa Tracker</a>
+      <a href="stamp-duty.html">Stamp Duty</a>
+      <a href="emi-calculator.html">EMI Calculator</a>
     </nav>
   </div>
 </footer>
@@ -395,14 +394,13 @@ var LR  = {AED:25.3,USD:93.1,GBP:116.0,SAR:24.8,QAR:25.6,KWD:303.0};
 var fxReady = false;
 var gEMI=0,gPrincipal=0,gInterest=0,gTotal=0,gRate=0,gTenure=0;
 
-function fmt(n)  { return "\u20b9" + Math.round(n).toLocaleString("en-IN"); }
+function fmt(n)  { return "₹" + Math.round(n).toLocaleString("en-IN"); }
 function fmtL(n) {
-  if (n >= 10000000) return "\u20b9" + (n/10000000).toFixed(2) + " Cr";
-  if (n >= 100000)   return "\u20b9" + (n/100000).toFixed(2) + " L";
+  if (n >= 10000000) return "₹" + (n/10000000).toFixed(2) + " Cr";
+  if (n >= 100000)   return "₹" + (n/100000).toFixed(2) + " L";
   return fmt(n);
 }
 
-/* ── PRE-FILL FROM LAND VALUE ── */
 (function(){
   var params = new URLSearchParams(window.location.search);
   var val    = params.get("value");
@@ -417,7 +415,6 @@ function fmtL(n) {
   calcEMI();
 })();
 
-/* ── SYNC SLIDERS ── */
 function syncLoan(src) {
   var sl = document.getElementById("loanSlider");
   var ip = document.getElementById("loanInput");
@@ -443,7 +440,6 @@ function syncTenure(src) {
   calcEMI();
 }
 
-/* ── CORE CALC ── */
 function calcEMI() {
   var P = parseFloat(document.getElementById("loanInput").value)  || 5000000;
   var A = parseFloat(document.getElementById("rateInput").value)  || 8.5;
@@ -477,7 +473,6 @@ function calcEMI() {
   if (!fxReady) loadFX();
 }
 
-/* ── AMORTIZATION ── */
 function buildAmort(P, r, n, emi) {
   var bal  = P;
   var html = "";
@@ -503,7 +498,6 @@ function buildAmort(P, r, n, emi) {
   document.getElementById("amortBody").innerHTML = html;
 }
 
-/* ── FX ── */
 function loadFX() {
   fetch("https://latest.currency-api.pages.dev/v1/currencies/inr.json")
     .then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(applyFX)
@@ -537,8 +531,6 @@ function drawFX() {
   document.getElementById("fxGrid").innerHTML = html;
 }
 
-/* ── SHARE ── */
-/* FIX WARNING 3: changed wa.me to api.whatsapp.com/send — more reliable on Android */
 function doShare() {
   if (!gEMI) return;
   var msg = "*Home Loan EMI Calculation*\n\n"

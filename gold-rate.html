@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kerala Gold Rate Today 2026 — 22 & 24 Carat, Silver Rate | Kerala NRI Toolkit</title>
+<meta name="description" content="Kerala gold rate today 2026 — 22 carat and 24 carat price per gram and per sovereign. Silver rate today Kerala. Multi-currency gold calculator for Gulf Malayalis — AED, SAR, QAR, KWD, OMR."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+html,body{overflow-x:hidden;max-width:100%;margin:0;padding:0;touch-action:pan-y;}
+body{font-family:"Inter",sans-serif;background:#f8fafc;line-height:1.5;}
+*,*::before,*::after{box-sizing:border-box;}
+
+.hero-bg{background:linear-gradient(135deg,#1a3c2e 0%,#14532d 40%,#065f46 100%);}
+.rate-card{background:white;border-radius:20px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.07);border:1px solid #f1f5f9;transition:transform .2s;min-width:0;overflow:hidden;}
+.rate-card:hover{transform:translateY(-2px);}
+.gold-card{background:linear-gradient(135deg,#fef9c3,#fef3c7);border:1.5px solid #fbbf24;border-radius:20px;padding:20px 24px;box-shadow:0 2px 16px rgba(251,191,36,.15);min-width:0;overflow:hidden;}
+.silver-card{background:linear-gradient(135deg,#f1f5f9,#e2e8f0);border:1.5px solid #94a3b8;border-radius:20px;padding:20px 24px;box-shadow:0 2px 16px rgba(148,163,184,.15);min-width:0;overflow:hidden;}
+.calc-card{background:white;border-radius:24px;padding:28px;box-shadow:0 2px 16px rgba(0,0,0,.08);border:1px solid #f1f5f9;min-width:0;overflow:hidden;}
+.badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:.4;}}
+.rate-dot{display:inline-block;width:8px;height:8px;background:#f59e0b;border-radius:50%;animation:pulse-dot 2s infinite;margin-right:5px;vertical-align:middle;}
+
+.nav-ul{display:flex;flex-wrap:nowrap;gap:12px;list-style:none;margin:0;padding:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;align-items:center;}
+.nav-ul::-webkit-scrollbar{display:none;}
+.nav-ul li a{white-space:nowrap;text-decoration:none;}
+.nav-link-full{display:inline;}
+.nav-link-short{display:none;}
+
+.nav-ul a,
+.nav-ul a:link,
+.nav-ul a:visited{
+  color:#6ee7b7 !important;
+  text-decoration:none !important;
+}
+.nav-ul a:hover{
+  color:#ffffff !important;
+}
+.nav-ul a.active,
+.nav-ul a.active:link,
+.nav-ul a.active:visited{
+  color:#fbbf24 !important;
+  font-weight:700 !important;
+  border-bottom:2px solid #fbbf24 !important;
+  padding-bottom:2px;
+}
+
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;border-radius:3px;background:#94a3b8;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#d97706;cursor:pointer;border:none;}
+.carat-btn{padding:7px 14px;border-radius:10px;font-weight:700;font-size:.8rem;cursor:pointer;border:2px solid #fbbf24;background:white;color:#92400e;transition:all .15s;white-space:nowrap;}
+.carat-btn.active{background:#fbbf24;color:#1a1a1a;}
+.info-box{background:#fef9c3;border:1px solid #fbbf24;border-radius:12px;padding:12px 16px;font-size:.78rem;color:#92400e;}
+.toggle-wrap{display:flex;align-items:center;gap:10px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:10px 14px;margin-bottom:12px;}
+.toggle{position:relative;width:42px;height:24px;flex-shrink:0;}
+.toggle input{opacity:0;width:0;height:0;}
+.slider-tog{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#cbd5e1;border-radius:24px;transition:.3s;}
+.slider-tog:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s;}
+input:checked + .slider-tog{background:#059669;}
+input:checked + .slider-tog:before{transform:translateX(18px);}
+.faq-q{padding:14px 18px;background:#fef9c3;font-weight:700;color:#92400e;font-size:.9rem;}
+.faq-a{padding:14px 18px;font-size:.85rem;color:#475569;line-height:1.6;}
+
+.container{max-width:1200px;margin:0 auto;padding:0 16px;}
+.container-sm{max-width:1000px;margin:0 auto;padding:0 16px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.center{text-align:center;}
+.muted{color:#64748b;}
+.small{font-size:.85rem;}
+.xsmall{font-size:.75rem;}
+.tight{line-height:1.2;}
+
+footer a,
+footer a:link,
+footer a:visited{
+  color:#94a3b8 !important;
+  text-decoration:none !important;
+}
+footer a:hover{
+  color:#ffffff !important;
+}
+
+@media(max-width:900px){
+  .grid-4{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .grid-3{grid-template-columns:1fr;}
+  .grid-2{grid-template-columns:1fr;}
+}
+
+@media(max-width:768px){
+  .nav-link-full{display:none!important;}
+  .nav-link-short{display:inline!important;}
+  .nav-ul{gap:6px!important;font-size:.76rem!important;}
+  .rate-card,.gold-card,.silver-card{padding:14px 12px!important;}
+  .calc-card{padding:18px!important;}
+  .grid-4{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .grid-2{grid-template-columns:1fr;}
+}
+
+@media(max-width:480px){
+  .grid-4{grid-template-columns:1fr 1fr;}
+  .badge{font-size:.65rem;}
+  h1{font-size:2rem !important;}
+}
+</style>
+</head>
+<body>
+
+<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;box-shadow:0 10px 18px rgba(0,0,0,.14);">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;white-space:nowrap;">🏡 Kerala NRI Toolkit</a>
+    <ul class="nav-ul text-sm">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="exchange-rates.html"><span class="nav-link-full">Exchange Rates</span><span class="nav-link-short">Rates</span></a></li>
+      <li><a href="gold-rate.html" class="active"><span class="nav-link-full">Gold Rate</span><span class="nav-link-short">Gold</span></a></li>
+      <li><a href="land-value.html"><span class="nav-link-full">Land Value</span><span class="nav-link-short">Land</span></a></li>
+      <li><a href="document-checklist.html"><span class="nav-link-full">Documents</span><span class="nav-link-short">Docs</span></a></li>
+      <li><a href="visa-tracker.html"><span class="nav-link-full">Visa Tracker</span><span class="nav-link-short">Visa</span></a></li>
+      <li><a href="stamp-duty.html"><span class="nav-link-full">Stamp Duty</span><span class="nav-link-short">Stamp</span></a></li>
+      <li><a href="emi-calculator.html"><span class="nav-link-full">EMI</span><span class="nav-link-short">EMI</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero-bg text-white py-14 px-4">
+  <div class="container-sm center">
+    <span class="badge" style="background:rgba(251,191,36,.2);color:#fbbf24;margin-bottom:14px;display:inline-block;">🌟 TODAY'S GOLD RATE — 2026</span>
+    <h1 class="tight" style="font-size:clamp(2rem,4vw,3rem);font-weight:800;margin:0 0 8px;color:#ffffff;">Kerala Gold Rate Today</h1>
+    <p style="color:#a7f3d0;font-weight:600;font-size:1.05rem;margin:0 0 8px;">22 Carat &amp; 24 Carat — Per Gram &amp; Per Sovereign</p>
+    <p class="small" style="color:#cbd5e1;max-width:720px;margin:0 auto 6px;">Today's estimated Kerala gold rate based on international spot price + India import duty adjustment. Making charges (₹1,000–₹2,500/sovereign) are additional.</p>
+    <div id="lastUpdated" class="xsmall" style="color:#cbd5e1;margin-top:10px;">
+      <span class="rate-dot"></span>Fetching today's market rate...
+    </div>
+  </div>
+</section>
+
+<section style="padding:40px 0;background:linear-gradient(180deg,#065f46 0%,#f8fafc 50%);">
+  <div class="container">
+    <div class="grid-4" style="margin-bottom:16px;">
+      <div class="gold-card">
+        <div class="xsmall" style="font-weight:800;color:#a16207;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">22 Carat / Gram</div>
+        <div id="g22gram" style="font-size:1.5rem;font-weight:800;color:#854d0e;">—</div>
+        <div class="xsmall" style="color:#b45309;margin-top:4px;">916 Hallmark</div>
+      </div>
+      <div class="gold-card">
+        <div class="xsmall" style="font-weight:800;color:#a16207;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">22 Carat / Sovereign</div>
+        <div id="g22sov" style="font-size:1.5rem;font-weight:800;color:#854d0e;">—</div>
+        <div class="xsmall" style="color:#b45309;margin-top:4px;">8 grams = 1 sovereign</div>
+      </div>
+      <div class="gold-card">
+        <div class="xsmall" style="font-weight:800;color:#a16207;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">24 Carat / Gram</div>
+        <div id="g24gram" style="font-size:1.5rem;font-weight:800;color:#854d0e;">—</div>
+        <div class="xsmall" style="color:#b45309;margin-top:4px;">999 Pure Gold</div>
+      </div>
+      <div class="gold-card">
+        <div class="xsmall" style="font-weight:800;color:#a16207;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">24 Carat / Sovereign</div>
+        <div id="g24sov" style="font-size:1.5rem;font-weight:800;color:#854d0e;">—</div>
+        <div class="xsmall" style="color:#b45309;margin-top:4px;">8 grams = 1 sovereign</div>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="silver-card">
+        <div class="xsmall" style="font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Silver Rate / Gram</div>
+        <div id="silverGram" style="font-size:1.5rem;font-weight:800;color:#334155;">—</div>
+        <div class="xsmall muted" style="margin-top:4px;">Today Kerala silver rate</div>
+      </div>
+      <div class="silver-card">
+        <div class="xsmall" style="font-weight:800;color:#475569;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Silver Rate / 10g</div>
+        <div id="silver10g" style="font-size:1.5rem;font-weight:800;color:#334155;">—</div>
+        <div class="xsmall muted" style="margin-top:4px;">Kerala market estimate</div>
+      </div>
+      <div class="rate-card" style="border-left:4px solid #fbbf24;">
+        <div class="xsmall" style="font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">Gold in AED / Gram</div>
+        <div id="goldAED" style="font-size:1.5rem;font-weight:800;color:#1a3c2e;">—</div>
+        <div class="xsmall muted" style="margin-top:4px;">Dubai / UAE gold price today</div>
+        <a href="exchange-rates.html" style="display:block;margin-top:10px;font-size:.8rem;font-weight:700;color:#047857;text-decoration:none;">All currency rates →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:48px 0;background:white;">
+  <div class="container-sm">
+    <div class="center" style="margin-bottom:28px;">
+      <h2 style="font-size:1.6rem;font-weight:800;color:#111827;margin:0;">Gold Calculators</h2>
+      <p class="small muted" style="margin:6px 0 0;">Calculate gold value in INR including GST &amp; making charges</p>
+    </div>
+    <div class="grid-2">
+
+      <div class="calc-card">
+        <h3 style="font-weight:800;color:#1f2937;margin:0 0 4px;font-size:1.05rem;">⚖ Gold Value Calculator</h3>
+        <p class="xsmall muted" style="margin:0 0 16px;">Enter weight — see estimated value in INR, AED, SAR &amp; more</p>
+
+        <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+          <button class="carat-btn active" id="btn22" onclick="selectCarat(22)">22 Carat</button>
+          <button class="carat-btn" id="btn24" onclick="selectCarat(24)">24 Carat</button>
+          <button class="carat-btn" id="btn18" onclick="selectCarat(18)">18 Carat</button>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;color:#475569;margin-bottom:6px;">
+            <span>Weight (grams)</span>
+            <span id="weightDisp" style="color:#a16207;">8g (1 sovereign)</span>
+          </div>
+          <input type="range" id="weightSlider" min="1" max="200" step="1" value="8" oninput="calcGold()"/>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <div class="xsmall" style="font-weight:700;color:#475569;margin-bottom:8px;">Show value in:</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;" id="valueCurrBtns">
+            <button class="carat-btn active" onclick="selectValueCurr('inr','INR',this)">INR</button>
+            <button class="carat-btn" onclick="selectValueCurr('aed','AED',this)">AED</button>
+            <button class="carat-btn" onclick="selectValueCurr('sar','SAR',this)">SAR</button>
+            <button class="carat-btn" onclick="selectValueCurr('qar','QAR',this)">QAR</button>
+            <button class="carat-btn" onclick="selectValueCurr('kwd','KWD',this)">KWD</button>
+            <button class="carat-btn" onclick="selectValueCurr('omr','OMR',this)">OMR</button>
+            <button class="carat-btn" onclick="selectValueCurr('usd','USD',this)">USD</button>
+            <button class="carat-btn" onclick="selectValueCurr('gbp','GBP',this)">GBP</button>
+          </div>
+        </div>
+
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="gstToggle" onchange="calcGold()"/>
+            <span class="slider-tog"></span>
+          </label>
+          <div>
+            <div class="xsmall" style="font-weight:800;color:#065f46;">Include GST (3%) + Making Charges</div>
+            <div class="xsmall" style="color:#16a34a;">₹1,500/sovereign — est. Malabar Gold / Joyalukkas price</div>
+          </div>
+        </div>
+
+        <div style="background:#fef9c3;border-radius:12px;padding:16px;text-align:center;margin-bottom:12px;">
+          <div class="xsmall" style="color:#a16207;font-weight:800;margin-bottom:6px;" id="inrLabel">Estimated Price (INR ₹)</div>
+          <div id="goldINR" style="font-size:2rem;font-weight:800;color:#854d0e;">—</div>
+          <div id="convertedVal" class="small" style="color:#b45309;margin-top:4px;"></div>
+        </div>
+
+        <div id="gstBreakdown" style="display:none;background:#f0fdf4;border-radius:12px;padding:12px;margin-bottom:12px;font-size:.78rem;color:#166534;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Gold value</span><span id="bSpot">—</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Making charges</span><span id="bMaking">—</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>GST 3%</span><span id="bGST">—</span></div>
+          <div style="display:flex;justify-content:space-between;font-weight:800;border-top:1px solid #bbf7d0;padding-top:6px;margin-top:6px;"><span>Total (est.)</span><span id="bTotal">—</span></div>
+        </div>
+
+        <div class="info-box" id="calcInfoBox">ℹ Estimated price only. Toggle above to include making charges &amp; GST for a jeweller-close estimate.</div>
+      </div>
+
+      <div class="calc-card">
+        <h3 style="font-weight:800;color:#1f2937;margin:0 0 4px;font-size:1.05rem;">💰 Currency to Gold Calculator</h3>
+        <p class="xsmall muted" style="margin:0 0 16px;">How much gold can you buy with your Gulf salary?</p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="currencyBtns">
+          <button class="carat-btn active" onclick="selectCurrency('aed','AED',this)">AED</button>
+          <button class="carat-btn" onclick="selectCurrency('sar','SAR',this)">SAR</button>
+          <button class="carat-btn" onclick="selectCurrency('qar','QAR',this)">QAR</button>
+          <button class="carat-btn" onclick="selectCurrency('kwd','KWD',this)">KWD</button>
+          <button class="carat-btn" onclick="selectCurrency('omr','OMR',this)">OMR</button>
+          <button class="carat-btn" onclick="selectCurrency('bhd','BHD',this)">BHD</button>
+          <button class="carat-btn" onclick="selectCurrency('gbp','GBP',this)">GBP</button>
+          <button class="carat-btn" onclick="selectCurrency('usd','USD',this)">USD</button>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;color:#475569;margin-bottom:6px;">
+            <span>Amount</span>
+            <span id="currAmtDisp" style="color:#047857;">AED 5,000</span>
+          </div>
+          <input type="range" id="currSlider" min="100" max="50000" step="100" value="5000" style="background:#059669;" oninput="calcCurr()"/>
+        </div>
+
+        <div class="grid-2" style="gap:12px;margin-bottom:14px;">
+          <div style="background:#f0fdf4;border-radius:12px;padding:12px;text-align:center;">
+            <div class="xsmall" style="color:#047857;font-weight:800;margin-bottom:4px;">INR Value</div>
+            <div id="currINR" style="font-size:1.2rem;font-weight:800;color:#047857;">—</div>
+          </div>
+          <div style="background:#fef9c3;border-radius:12px;padding:12px;text-align:center;">
+            <div class="xsmall" style="color:#a16207;font-weight:800;margin-bottom:4px;">22K Gold (grams)</div>
+            <div id="currGoldG" style="font-size:1.2rem;font-weight:800;color:#854d0e;">—</div>
+          </div>
+        </div>
+
+        <div style="background:#fef9c3;border-radius:12px;padding:14px;text-align:center;margin-bottom:12px;">
+          <div class="xsmall" style="color:#a16207;font-weight:800;margin-bottom:4px;">Sovereigns you can buy (22 Carat)</div>
+          <div id="currSov" style="font-size:2rem;font-weight:800;color:#713f12;">—</div>
+          <div class="xsmall" style="color:#b45309;margin-top:4px;">1 sovereign = 8 grams</div>
+        </div>
+
+        <div class="info-box">ℹ Based on today's estimated Kerala rate + live exchange rates. Excludes making charges &amp; 3% GST.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="padding:48px 0;background:#f8fafc;">
+  <div class="container-sm">
+    <h2 class="center" style="font-size:1.6rem;font-weight:800;color:#111827;margin:0 0 6px;">Kerala Gold Rate Today — All Carats</h2>
+    <p class="center small muted" style="margin:0 0 22px;">Estimated rates — add ₹1,000–₹2,500 making charges + 3% GST for final jeweller price</p>
+    <div style="overflow-x:auto;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);">
+      <table style="width:100%;border-collapse:collapse;background:white;min-width:340px;">
+        <thead>
+          <tr style="background:#1a3c2e;color:white;">
+            <th style="padding:12px 16px;text-align:left;font-size:.8rem;font-weight:700;">Carat</th>
+            <th style="padding:12px 16px;text-align:right;font-size:.8rem;font-weight:700;">Per Gram (₹)</th>
+            <th style="padding:12px 16px;text-align:right;font-size:.8rem;font-weight:700;">Per Sovereign (₹)</th>
+            <th style="padding:12px 16px;text-align:right;font-size:.8rem;font-weight:700;">Per 10g (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="goldTable">
+          <tr><td colspan="4" style="padding:20px;text-align:center;color:#94a3b8;">Loading today's rates...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info-box" style="font-size:.75rem;margin-top:16px;">
+      ⚠ Rates shown = international XAU spot price + approx India import duty adjustment. Actual Kerala jeweller rate (KGSMA) may differ by ₹100–₹300/gram. For the exact daily rate, check your local jeweller or KGSMA. Making charges &amp; 3% GST are additional.
+    </div>
+  </div>
+</section>
+
+<section style="padding:48px 0;background:white;">
+  <div class="container-sm">
+    <h2 class="center" style="font-size:1.6rem;font-weight:800;color:#111827;margin:0 0 24px;">Kerala Gold Rate — Common Questions</h2>
+
+    <div style="border:1px solid #f1f5f9;border-radius:16px;overflow:hidden;margin-bottom:12px;">
+      <div class="faq-q">What is 1 gram 22 carat gold rate in Kerala today?</div>
+      <div class="faq-a">The estimated 22 carat gold rate per gram in Kerala today is shown in the rate cards above. It is based on the international XAU spot price converted to INR plus an India import duty adjustment. The actual jeweller price at Malabar Gold, Joyalukkas, or Kalyan may vary by ₹100–₹300/gram. Use the calculator toggle to include making charges and 3% GST for a realistic estimate.</div>
+    </div>
+
+    <div style="border:1px solid #f1f5f9;border-radius:16px;overflow:hidden;margin-bottom:12px;">
+      <div class="faq-q">How many grams is 1 sovereign of gold in Kerala?</div>
+      <div class="faq-a">1 sovereign of gold in Kerala equals exactly 8 grams. This is the standard unit used across Kerala and South India for jewellery, dowry, and gold investment. Our calculator automatically shows the sovereign price alongside the per-gram price.</div>
+    </div>
+
+    <div style="border:1px solid #f1f5f9;border-radius:16px;overflow:hidden;margin-bottom:12px;">
+      <div class="faq-q">What is silver rate today in Kerala per gram?</div>
+      <div class="faq-a">Today's Kerala silver rate per gram and per 10 grams is shown in the silver cards above. Kerala silver prices now use a layered market estimate based on the international XAG spot price converted to INR, plus duty, GST, a small market premium, and a local Kerala adjustment.</div>
+    </div>
+
+    <div style="border:1px solid #f1f5f9;border-radius:16px;overflow:hidden;margin-bottom:12px;">
+      <div class="faq-q">How much gold can I bring from Dubai to Kerala duty-free?</div>
+      <div class="faq-a">NRIs returning to India from Dubai can bring gold jewellery duty-free up to 20 grams (max ₹50,000) for men and 40 grams (max ₹1,00,000) for women. Gold beyond this attracts 12.5% customs duty + 3% IGST. Gold bars and coins do not qualify for the duty-free allowance.</div>
+    </div>
+
+    <div style="border:1px solid #f1f5f9;border-radius:16px;overflow:hidden;margin-bottom:12px;">
+      <div class="faq-q">Why is the Kerala jeweller price different from the rate shown here?</div>
+      <div class="faq-a">The rates shown here are based on international spot prices plus an estimated import duty adjustment. The official Kerala rate is set daily by KGSMA (Kerala Gold &amp; Silver Merchants Association) and may vary by ₹100–₹300/gram. Jewellers also add making charges (₹1,000–₹2,500 per sovereign) and 3% GST. Use the toggle in the calculator above for a closer estimate.</div>
+    </div>
+
+    <div style="border:1px solid #f1f5f9;border-radius:16px;overflow:hidden;">
+      <div class="faq-q">What is 1 dirham (AED) in Indian rupees today?</div>
+      <div class="faq-a">Today's AED to INR exchange rate is shown in our <a href="exchange-rates.html" style="color:#059669;font-weight:700;">Exchange Rates tool</a>. The Currency to Gold Calculator on this page also uses the live AED/INR rate to show exactly how many grams and sovereigns your dirhams can buy at today's Kerala gold rate.</div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:32px 16px;">
+  <div class="container">
+    <div style="min-height:90px;border:2px dashed #d1d5db;padding:28px;border-radius:12px;text-align:center;background:white;">
+      <p class="muted small" style="margin:0;">Advertisement</p>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#0f172a;color:white;padding:40px 16px;">
+  <div class="container" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;">
+    <p style="color:#94a3b8;margin:0;">&copy; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community</p>
+    <nav style="display:flex;flex-wrap:wrap;gap:12px;" class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="exchange-rates.html">Exchange Rates</a>
+      <a href="gold-rate.html">Gold Rate</a>
+      <a href="visa-tracker.html">Visa Tracker</a>
+      <a href="stamp-duty.html">Stamp Duty</a>
+      <a href="emi-calculator.html">EMI Calculator</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+var liveData={xauINR:null,xagINR:null,xauAED:null};
+var currencyRates={};
+var selectedCarat=22;
+var selectedCurrency="aed";
+var selectedCurrLabel="AED";
+var selectedValueCurr="inr";
+
+function fmt(n){return "₹"+Math.round(n).toLocaleString("en-IN");}
+function fmtForeign(n,code){return code.toUpperCase()+" "+Math.round(n).toLocaleString("en-IN");}
+function caratFactor(c){return c===24?1:c===22?22/24:18/24;}
+
+function updateRateCards(){
+  if(!liveData.xauINR) return;
+
+  var g24=(liveData.xauINR/31.1035)+500;
+  var g22=g24*(22/24);
+
+  document.getElementById("g24gram").textContent=fmt(g24);
+  document.getElementById("g24sov").textContent=fmt(g24*8);
+  document.getElementById("g22gram").textContent=fmt(g22);
+  document.getElementById("g22sov").textContent=fmt(g22*8);
+
+  if(liveData.xagINR){
+    var silverSpot = liveData.xagINR / 31.1035;
+    var silverWithDuty = silverSpot * 1.06;
+    var silverWithGST = silverWithDuty * 1.03;
+    var silverWithMarket = silverWithGST * 1.03;
+    var silverKerala = silverWithMarket + 1.40;
+    document.getElementById("silverGram").textContent = fmt(silverKerala);
+    document.getElementById("silver10g").textContent = fmt(silverKerala * 10);
+  }
+
+  if(liveData.xauAED){
+    var gAED = liveData.xauAED / 31.1035;
+    document.getElementById("goldAED").textContent = "AED " + gAED.toFixed(2);
+  }
+
+  var rows=[
+    {label:"24 Carat (999 Pure)",f:1},
+    {label:"22 Carat (916 Hallmark)",f:22/24},
+    {label:"21 Carat (875)",f:21/24},
+    {label:"18 Carat (750)",f:18/24},
+    {label:"14 Carat (585)",f:14/24}
+  ];
+
+  var html="";
+  rows.forEach(function(r,i){
+    var pg=g24*r.f;
+    var bg=i===0?"#fef9c3":i===1?"#fef3c7":i%2===0?"#f8fafc":"white";
+    html+="<tr style='background:"+bg+";border-bottom:1px solid #f1f5f9;'>"
+      +"<td style='padding:11px 16px;font-weight:600;font-size:.85rem;color:#1a3c2e;'>"+r.label+"</td>"
+      +"<td style='padding:11px 16px;text-align:right;font-weight:700;color:#92400e;'>"+Math.round(pg).toLocaleString("en-IN")+"</td>"
+      +"<td style='padding:11px 16px;text-align:right;font-weight:700;color:#92400e;'>"+Math.round(pg*8).toLocaleString("en-IN")+"</td>"
+      +"<td style='padding:11px 16px;text-align:right;font-weight:700;color:#92400e;'>"+Math.round(pg*10).toLocaleString("en-IN")+"</td>"
+      +"</tr>";
+  });
+  document.getElementById("goldTable").innerHTML=html;
+
+  var now=new Date();
+  document.getElementById("lastUpdated").innerHTML =
+    "<span class='rate-dot'></span>Rate as of today — " +
+    now.toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) +
+    " — updates daily";
+
+  calcGold();
+  calcCurr();
+}
+
+function selectCarat(c){
+  selectedCarat=c;
+  ["22","24","18"].forEach(function(x){var el=document.getElementById("btn"+x); if(el) el.classList.remove("active");});
+  document.getElementById("btn"+c).classList.add("active");
+  calcGold();
+}
+
+function selectValueCurr(code,label,btn){
+  selectedValueCurr=code;
+  document.querySelectorAll("#valueCurrBtns .carat-btn").forEach(function(b){b.classList.remove("active");});
+  btn.classList.add("active");
+  calcGold();
+}
+
+function calcGold(){
+  if(!liveData.xauINR) return;
+
+  var g24=(liveData.xauINR/31.1035)+500;
+  var grams=parseFloat(document.getElementById("weightSlider").value);
+  var pricePerGram=g24*caratFactor(selectedCarat);
+  var spotVal=pricePerGram*grams;
+  var sovereigns=grams/8;
+  var includeCharges=document.getElementById("gstToggle").checked;
+  var makingCharges=includeCharges?sovereigns*1500:0;
+  var gst=includeCharges?(spotVal+makingCharges)*0.03:0;
+  var totalINR=spotVal+makingCharges+gst;
+  var displayINR=includeCharges?totalINR:spotVal;
+
+  var lbl=grams+"g"+(grams==8?" (1 sovereign)":grams==16?" (2 sovereigns)":grams==24?" (3 sovereigns)":"");
+  document.getElementById("weightDisp").textContent=lbl;
+  document.getElementById("inrLabel").textContent=includeCharges?"Est. Jeweller Price":"Estimated Price (INR)";
+  document.getElementById("goldINR").textContent=fmt(displayINR);
+
+  var convEl=document.getElementById("convertedVal");
+  if(selectedValueCurr!=="inr"&&currencyRates[selectedValueCurr]){
+    var foreignVal=displayINR/currencyRates[selectedValueCurr];
+    convEl.textContent="= "+fmtForeign(foreignVal,selectedValueCurr);
+  } else {
+    convEl.textContent="";
+  }
+
+  var bd=document.getElementById("gstBreakdown");
+  if(includeCharges){
+    bd.style.display="block";
+    document.getElementById("bSpot").textContent=fmt(spotVal);
+    document.getElementById("bMaking").textContent=fmt(makingCharges);
+    document.getElementById("bGST").textContent=fmt(gst);
+    document.getElementById("bTotal").textContent=fmt(totalINR);
+    document.getElementById("calcInfoBox").textContent="Estimated price at Malabar Gold / Joyalukkas. Actual making charges vary ₹1,000–₹2,500/sovereign.";
+  } else {
+    bd.style.display="none";
+    document.getElementById("calcInfoBox").textContent="Estimated price only. Toggle above to include making charges & GST for a jeweller-close estimate.";
+  }
+}
+
+function selectCurrency(code,label,btn){
+  selectedCurrency=code;
+  selectedCurrLabel=label;
+  document.querySelectorAll("#currencyBtns .carat-btn").forEach(function(b){b.classList.remove("active");});
+  btn.classList.add("active");
+  var maxMap={aed:50000,sar:50000,qar:50000,kwd:10000,omr:10000,bhd:10000,gbp:20000,usd:20000};
+  document.getElementById("currSlider").max=maxMap[code]||50000;
+  calcCurr();
+}
+
+function calcCurr(){
+  if(!liveData.xauINR) return;
+  var rate=currencyRates[selectedCurrency];
+  if(!rate) return;
+  var amt=parseFloat(document.getElementById("currSlider").value);
+  var inr=amt*rate;
+  var g24=(liveData.xauINR/31.1035)+500;
+  var g22=g24*(22/24);
+  var grams=inr/g22;
+  var sovs=grams/8;
+  document.getElementById("currAmtDisp").textContent=selectedCurrLabel+" "+amt.toLocaleString("en-IN");
+  document.getElementById("currINR").textContent=fmt(inr);
+  document.getElementById("currGoldG").textContent=grams.toFixed(2)+"g";
+  document.getElementById("currSov").textContent=sovs.toFixed(2)+" sovereigns";
+}
+
+function fetchAllRates(){
+  fetch("https://latest.currency-api.pages.dev/v1/currencies/xau.json")
+    .then(function(r){return r.json();})
+    .then(function(d){liveData.xauINR=d.xau.inr;liveData.xauAED=d.xau.aed;updateRateCards();})
+    .catch(function(){
+      fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xau.json")
+        .then(function(r){return r.json();})
+        .then(function(d){liveData.xauINR=d.xau.inr;liveData.xauAED=d.xau.aed;updateRateCards();});
+    });
+
+  fetch("https://latest.currency-api.pages.dev/v1/currencies/xag.json")
+    .then(function(r){return r.json();})
+    .then(function(d){liveData.xagINR=d.xag.inr;updateRateCards();})
+    .catch(function(){
+      fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/xag.json")
+        .then(function(r){return r.json();})
+        .then(function(d){liveData.xagINR=d.xag.inr;updateRateCards();});
+    });
+
+  fetch("https://latest.currency-api.pages.dev/v1/currencies/inr.json")
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var i=d.inr;
+      currencyRates.aed=1/i.aed;currencyRates.sar=1/i.sar;
+      currencyRates.qar=1/i.qar;currencyRates.kwd=1/i.kwd;
+      currencyRates.omr=1/i.omr;currencyRates.bhd=1/i.bhd;
+      currencyRates.gbp=1/i.gbp;currencyRates.usd=1/i.usd;
+      calcGold();calcCurr();
+    })
+    .catch(function(){
+      fetch("https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/inr.json")
+        .then(function(r){return r.json();})
+        .then(function(d){
+          var i=d.inr;
+          currencyRates.aed=1/i.aed;currencyRates.sar=1/i.sar;
+          currencyRates.qar=1/i.qar;currencyRates.kwd=1/i.kwd;
+          currencyRates.omr=1/i.omr;currencyRates.bhd=1/i.bhd;
+          currencyRates.gbp=1/i.gbp;currencyRates.usd=1/i.usd;
+          calcGold();calcCurr();
+        });
+    });
+}
+
+fetchAllRates();
+</script>
+</body>
+</html>

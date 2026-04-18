@@ -14,7 +14,6 @@ html,body{
   max-width:100%;
   margin:0;
   padding:0;
-  /* FIX 3: iOS Safari rubber-band horizontal drift blocked */
   touch-action:pan-y;
 }
 
@@ -24,6 +23,28 @@ body{
   min-height:100vh;
   position:relative;
   width:100%;
+}
+
+/* ── TOP NAV LINKS ── */
+.nav-links a,
+.nav-links a:link,
+.nav-links a:visited {
+  color: #cbd5e1 !important;
+  text-decoration: none !important;
+}
+.nav-links a:hover {
+  color: #6ee7b7 !important;
+}
+
+/* ── FOOTER NAV LINKS ── */
+.footer-nav a,
+.footer-nav a:link,
+.footer-nav a:visited {
+  color: #94a3b8 !important;
+  text-decoration: none !important;
+}
+.footer-nav a:hover {
+  color: #ffffff !important;
 }
 
 /* ── NAV ── */
@@ -60,27 +81,19 @@ body{
 
 /* ── MOBILE ── */
 @media(max-width:768px){
-
   .nav-link-full{display:none !important;}
   .nav-link-short{display:inline !important;}
-
   .nav-inner{gap:6px !important;}
   .nav-links{gap:8px !important;font-size:.78rem !important;}
-
   .hero-section{padding:16px 12px !important;}
   h1{font-size:1.4rem !important;}
-
   .progress-box{max-width:100% !important;}
-
   .main-grid{
     grid-template-columns:1fr !important;
     padding:0 12px 32px !important;
     gap:12px !important;
   }
-
   .checklist-col{min-width:0 !important;overflow:hidden !important;}
-
-  /* Sidebar → horizontal pill scroll */
   .sidebar-card{
     position:static !important;
     background:transparent !important;
@@ -93,15 +106,12 @@ body{
     overflow-x:auto !important;
     overflow-y:visible !important;
     -webkit-overflow-scrolling:touch;
-    /* FIX: pills scroll horizontally, page stays locked vertically */
     touch-action:pan-x !important;
     gap:6px !important;
     scrollbar-width:none !important;
   }
   .sidebar-card::-webkit-scrollbar{display:none;}
-
   .sidebar-label,.sidebar-legend{display:none !important;}
-
   .cat-btn{
     flex-shrink:0 !important;
     width:auto !important;
@@ -122,19 +132,13 @@ body{
   }
   .cat-btn.on .cat-count{background:rgba(255,255,255,.25) !important;color:white !important;}
   .cat-count{background:rgba(0,0,0,.07) !important;color:#475569 !important;}
-
-  /* FIX 2: overflow:hidden added back to checklist panel */
   .checklist-panel{padding:14px !important;overflow:hidden !important;}
-
   .cat-header{flex-direction:column !important;gap:4px !important;}
   .cat-header-right{text-align:left !important;margin-left:0 !important;}
   .mini-bar{width:100% !important;max-width:200px !important;}
-
   .doc-item{gap:8px !important;padding:12px 0 !important;}
   .doc-item input[type=checkbox]{width:20px !important;height:20px !important;}
-
   .tips-box{padding:14px !important;font-size:.8rem !important;}
-
   .footer-nav{gap:8px !important;font-size:.74rem !important;}
 }
 
@@ -150,31 +154,34 @@ body{
 <!-- NAV -->
 <nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;width:100%;">
   <div class="nav-inner" style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
-    <!-- FIX minor: removed white-space:nowrap from logo so it can wrap on tiny screens -->
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
     <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;">
-      <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="index.html">Home</a>
+      <a href="exchange-rates.html">
         <span class="nav-link-full">Exchange Rates</span>
         <span class="nav-link-short">Rates</span>
       </a>
-      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="gold-rate.html">
+        <span class="nav-link-full">Gold Rate</span>
+        <span class="nav-link-short">Gold</span>
+      </a>
+      <a href="land-value.html">
         <span class="nav-link-full">Land Value</span>
         <span class="nav-link-short">Land</span>
       </a>
-      <a href="document-checklist.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">
+      <a href="document-checklist.html" style="color:#6ee7b7 !important;font-weight:700;border-bottom:2px solid #6ee7b7;">
         <span class="nav-link-full">Documents</span>
         <span class="nav-link-short">Docs</span>
       </a>
-      <a href="visa-tracker.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="visa-tracker.html">
         <span class="nav-link-full">Visa Tracker</span>
         <span class="nav-link-short">Visa</span>
       </a>
-      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="stamp-duty.html">
         <span class="nav-link-full">Stamp Duty</span>
         <span class="nav-link-short">Stamp</span>
       </a>
-      <a href="emi-calculator.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="emi-calculator.html">
         <span class="nav-link-full">EMI Calculator</span>
         <span class="nav-link-short">EMI</span>
       </a>
@@ -266,13 +273,14 @@ body{
   <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;">
     <p style="margin:0;">&#169; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community.</p>
     <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:16px;">
-      <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
-      <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
-      <a href="document-checklist.html" style="color:#94a3b8;text-decoration:none;">Documents</a>
-      <a href="visa-tracker.html" style="color:#94a3b8;text-decoration:none;">Visa Tracker</a>
-      <a href="stamp-duty.html" style="color:#94a3b8;text-decoration:none;">Stamp Duty</a>
-      <a href="emi-calculator.html" style="color:#94a3b8;text-decoration:none;">EMI Calculator</a>
+      <a href="index.html">Home</a>
+      <a href="exchange-rates.html">Exchange Rates</a>
+      <a href="gold-rate.html">Gold Rate</a>
+      <a href="land-value.html">Land Value</a>
+      <a href="document-checklist.html">Documents</a>
+      <a href="visa-tracker.html">Visa Tracker</a>
+      <a href="stamp-duty.html">Stamp Duty</a>
+      <a href="emi-calculator.html">EMI Calculator</a>
     </nav>
   </div>
 </footer>
@@ -357,7 +365,6 @@ var CATS = [
 }
 ];
 
-// AUTO-CALCULATE TOTAL — no hardcoding
 var TOTAL = 0;
 CATS.forEach(function(cat){ TOTAL += cat.items.length; });
 
@@ -441,7 +448,6 @@ function resetAll() {
     btn.style.color = "#991b1b";
     btn.setAttribute("data-confirm", "yes");
     setTimeout(function(){
-      // FIX BUG 1: use actual ↻ character, not unicode escape string
       btn.textContent = "↻ Reset All";
       btn.style.background = "#f1f5f9";
       btn.style.color = "#64748b";
@@ -457,7 +463,6 @@ function resetAll() {
     document.getElementById("catcount-" + i).textContent = "0/" + CATS[i].items.length;
   }
   var b = document.getElementById("resetBtn");
-  // FIX BUG 1: actual ↻ character
   b.textContent = "↻ Reset All";
   b.style.background = "#f1f5f9";
   b.style.color = "#64748b";
@@ -474,7 +479,6 @@ function shareWhatsApp() {
     });
   });
   var pct = Math.round((done / TOTAL) * 100);
-  // FIX BUG 2 & 3: use actual \n newline character (single backslash), not \\n
   var topMissing = missing.slice(0, 8).join("\n");
   var msg = "*Kerala NRI Document Checklist*\n\n"
           + "Progress: " + done + " / " + TOTAL + " documents (" + pct + "%)\n\n"

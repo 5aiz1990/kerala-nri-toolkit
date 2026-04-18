@@ -26,6 +26,16 @@ body{
   width:100%;
 }
 
+.nav-links a,
+.nav-links a:link,
+.nav-links a:visited {
+  color: #cbd5e1 !important;
+  text-decoration: none !important;
+}
+
+.nav-links a:hover {
+  color: #ffffff !important;
+}
 /* ── NAV short/full labels ── */
 .nav-link-full{display:inline;}
 .nav-link-short{display:none;}
@@ -168,12 +178,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 <nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
-    <!-- FIX 5: short labels added -->
     <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;">
       <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
       <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
         <span class="nav-link-full">Exchange Rates</span>
         <span class="nav-link-short">Rates</span>
+      </a>
+      <a href="gold-rate.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Gold Rate</span>
+        <span class="nav-link-short">Gold</span>
       </a>
       <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">
         <span class="nav-link-full">Land Value</span>
@@ -407,6 +420,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
     <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:12px;">
       <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
       <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
+      <a href="gold-rate.html" style="color:#94a3b8;text-decoration:none;">Gold Rate</a>
       <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
       <a href="document-checklist.html" style="color:#94a3b8;text-decoration:none;">Documents</a>
       <a href="visa-tracker.html" style="color:#94a3b8;text-decoration:none;">Visa Tracker</a>

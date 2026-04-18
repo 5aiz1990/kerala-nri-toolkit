@@ -9,6 +9,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;}
 
+
 /* FIX 1: overflow-x + touch-action */
 html,body{
   overflow-x:hidden;
@@ -18,6 +19,7 @@ html,body{
   touch-action:pan-y;
 }
 
+
 /* FIX 2: removed Tailwind — replaced with plain CSS */
 body{
   font-family:'Inter',sans-serif;
@@ -25,10 +27,19 @@ body{
   min-height:100vh;
   width:100%;
 }
-
+.nav-links a,
+.nav-links a:link,
+.nav-links a:visited {
+  color: #cbd5e1 !important;
+  text-decoration: none !important;
+}
+.nav-links a:hover {
+  color: #6ee7b7 !important;
+}
 /* ── NAV short/full labels ── */
 .nav-link-full{display:inline;}
 .nav-link-short{display:none;}
+
 
 /* FIX 5: flex-wrap + word-break on result rows */
 .rrow{
@@ -43,6 +54,7 @@ body{
 }
 .rrow:last-child{border:none;}
 .rrow span:last-child{font-weight:600;}
+
 
 /* Land type buttons */
 .type-btn{
@@ -60,6 +72,7 @@ body{
 }
 .type-btn:hover,.type-btn.on{background:#1a3c2e;color:white;border-color:#1a3c2e;}
 
+
 /* Checklist rows */
 .chkrow{
   display:flex;
@@ -76,12 +89,15 @@ body{
 .chkrow span{word-break:break-word;min-width:0;flex:1;}
 .done{text-decoration:line-through;color:#94a3b8;}
 
+
 /* Spinner */
 .spin{display:inline-block;width:12px;height:12px;border:2px solid #444;border-top-color:#10b981;border-radius:50%;animation:sp .7s linear infinite;}
 @keyframes sp{to{transform:rotate(360deg);}}
 
+
 details summary{cursor:pointer;list-style:none;}
 details summary::-webkit-details-marker{display:none;}
+
 
 /* ── GRIDS ── */
 .main-grid{
@@ -92,6 +108,7 @@ details summary::-webkit-details-marker{display:none;}
 }
 /* FIX 3: min-width:0 on ALL grid children */
 .main-grid > div{min-width:0;}
+
 
 .type-grid{
   display:grid;
@@ -110,26 +127,32 @@ details summary::-webkit-details-marker{display:none;}
   gap:8px;
 }
 
+
 /* FIX 4: word-break on district cards */
 .dist-card-name{font-size:.78rem;font-weight:700;color:#334155;margin:0 0 4px;word-break:break-word;}
 .dist-card-price{font-size:.85rem;font-weight:800;color:#059669;margin:0;word-break:break-word;}
 .dist-card-sub{font-size:.7rem;color:#94a3b8;margin:2px 0 0;}
 
+
 /* FIX warn 4: key rules text wraps */
 .rules-list li{display:flex;gap:10px;word-break:break-word;}
 .rules-list li span:last-child{word-break:break-word;min-width:0;flex:1;}
 
+
 /* ── MOBILE ── */
 @media(max-width:768px){
+
 
   /* Nav */
   .nav-link-full{display:none !important;}
   .nav-link-short{display:inline !important;}
   .nav-links{gap:8px !important;font-size:.78rem !important;}
 
+
   /* Hero */
   .hero-wrap{padding:20px 12px 16px !important;}
   h1{font-size:1.5rem !important;}
+
 
   /* Grid → single column */
   .main-grid{
@@ -138,8 +161,10 @@ details summary::-webkit-details-marker{display:none;}
     gap:16px !important;
   }
 
+
   /* Estimator card */
   .estimator-card{padding:18px !important;}
+
 
   /* FIX warn 2: type grid — 2+1 layout on tiny screens */
   .type-grid{
@@ -150,16 +175,20 @@ details summary::-webkit-details-marker{display:none;}
   }
   .type-btn{font-size:.78rem !important;padding:10px 4px !important;}
 
+
   /* District cards stay 2-col */
   .dist-cards-grid{grid-template-columns:1fr 1fr !important;}
 
+
   /* FX grid — auto-fit handles itself */
+
 
   /* Inputs bigger touch targets */
   select,input[type=number]{
     padding:13px 16px !important;
     font-size:1rem !important;
   }
+
 
   /* Full-width buttons */
   .full-btn{
@@ -169,13 +198,16 @@ details summary::-webkit-details-marker{display:none;}
     min-height:48px !important;
   }
 
+
   /* Footer */
   .footer-nav{gap:8px !important;font-size:.74rem !important;}
+
 
   /* Checklist */
   .chkrow{font-size:.84rem !important;}
   .chkrow input[type=checkbox]{width:20px !important;height:20px !important;}
 }
+
 
 @media(max-width:380px){
   .type-btn{font-size:.72rem !important;padding:8px 2px !important;}
@@ -184,19 +216,22 @@ details summary::-webkit-details-marker{display:none;}
 }
 </style>
 </head>
-<!-- FIX 2: removed Tailwind classes bg-slate-50 min-h-screen — handled in CSS -->
 <body>
+
 
 <!-- NAV -->
 <nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
-    <!-- FIX 8: short labels added for mobile -->
     <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;">
       <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
       <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
         <span class="nav-link-full">Exchange Rates</span>
         <span class="nav-link-short">Rates</span>
+      </a>
+      <a href="gold-rate.html" style="color:#cbd5e1;text-decoration:none;">
+        <span class="nav-link-full">Gold Rate</span>
+        <span class="nav-link-short">Gold</span>
       </a>
       <a href="land-value.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">
         <span class="nav-link-full">Land Value</span>
@@ -222,6 +257,7 @@ details summary::-webkit-details-marker{display:none;}
   </div>
 </nav>
 
+
 <!-- HERO -->
 <div class="hero-wrap" style="max-width:1200px;margin:0 auto;padding:40px 16px 24px;width:100%;">
   <span style="background:#d1fae5;color:#065f46;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;">Verified 2026 | SRO Rates</span>
@@ -230,13 +266,16 @@ details summary::-webkit-details-marker{display:none;}
   <p style="color:#94a3b8;font-size:.76rem;margin-top:6px;">Values are indicative only. Always verify at <a href="https://igr.kerala.gov.in" target="_blank" style="color:#059669;">igr.kerala.gov.in</a></p>
 </div>
 
+
 <!-- MAIN GRID -->
 <div style="max-width:1200px;margin:0 auto;padding:0 16px 40px;" class="main-grid">
+
 
   <!-- LEFT: ESTIMATOR -->
   <div>
     <div class="estimator-card" style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;">
       <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:20px;">&#127968; Property Estimator</h2>
+
 
       <!-- District -->
       <div style="margin-bottom:16px;">
@@ -260,7 +299,8 @@ details summary::-webkit-details-marker{display:none;}
         </select>
       </div>
 
-      <!-- Land Type — FIX warn 2: agri spans full width on mobile via class -->
+
+      <!-- Land Type -->
       <div style="margin-bottom:16px;">
         <label style="display:block;font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Land Type</label>
         <div class="type-grid">
@@ -270,6 +310,7 @@ details summary::-webkit-details-marker{display:none;}
         </div>
       </div>
 
+
       <!-- Area -->
       <div style="margin-bottom:20px;">
         <label style="display:block;font-size:.75rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">Area in Cents</label>
@@ -278,10 +319,12 @@ details summary::-webkit-details-marker{display:none;}
         <p id="sqmNote" style="color:#94a3b8;font-size:.75rem;margin-top:4px;">1 cent = 40.47 sq. metres</p>
       </div>
 
+
       <!-- Placeholder -->
       <div id="ph" style="text-align:center;color:#cbd5e1;padding:32px 16px;border:2px dashed #e2e8f0;border-radius:16px;font-size:.9rem;word-break:break-word;">
         Select district, land type and enter area to see estimate
       </div>
+
 
       <!-- Result -->
       <div id="resBox" style="display:none;">
@@ -297,6 +340,7 @@ details summary::-webkit-details-marker{display:none;}
             <span style="color:#6ee7b7;">Total Estimated Cost</span><span id="v6"></span>
           </div>
 
+
           <!-- FX -->
           <div style="margin-top:20px;padding-top:16px;border-top:1px solid #14532d;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:4px;">
@@ -306,12 +350,12 @@ details summary::-webkit-details-marker{display:none;}
             <div id="fxGrid" class="fx-grid"></div>
           </div>
 
+
           <a id="emiBtn" href="emi-calculator.html"
             class="full-btn"
             style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;background:#059669;color:white;font-weight:700;font-size:.87rem;padding:13px;border-radius:12px;text-decoration:none;min-height:48px;">
             &#129518; Calculate Home Loan EMI &#8594;
           </a>
-          <!-- FIX 6: wa.me → api.whatsapp.com/send -->
           <button onclick="doShare()"
             class="full-btn"
             style="margin-top:8px;width:100%;background:#25D366;color:white;font-weight:700;font-size:.87rem;padding:13px;border-radius:12px;border:none;cursor:pointer;min-height:48px;">
@@ -322,8 +366,10 @@ details summary::-webkit-details-marker{display:none;}
     </div>
   </div>
 
+
   <!-- RIGHT -->
   <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
+
 
     <!-- DISTRICT RATE GUIDE -->
     <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
@@ -331,6 +377,7 @@ details summary::-webkit-details-marker{display:none;}
       <p style="color:#94a3b8;font-size:.75rem;margin-bottom:16px;word-break:break-word;">SRO guideline residential rate per sq.m — current as of 2026. Tap any to auto-fill calculator.</p>
       <div id="distCards" class="dist-cards-grid"></div>
     </div>
+
 
     <!-- CHECKLIST -->
     <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
@@ -341,6 +388,7 @@ details summary::-webkit-details-marker{display:none;}
         </summary>
         <p style="color:#94a3b8;font-size:.75rem;margin:12px 0 8px;">Tick each step. Progress saved automatically.</p>
 
+
         <p style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 4px;">Before Buying</p>
         <label class="chkrow" for="c0"><input type="checkbox" id="c0" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Verify land ownership at Sub-Registrar Office (SRO)</span></label>
         <label class="chkrow" for="c1"><input type="checkbox" id="c1" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Obtain Encumbrance Certificate (EC) for last 30 years</span></label>
@@ -349,6 +397,7 @@ details summary::-webkit-details-marker{display:none;}
         <label class="chkrow" for="c4"><input type="checkbox" id="c4" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Verify Survey sketch from Survey Department</span></label>
         <label class="chkrow" for="c5"><input type="checkbox" id="c5" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Confirm land is NOT agricultural (NRIs cannot buy agri / plantation land under FEMA)</span></label>
 
+
         <p style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 4px;">Legal &amp; Documents</p>
         <label class="chkrow" for="c6"><input type="checkbox" id="c6" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Hire a Kerala-registered lawyer to review sale deed</span></label>
         <label class="chkrow" for="c7"><input type="checkbox" id="c7" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Prepare Apostilled Power of Attorney if buying from abroad</span></label>
@@ -356,10 +405,12 @@ details summary::-webkit-details-marker{display:none;}
         <label class="chkrow" for="c9"><input type="checkbox" id="c9" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Arrange two witnesses with valid Aadhaar cards</span></label>
         <label class="chkrow" for="c10"><input type="checkbox" id="c10" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Draft and verify sale deed before printing on stamp paper</span></label>
 
+
         <p style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 4px;">Payment &amp; Tax</p>
         <label class="chkrow" for="c11"><input type="checkbox" id="c11" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Route all payments via NRE or NRO bank account only</span></label>
         <label class="chkrow" for="c12"><input type="checkbox" id="c12" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Arrange Demand Draft for stamp duty (8%) + registration fee (2%)</span></label>
         <label class="chkrow" for="c13"><input type="checkbox" id="c13" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>If NRI seller: deduct TDS (12.5-20%) and file Form 27Q</span></label>
+
 
         <p style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin:16px 0 4px;">After Registration</p>
         <label class="chkrow" for="c14"><input type="checkbox" id="c14" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Register at SRO: both parties or POA holder must attend</span></label>
@@ -367,6 +418,7 @@ details summary::-webkit-details-marker{display:none;}
         <label class="chkrow" for="c16"><input type="checkbox" id="c16" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Apply for mutation at local Panchayat / Corporation</span></label>
         <label class="chkrow" for="c17"><input type="checkbox" id="c17" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Update property tax records in your name</span></label>
         <label class="chkrow" for="c18"><input type="checkbox" id="c18" onchange="chkSave(this)" style="width:18px;height:18px;margin-top:2px;accent-color:#059669;flex-shrink:0;"/><span>Store all original documents safely (physical + scanned)</span></label>
+
 
         <div style="margin-top:16px;">
           <div style="display:flex;justify-content:space-between;font-size:.75rem;color:#94a3b8;margin-bottom:4px;flex-wrap:wrap;gap:4px;">
@@ -380,10 +432,10 @@ details summary::-webkit-details-marker{display:none;}
       </details>
     </div>
 
+
     <!-- KEY RULES -->
     <div style="background:white;border-radius:24px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid #f1f5f9;overflow:hidden;">
       <h2 style="font-size:1rem;font-weight:700;margin-bottom:12px;">&#8505;&#65039; Key Rules for NRIs</h2>
-      <!-- FIX warn 4: word-break on rules list -->
       <ul class="rules-list" style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:.87rem;color:#475569;">
         <li><span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span><span><strong>Stamp Duty:</strong> Flat 8% for all buyers in Kerala (no gender concession)</span></li>
         <li><span style="color:#059669;font-weight:700;flex-shrink:0;">&#10003;</span><span><strong>Registration Fee:</strong> Additional 2% of property value</span></li>
@@ -399,8 +451,10 @@ details summary::-webkit-details-marker{display:none;}
       </a>
     </div>
 
+
   </div>
 </div>
+
 
 <!-- FOOTER -->
 <footer style="background:#0f172a;color:#64748b;padding:32px 16px;margin-top:16px;width:100%;">
@@ -409,6 +463,7 @@ details summary::-webkit-details-marker{display:none;}
     <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:12px;">
       <a href="index.html" style="color:#94a3b8;text-decoration:none;">Home</a>
       <a href="exchange-rates.html" style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
+      <a href="gold-rate.html" style="color:#94a3b8;text-decoration:none;">Gold Rate</a>
       <a href="land-value.html" style="color:#94a3b8;text-decoration:none;">Land Value</a>
       <a href="document-checklist.html" style="color:#94a3b8;text-decoration:none;">Documents</a>
       <a href="visa-tracker.html" style="color:#94a3b8;text-decoration:none;">Visa Tracker</a>
@@ -417,6 +472,7 @@ details summary::-webkit-details-marker{display:none;}
     </nav>
   </div>
 </footer>
+
 
 <script>
 var DIST = {
@@ -436,6 +492,7 @@ var DIST = {
   kasaragod:          {n:"Kasaragod",               res:[2000,7000],   com:[4000,13000],  agr:[700,2500],   mk:"1.2-1.8x",note:"Border district with growing demand; some coastal premium."}
 };
 
+
 var CUR = [
   {c:"AED",name:"UAE Dirham"},
   {c:"USD",name:"US Dollar"},
@@ -449,7 +506,9 @@ var LR  = {AED:25.3,USD:93.1,GBP:116.0,SAR:24.8,QAR:25.6,KWD:303.0};
 var fxReady=false, selType="res";
 var gMin=0,gMax=0,gName="",gArea=0,gType="";
 
-function fmt(n){ return "\u20b9"+Math.round(n).toLocaleString("en-IN"); }
+
+function fmt(n){ return "₹"+Math.round(n).toLocaleString("en-IN"); }
+
 
 function loadFX(){
   fetch("https://latest.currency-api.pages.dev/v1/currencies/inr.json")
@@ -486,12 +545,14 @@ function drawFX(){
   grid.innerHTML=html;
 }
 
+
 function setType(t,btn){
   selType=t;
   ["res","com","agr"].forEach(function(x){ document.getElementById("btn-"+x).classList.remove("on"); });
   btn.classList.add("on");
   calc();
 }
+
 
 function calc(){
   var dist=document.getElementById("distSel").value;
@@ -531,12 +592,14 @@ function calc(){
   if(!fxReady) loadFX();
 }
 
-/* FIX 6: wa.me → api.whatsapp.com/send */
+
+/* ── WHATSAPP SHARE ── */
 function doShare(){
   if(!gMin) return;
-  var msg="*Kerala Land Value Estimate*\n\nDistrict: "+gName+"\nType: "+gType+"\nArea: "+gArea+" cents\n\nTotal Estimated Cost:\n"+fmt(gMin)+" to "+fmt(gMax)+"\n\nKerala NRI Toolkit\nhttps://kerala-nri-toolkit.vercel.app/land-value.html\n_Based on current SRO rates \u2014 verified 2026. Verify at igr.kerala.gov.in_";
+  var msg="*Kerala Land Value Estimate*\n\nDistrict: "+gName+"\nType: "+gType+"\nArea: "+gArea+" cents\n\nTotal Estimated Cost:\n"+fmt(gMin)+" to "+fmt(gMax)+"\n\nKerala NRI Toolkit\nhttps://kerala-nri-toolkit.vercel.app/land-value.html\n_Based on current SRO rates — verified 2026. Verify at igr.kerala.gov.in_";
   window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(msg),"_blank");
 }
+
 
 /* ── DISTRICT CARDS ── */
 (function(){
@@ -547,14 +610,14 @@ function doShare(){
     el.style.cssText="border-radius:12px;background:#f8fafc;border:1px solid #f1f5f9;padding:10px;cursor:pointer;transition:border-color .15s;overflow:hidden;";
     el.onmouseover=function(){ el.style.borderColor="#059669"; };
     el.onmouseout=function(){ el.style.borderColor="#f1f5f9"; };
-    /* FIX 4: word-break on district card text */
     el.innerHTML='<p class="dist-card-name">'+d.n+'</p>'
-                +'<p class="dist-card-price">\u20b9'+d.res[0].toLocaleString("en-IN")+' - \u20b9'+d.res[1].toLocaleString("en-IN")+'</p>'
+                +'<p class="dist-card-price">₹'+d.res[0].toLocaleString("en-IN")+' - ₹'+d.res[1].toLocaleString("en-IN")+'</p>'
                 +'<p class="dist-card-sub">per sq.m (residential)</p>';
     el.onclick=function(){ document.getElementById("distSel").value=key; calc(); window.scrollTo({top:0,behavior:"smooth"}); };
     wrap.appendChild(el);
   });
 })();
+
 
 /* ── CHECKLIST RESTORE ── */
 (function(){
@@ -568,6 +631,7 @@ function doShare(){
   }
   updProg(done);
 })();
+
 
 function chkSave(el){
   var saved={};

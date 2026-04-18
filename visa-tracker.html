@@ -5,129 +5,149 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Gulf Visa &amp; Iqama Tracker | Kerala NRI Toolkit</title>
 <meta name="description" content="Track your Gulf visa, Iqama, Emirates ID and residence permit expiry dates. Get countdown alerts for UAE, Saudi, Qatar, Kuwait, Bahrain and Oman visas."/>
-<script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-/* FIX: overflow-x + touch-action */
-html, body {
-  overflow-x: hidden;
-  max-width: 100%;
-  touch-action: pan-y;
+*,*::before,*::after{box-sizing:border-box;}
+
+html,body{
+  overflow-x:hidden;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  touch-action:pan-y;
 }
 
-body { font-family: 'Inter', sans-serif; background: #f8fafc; min-height: 100vh; }
+body{font-family:'Inter',sans-serif;background:#f8fafc;min-height:100vh;}
 
-.visa-card { border-radius: 16px; padding: 18px; margin-bottom: 12px; border: 2px solid transparent; transition: all .2s; position: relative; overflow: hidden; min-width: 0; }
-.visa-card:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,.1); }
-.status-safe     { background: #f0fdf4; border-color: #86efac; }
-.status-caution  { background: #fefce8; border-color: #fde047; }
-.status-warning  { background: #fff7ed; border-color: #fdba74; }
-.status-critical { background: #fef2f2; border-color: #fca5a5; }
-.status-expired  { background: #f1f5f9; border-color: #cbd5e1; }
-
-.days-big      { font-size: 2.2rem; font-weight: 800; line-height: 1; }
-.days-safe     { color: #16a34a; }
-.days-caution  { color: #ca8a04; }
-.days-warning  { color: #ea580c; }
-.days-critical { color: #dc2626; }
-.days-expired  { color: #94a3b8; }
-
-.pill { display: inline-block; font-size: .68rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
-.pill-safe     { background: #dcfce7; color: #15803d; }
-.pill-caution  { background: #fef9c3; color: #854d0e; }
-.pill-warning  { background: #ffedd5; color: #9a3412; }
-.pill-critical { background: #fee2e2; color: #991b1b; }
-.pill-expired  { background: #e2e8f0; color: #475569; }
-
-input, select { width: 100%; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: .9rem; font-weight: 500; background: #f8fafc; outline: none; box-sizing: border-box; font-family: inherit; }
-input:focus, select:focus { border-color: #059669; background: white; }
-
-label { display: block; font-size: .73rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
-
-.del-btn { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,.07); border: none; border-radius: 6px; width: 30px; height: 30px; cursor: pointer; font-size: .8rem; display: flex; align-items: center; justify-content: center; transition: background .15s; flex-shrink: 0; }
-.del-btn:hover { background: #fee2e2; color: #dc2626; }
-
-.fact-row { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: .84rem; align-items: flex-start; }
-.fact-row:last-child { border: none; }
-.fact-row span:last-child { word-break: break-word; min-width: 0; }
-
-/* FIX: nav short/full labels */
-.nav-link-full  { display: inline; }
-.nav-link-short { display: none; }
-
-/* MAIN LAYOUT */
-.main-grid { display: grid; grid-template-columns: 380px 1fr; gap: 24px; }
-
-/* FIX: summaryBar — use JS only, no conflicting inline display */
-#summaryBar { display: none; background: white; border-radius: 16px; padding: 14px 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.05); border: 1px solid #f1f5f9; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
-
-@media (max-width: 768px) {
-  html, body { overflow-x: hidden; }
-
-  .main-grid { grid-template-columns: 1fr !important; }
-
-  /* FIX: nav short labels on mobile */
-  .nav-link-full  { display: none !important; }
-  .nav-link-short { display: inline !important; }
-  .nav-links { gap: 8px !important; font-size: .76rem !important; }
-
-  /* UX FIX: on mobile, RIGHT col (cards) shows FIRST above LEFT col (form) */
-  .main-grid { display: flex !important; flex-direction: column !important; }
-  .main-left  { order: 2; }
-  .main-right { order: 1; }
-
-  h1 { font-size: 1.6rem !important; }
-  .days-big { font-size: 1.8rem !important; }
-
-  .visa-card button { padding: 6px 10px !important; font-size: .72rem !important; }
-
-  #summaryBar { flex-direction: column; align-items: flex-start !important; }
-  #summaryBar button { width: 100% !important; }
-
-  table { display: block; overflow-x: auto; white-space: nowrap; }
-
-  input, select { padding: 12px 14px !important; font-size: 1rem !important; }
-  button[onclick="saveVisa()"] { padding: 15px !important; font-size: 1rem !important; }
-
-  footer nav { gap: 8px !important; font-size: .74rem !important; }
+/* ── TOP NAV LINKS ── */
+.nav-links a,
+.nav-links a:link,
+.nav-links a:visited {
+  color: #6ee7b7 !important;
+  text-decoration: none !important;
+}
+.nav-links a:hover {
+  color: #ffffff !important;
+}
+.nav-links a.active,
+.nav-links a.active:link,
+.nav-links a.active:visited {
+  color: #6ee7b7 !important;
+  font-weight: 700 !important;
+  border-bottom: 2px solid #6ee7b7 !important;
 }
 
-@media (max-width: 380px) {
-  .days-big { font-size: 1.4rem !important; }
-  .pill { font-size: .62rem !important; }
+/* ── FOOTER NAV LINKS ── */
+.footer-nav a,
+.footer-nav a:link,
+.footer-nav a:visited {
+  color: #94a3b8 !important;
+  text-decoration: none !important;
+}
+.footer-nav a:hover {
+  color: #ffffff !important;
+}
+
+.visa-card{border-radius:16px;padding:18px;margin-bottom:12px;border:2px solid transparent;transition:all .2s;position:relative;overflow:hidden;min-width:0;}
+.visa-card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.1);}
+.status-safe    {background:#f0fdf4;border-color:#86efac;}
+.status-caution {background:#fefce8;border-color:#fde047;}
+.status-warning {background:#fff7ed;border-color:#fdba74;}
+.status-critical{background:#fef2f2;border-color:#fca5a5;}
+.status-expired {background:#f1f5f9;border-color:#cbd5e1;}
+
+.days-big     {font-size:2.2rem;font-weight:800;line-height:1;}
+.days-safe    {color:#16a34a;}
+.days-caution {color:#ca8a04;}
+.days-warning {color:#ea580c;}
+.days-critical{color:#dc2626;}
+.days-expired {color:#94a3b8;}
+
+.pill{display:inline-block;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;}
+.pill-safe    {background:#dcfce7;color:#15803d;}
+.pill-caution {background:#fef9c3;color:#854d0e;}
+.pill-warning {background:#ffedd5;color:#9a3412;}
+.pill-critical{background:#fee2e2;color:#991b1b;}
+.pill-expired {background:#e2e8f0;color:#475569;}
+
+input,select{width:100%;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.9rem;font-weight:500;background:#f8fafc;outline:none;box-sizing:border-box;font-family:inherit;}
+input:focus,select:focus{border-color:#059669;background:white;}
+
+label{display:block;font-size:.73rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+
+.del-btn{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.07);border:none;border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;}
+.del-btn:hover{background:#fee2e2;color:#dc2626;}
+
+.fact-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9;font-size:.84rem;align-items:flex-start;}
+.fact-row:last-child{border:none;}
+.fact-row span:last-child{word-break:break-word;min-width:0;}
+
+.nav-link-full {display:inline;}
+.nav-link-short{display:none;}
+
+.main-grid{display:grid;grid-template-columns:380px 1fr;gap:24px;}
+
+#summaryBar{display:none;background:white;border-radius:16px;padding:14px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);border:1px solid #f1f5f9;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;}
+
+@media(max-width:768px){
+  html,body{overflow-x:hidden;}
+  .main-grid{grid-template-columns:1fr !important;}
+  .nav-link-full {display:none !important;}
+  .nav-link-short{display:inline !important;}
+  .nav-links{gap:8px !important;font-size:.76rem !important;}
+  .main-grid{display:flex !important;flex-direction:column !important;}
+  .main-left {order:2;}
+  .main-right{order:1;}
+  h1{font-size:1.6rem !important;}
+  .days-big{font-size:1.8rem !important;}
+  .visa-card button{padding:6px 10px !important;font-size:.72rem !important;}
+  #summaryBar{flex-direction:column;align-items:flex-start !important;}
+  #summaryBar button{width:100% !important;}
+  table{display:block;overflow-x:auto;white-space:nowrap;}
+  input,select{padding:12px 14px !important;font-size:1rem !important;}
+  button[onclick="saveVisa()"]{padding:15px !important;font-size:1rem !important;}
+  .footer-nav{gap:8px !important;font-size:.74rem !important;}
+}
+
+@media(max-width:380px){
+  .days-big{font-size:1.4rem !important;}
+  .pill{font-size:.62rem !important;}
 }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;">
+<nav style="background:#1a3c2e;color:white;padding:12px 16px;position:sticky;top:0;z-index:50;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;">
     <a href="index.html" style="color:#6ee7b7;font-weight:800;font-size:1rem;text-decoration:none;">&#127796; Kerala NRI Toolkit</a>
-    <!-- FIX: short labels -->
     <div class="nav-links" style="display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;">
-      <a href="index.html" style="color:#cbd5e1;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="index.html">Home</a>
+      <a href="exchange-rates.html">
         <span class="nav-link-full">Exchange Rates</span>
         <span class="nav-link-short">Rates</span>
       </a>
-      <a href="land-value.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="gold-rate.html">
+        <span class="nav-link-full">Gold Rate</span>
+        <span class="nav-link-short">Gold</span>
+      </a>
+      <a href="land-value.html">
         <span class="nav-link-full">Land Value</span>
         <span class="nav-link-short">Land</span>
       </a>
-      <a href="document-checklist.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="document-checklist.html">
         <span class="nav-link-full">Documents</span>
         <span class="nav-link-short">Docs</span>
       </a>
-      <a href="visa-tracker.html" style="color:#6ee7b7;font-weight:700;text-decoration:none;border-bottom:2px solid #6ee7b7;">
+      <a href="visa-tracker.html" class="active">
         <span class="nav-link-full">Visa Tracker</span>
         <span class="nav-link-short">Visa</span>
       </a>
-      <a href="stamp-duty.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="stamp-duty.html">
         <span class="nav-link-full">Stamp Duty</span>
         <span class="nav-link-short">Stamp</span>
       </a>
-      <a href="emi-calculator.html" style="color:#cbd5e1;text-decoration:none;">
+      <a href="emi-calculator.html">
         <span class="nav-link-full">EMI Calculator</span>
         <span class="nav-link-short">EMI</span>
       </a>
@@ -214,7 +234,6 @@ label { display: block; font-size: .73rem; font-weight: 700; color: #64748b; tex
       <button onclick="cancelEdit()" id="cancelBtn" style="display:none;width:100%;background:#f1f5f9;color:#64748b;font-weight:600;font-size:.87rem;padding:10px;border-radius:12px;border:none;cursor:pointer;margin-top:8px;min-height:44px;">
         Cancel Edit
       </button>
-      <!-- FIX warn: \u8635 is Chinese char — use ↺ correctly -->
       <button id="resetAllBtn" onclick="resetAllVisas()" style="width:100%;background:#f1f5f9;color:#94a3b8;font-weight:600;font-size:.78rem;padding:8px;border-radius:10px;border:none;cursor:pointer;margin-top:8px;min-height:44px;">
         &#8634; Reset All Visas
       </button>
@@ -241,24 +260,20 @@ label { display: block; font-size: .73rem; font-weight: 700; color: #64748b; tex
 
   </div><!-- /main-left -->
 
-  <!-- RIGHT: VISA CARDS — UX FIX: order:1 on mobile so cards appear above form after saving -->
+  <!-- RIGHT: VISA CARDS -->
   <div class="main-right">
 
-    <!-- SUMMARY BAR — FIX: CSS-only display:none, JS sets display:flex -->
     <div id="summaryBar">
       <div style="display:flex;gap:10px;flex-wrap:wrap;" id="summaryPills"></div>
-      <!-- FIX: wa.me → api.whatsapp.com/send -->
       <button onclick="shareAll()" style="background:#25D366;color:white;font-weight:700;font-size:.78rem;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;flex-shrink:0;min-height:40px;">&#128241; Share All</button>
     </div>
 
-    <!-- EMPTY STATE -->
     <div id="emptyState" style="background:white;border-radius:24px;padding:60px 20px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);border:2px dashed #e2e8f0;">
       <div style="font-size:3rem;margin-bottom:12px;">&#128196;</div>
       <p style="font-weight:700;color:#1e293b;font-size:1rem;margin-bottom:6px;">No visas tracked yet</p>
       <p style="color:#94a3b8;font-size:.85rem;word-break:break-word;">Add your first visa using the form to start tracking expiry dates.</p>
     </div>
 
-    <!-- CARDS -->
     <div id="cardsContainer"></div>
 
     <!-- GULF VISA FACTS -->
@@ -283,14 +298,15 @@ label { display: block; font-size: .73rem; font-weight: 700; color: #64748b; tex
 <footer style="background:#0f172a;color:#64748b;padding:32px 16px;width:100%;">
   <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:.85rem;overflow:hidden;">
     <p style="margin:0;">&#169; 2026 Kerala NRI Toolkit &middot; Free tools for Kerala's global community.</p>
-    <nav style="display:flex;flex-wrap:wrap;gap:12px;">
-      <a href="index.html"              style="color:#94a3b8;text-decoration:none;">Home</a>
-      <a href="exchange-rates.html"     style="color:#94a3b8;text-decoration:none;">Exchange Rates</a>
-      <a href="land-value.html"         style="color:#94a3b8;text-decoration:none;">Land Value</a>
-      <a href="document-checklist.html" style="color:#94a3b8;text-decoration:none;">Documents</a>
-      <a href="visa-tracker.html"       style="color:#94a3b8;text-decoration:none;">Visa Tracker</a>
-      <a href="stamp-duty.html"         style="color:#94a3b8;text-decoration:none;">Stamp Duty</a>
-      <a href="emi-calculator.html"     style="color:#94a3b8;text-decoration:none;">EMI Calculator</a>
+    <nav class="footer-nav" style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="index.html">Home</a>
+      <a href="exchange-rates.html">Exchange Rates</a>
+      <a href="gold-rate.html">Gold Rate</a>
+      <a href="land-value.html">Land Value</a>
+      <a href="document-checklist.html">Documents</a>
+      <a href="visa-tracker.html">Visa Tracker</a>
+      <a href="stamp-duty.html">Stamp Duty</a>
+      <a href="emi-calculator.html">EMI Calculator</a>
     </nav>
   </div>
 </footer>
@@ -348,7 +364,6 @@ function render() {
     return;
   }
   empty.style.display   = "none";
-  /* FIX: summaryBar display:flex set by JS only */
   summary.style.display = "flex";
   var sorted = visas.slice().sort(function(a,b){
     return getStatus(a.expiry).days - getStatus(b.expiry).days;
@@ -356,7 +371,6 @@ function render() {
   var html = "";
   sorted.forEach(function(v) {
     var s = getStatus(v.expiry);
-    var daysLabel = s.days < 0 ? Math.abs(s.days)+" days ago" : s.days === 0 ? "Expires TODAY" : s.days+" days left";
     html += '<div class="visa-card status-'+s.cls+'">'
           + '<button class="del-btn" onclick="deleteVisa(\''+v.id+'\')" title="Delete">&#10005;</button>'
           + '<div style="display:flex;align-items:flex-start;gap:12px;">'
@@ -370,7 +384,6 @@ function render() {
           + '<div style="font-size:.78rem;color:#64748b;margin-top:6px;">Expiry: <strong>'+fmtDate(v.expiry)+'</strong></div>'
           + '<div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">'
           + '<button onclick="editVisa(\''+v.id+'\')" style="font-size:.74rem;font-weight:700;padding:6px 12px;border-radius:8px;background:rgba(0,0,0,.06);border:none;cursor:pointer;min-height:36px;">&#9998; Edit</button>'
-          /* FIX: shareVisa uses api.whatsapp.com/send */
           + '<button onclick="shareVisa(\''+v.id+'\')" style="font-size:.74rem;font-weight:700;padding:6px 12px;border-radius:8px;background:#dcfce7;color:#15803d;border:none;cursor:pointer;min-height:36px;">&#128241; Share</button>'
           + '</div></div>'
           + '<div style="text-align:right;flex-shrink:0;">'
@@ -395,13 +408,13 @@ function updateSummary() {
 }
 
 function saveVisa() {
-  var name   = document.getElementById("fName").value.trim();
-  var country= document.getElementById("fCountry").value;
-  var type   = document.getElementById("fType").value;
-  var expiry = document.getElementById("fExpiry").value;
-  var number = document.getElementById("fNumber").value.trim();
-  var editId = document.getElementById("editId").value;
-  if (!name)   { alert("Please enter a name.");         return; }
+  var name    = document.getElementById("fName").value.trim();
+  var country = document.getElementById("fCountry").value;
+  var type    = document.getElementById("fType").value;
+  var expiry  = document.getElementById("fExpiry").value;
+  var number  = document.getElementById("fNumber").value.trim();
+  var editId  = document.getElementById("editId").value;
+  if (!name)   { alert("Please enter a name.");          return; }
   if (!expiry) { alert("Please select an expiry date."); return; }
   if (editId) {
     visas = visas.map(function(v){
@@ -411,7 +424,6 @@ function saveVisa() {
     visas.push({id:"v"+Date.now(),name:name,country:country,type:type,expiry:expiry,number:number});
   }
   saveStorage(); render(); clearForm();
-  /* UX: scroll to cards on mobile after save */
   var cards = document.getElementById("cardsContainer");
   if (cards && window.innerWidth <= 768) {
     cards.scrollIntoView({behavior:"smooth", block:"start"});
@@ -468,7 +480,6 @@ function updateTypeHint() {
   else { hint.style.display="none"; }
 }
 
-/* FIX: shareVisa → api.whatsapp.com/send */
 function shareVisa(id) {
   var v = visas.find(function(x){ return x.id===id; });
   if (!v) return;
@@ -479,7 +490,6 @@ function shareVisa(id) {
   window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(msg),"_blank");
 }
 
-/* FIX: shareAll → api.whatsapp.com/send */
 function shareAll() {
   if (visas.length===0) return;
   var sorted = visas.slice().sort(function(a,b){ return getStatus(a.expiry).days-getStatus(b.expiry).days; });
