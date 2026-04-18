@@ -56,7 +56,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 24px;
 
 canvas { max-width: 100% !important; }
 
-/* NAVBAR — horizontal scroll, never wrap */
 .nav-ul {
   display: flex;
   flex-wrap: nowrap;
@@ -73,7 +72,6 @@ canvas { max-width: 100% !important; }
 .nav-link-full { display: inline; }
 .nav-link-short { display: none; }
 
-/* HERO STATS — number + label locked together */
 .hero-stats {
   display: flex;
   flex-wrap: wrap;
@@ -132,6 +130,9 @@ canvas { max-width: 100% !important; }
       <li><a href="exchange-rates.html" class="text-slate-300 hover:text-white">
         <span class="nav-link-full">Exchange Rates</span><span class="nav-link-short">Rates</span>
       </a></li>
+      <li><a href="gold-rate.html" class="text-slate-300 hover:text-white">
+        <span class="nav-link-full">Gold Rate</span><span class="nav-link-short">Gold</span>
+      </a></li>
       <li><a href="land-value.html" class="text-slate-300 hover:text-white">
         <span class="nav-link-full">Land Value</span><span class="nav-link-short">Land</span>
       </a></li>
@@ -161,7 +162,7 @@ canvas { max-width: 100% !important; }
 
     <div class="hero-stats">
       <div class="hero-stat-item">
-        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-num">7</div>
         <div class="hero-stat-label">Free Tools</div>
       </div>
       <div class="hero-divider"></div>
@@ -219,7 +220,6 @@ canvas { max-width: 100% !important; }
       </div>
       <a href="document-checklist.html" class="text-xs text-emerald-700 font-semibold mt-2 block">Open checklist &rarr;</a>
     </div>
-
   </div>
 </section>
 
@@ -227,7 +227,7 @@ canvas { max-width: 100% !important; }
 <section class="py-14 px-4 bg-white">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-10">
-      <h2 class="text-3xl font-extrabold text-gray-900">6 Free Tools</h2>
+      <h2 class="text-3xl font-extrabold text-gray-900">7 Free Tools</h2>
       <p class="text-gray-500 mt-2">Everything a Kerala NRI needs — property, money, documents, visa</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
@@ -238,6 +238,14 @@ canvas { max-width: 100% !important; }
         <h3 class="text-lg font-bold">Exchange Rates</h3>
         <p class="text-sm text-gray-500">Live INR exchange rates for AED, USD, GBP, QAR, SAR, KWD with historical context</p>
         <a href="exchange-rates.html" class="open-btn mt-auto">Open Tool &rarr;</a>
+      </div>
+
+      <div class="tool-card border-l-4 border-yellow-400">
+        <div style="font-size:1.8rem;">&#128176;</div>
+        <div><span class="badge" style="background:#fef9c3;color:#854d0e;">2026 RATES</span></div>
+        <h3 class="text-lg font-bold">Gold Rate</h3>
+        <p class="text-sm text-gray-500">Live Kerala gold and silver rates with calculator and currency conversion</p>
+        <a href="gold-rate.html" class="open-btn mt-auto">Open Tool &rarr;</a>
       </div>
 
       <div class="tool-card border-l-4 border-blue-400">
@@ -335,7 +343,6 @@ canvas { max-width: 100% !important; }
   </div>
 </section>
 
-<!-- ADSENSE -->
 <section class="py-10 px-4">
   <div class="max-w-4xl mx-auto text-center">
     <div class="adsense-wrap">
@@ -344,7 +351,6 @@ canvas { max-width: 100% !important; }
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="bg-[#0f172a] text-white py-10 px-4" style="width:100%;">
   <div class="max-w-6xl mx-auto" style="overflow:hidden;">
     <div class="flex flex-wrap items-center justify-between gap-4 text-sm">
@@ -352,6 +358,7 @@ canvas { max-width: 100% !important; }
       <ul class="footer-nav flex flex-wrap gap-4 text-slate-400" style="list-style:none;margin:0;padding:0;">
         <li><a href="index.html" class="hover:text-emerald-300" style="text-decoration:none;">Home</a></li>
         <li><a href="exchange-rates.html" class="hover:text-emerald-300" style="text-decoration:none;">Exchange Rates</a></li>
+        <li><a href="gold-rate.html" class="hover:text-yellow-300" style="text-decoration:none;">Gold Rate</a></li>
         <li><a href="land-value.html" class="hover:text-emerald-300" style="text-decoration:none;">Land Value</a></li>
         <li><a href="document-checklist.html" class="hover:text-emerald-300" style="text-decoration:none;">Documents</a></li>
         <li><a href="visa-tracker.html" class="hover:text-emerald-300" style="text-decoration:none;">Visa Tracker</a></li>
